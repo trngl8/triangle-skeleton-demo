@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <!-- Modal -->
+    <div class="modal fade text-black" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="loginModalLabel">{{ 'title.login'|trans }}</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="{{ 'label.close'|trans }}"></button>
+                </div>
+                <div class="modal-body text-start">
+                    <p>{{ 'message.security_not_implement'|trans }}</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ 'button.close'|trans }}</button>
+                    <button type="button" class="btn btn-primary">{{ 'button.ok'|trans }}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
+        <header class="mb-auto">
+            <div class="text-end">
+                <h3 class=""><a href="#" class="btn btn-sm btn-outline-secondary" title="{{ 'app.login'|trans }}" data-bs-toggle="modal" data-bs-target="#loginModal"><i class="bi bi-person"></i></a></h3>
+            </div>
+        </header>
+
+        <main class="px-3" data-controller="hello">
+            <div class="logo"><i class="bi bi-triangle-half"></i></div>
+            <h1 class="mb-5">{{ app_name }} <small>{{ app_version }}</small></h1>
+            <p class="lead" data-hello-target="output">{{ 'text.default_content'|trans }}</p>
+            <p class="lead mt-5">
+                <a href="#" class="btn btn-lg btn-outline-primary fw-bold px-lg-5" title="button.blue.title" data-hello-target="name" data-action="click->hello#greet">{{ 'button.blue'|trans }}</a>
+                <a href="{{ path('app_subscribe') }}" class="btn btn-lg btn-outline-danger fw-bold px-lg-5" title="button.red.title">{{ 'button.red'|trans }}</a>
+            </p>
+        </main>
+
+        <footer class="mt-auto text-white-50">
+            <p>{{ 'text.info'|trans }} <a href="{{ path('app_info') }}" class="text-white">{{ app_name }}</a> {{ app_version }} ({{ app.environment|upper }}).</p>
+        </footer>
+    </div>
+{% endblock %}

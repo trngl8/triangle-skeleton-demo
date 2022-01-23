@@ -1,0 +1,19 @@
+{% extends 'layout.html.twig' %}
+
+{% block main %}
+<h1 class="mb-4">{{ 'title.subscribe'|trans }}</h1>
+
+<div class="row">
+    <div class="col-md-6">
+        {% block form %}
+            <p class="fs-5 col-md-8 mb-5">
+                {{ 'message.subscribe'|trans }}
+            </p>
+
+            {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+                {{ form_widget(form) }}
+            {{ form_end(form) }}
+        {% endblock %}
+    </div>
+</div>
+{% endblock %}

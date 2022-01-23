@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="{{ app.request.locale }}"  class="h-100">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" type="image/svg+xml" href="{{ asset('favicons/favicon.svg') }}">
+    <link rel="alternate icon" type="image/png" sizes="16x16" href="{{ asset('favicons/favicon16x16.png') }}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('favicons/apple-touch-icon.png') }}" />
+
+{% block stylesheets %}
+    {{ encore_entry_link_tags('app') }}
+{% endblock stylesheets %}
+
+{% block javascripts %}
+    {{ encore_entry_script_tags('app') }}
+{% endblock javascripts %}
+
+</head>
+
+{% block body_outside %}
+<body class="d-flex h-100 text-center text-white bg-dark">
+    {% block body %}
+    {% endblock %}
+</body>
+{% endblock %}
+
+<!-- Page rendered on {{ 'now'|format_datetime('long', 'long', '', 'UTC') }} -->
+
+</html>

@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container">
+        <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
+            <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
+                <svg xmlns="http://www.w3.org/2000/svg"  width="40" height="32" fill="currentColor" class="bi bi-triangle-fill me-2" viewBox="0 0 16 16">
+                    <title>{{ app_name }}</title>
+                    <path fill-rule="evenodd" d="M7.022 1.566a1.13 1.13 0 0 1 1.96 0l6.857 11.667c.457.778-.092 1.767-.98 1.767H1.144c-.889 0-1.437-.99-.98-1.767L7.022 1.566z"/>
+                </svg>
+                <span class="fs-4">{{ app_name }}</span>
+            </a>
+
+            <ul class="nav nav-pills">
+                <li class="nav-item"><a href="{{ path('app_index') }}" class="nav-link {% if app.request.get('_route') == 'app_index' %}active{% endif %}" aria-current="page">{{ 'menu.index'|trans }}</a></li>
+                <li class="nav-item"><a href="{{ path('app_subscribe') }}" class="nav-link {% if app.request.get('_route') == 'app_subscribe' %}active{% endif %}">{{ 'menu.products'|trans }}</a></li>
+                <li class="nav-item"><a href="{{ path('app_info') }}" class="nav-link {% if app.request.get('_route') == 'app_info' %}active{% endif %}">{{ 'menu.info'|trans }}</a></li>
+            </ul>
+        </header>
+    </div>
+
+    <div class="container">
+        <main>
+            {% block main %}
+            {% endblock %}
+        </main>
+    </div>
+
+    <div class="container">
+        <footer class="pt-3 my-5 text-muted border-top">
+            <small>{{ 'message.created'|trans }} {{ app_name }} {{ app_version }} &middot; &copy;</small>
+        </footer>
+    </div>
+
+
+{% endblock %}
