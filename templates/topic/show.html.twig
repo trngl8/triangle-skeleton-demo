@@ -1,5 +1,15 @@
 {% extends 'topic/index.html.twig' %}
 
+{% block breadcrumbs %}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ path('app_index') }}">{{ 'brcmbs.home'|trans }}</a></li>
+        <li class="breadcrumb-item"><a href="{{ path('topic_index') }}">{{ 'brcmbs.topics'|trans }}</a></li>
+        <li class="breadcrumb-item active" aria-current="page">{{ item.title }}</li>
+    </ol>
+</nav>
+{% endblock %}
+
 {% block main %}
     <h1 class="mb-4">{{ 'title.topic.show'|trans }} #{{ item.id }}</h1>
 

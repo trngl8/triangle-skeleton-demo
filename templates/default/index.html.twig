@@ -6,7 +6,16 @@
     <div class="row">
         <div class="col-md-6">
             <p>index</p>
-            <a href="{{ path('topic_add') }}" class="btn btn-outline-primary">{{ 'button.add'|trans }}</a>
+            <ul>
+                {% for topic in topics %}
+                    <li><a href="{{ path('topic_show', { id: topic.id}) }}">{{ topic.title }}</a></li>
+                {% endfor %}
+            </ul>
+
+            {% if button is defined %}
+                <a href="{{ path(button.route) }}" class="{{ button.classes }}">{{ button.caption|trans }}</a>
+            {% endif %}
+
         </div>
     </div>
 {% endblock %}

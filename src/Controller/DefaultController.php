@@ -2,6 +2,9 @@
 
 namespace App\Controller;
 
+use App\Button\LinkToRoute;
+use App\Entity\Topic;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -12,9 +15,16 @@ class DefaultController extends AbstractController
         return $this->render('default/home.html.twig');
     }
 
-    public function index() : Response
+    public function index(ManagerRegistry $doctrine) : Response
     {
-        return $this->render('default/index.html.twig');
+        $topics = $doctrine->getRepository(Topic::class)->findBy([]);
+
+        $button = new LinkToRoute('topic_add', 'button.add');
+
+        return $this->render('default/index.html.twig', [
+            'topics' => $topics,
+            'button' => $button
+        ]);
     }
 
     public function info() : Response

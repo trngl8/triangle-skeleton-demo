@@ -2,12 +2,21 @@
 
 {% block title %}{{ 'title.topic.add'|trans }}{% endblock %}
 
+{% block breadcrumbs %}
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ path('app_index') }}">{{ 'brcmbs.home'|trans }}</a></li>
+            <li class="breadcrumb-item"><a href="{{ path('topic_index') }}">{{ 'brcmbs.topics'|trans }}</a></li>
+            <li class="breadcrumb-item active" aria-current="page">New {{ 'brcmbs.topic'|trans }}</li>
+        </ol>
+    </nav>
+{% endblock %}
+
 {% block main %}
     <h1 class="mb-4">{{ 'title.topic.add'|trans }}</h1>
 
     <div class="row">
         <div class="col-md-6">
-            <p>Topic</p>
             {{ form(form) }}
         </div>
     </div>

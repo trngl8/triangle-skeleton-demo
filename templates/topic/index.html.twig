@@ -2,6 +2,15 @@
 
 {% block title %}{{ 'text.must_be_replaced'|trans }}{% endblock %}
 
+{% block breadcrumbs %}
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ path('app_index') }}">{{ 'brcmbs.home'|trans }}</a></li>
+            <li class="breadcrumb-item active"  aria-current="page">{{ 'brcmbs.topics'|trans }}</li>
+        </ol>
+    </nav>
+{% endblock %}
+
 {% block main %}
     <p>{{ 'text.must_be_replaced'|trans }}</p>
     <ul>
@@ -10,5 +19,7 @@
     {% endfor %}
     </ul>
 
+    {% if buton is defined %}
     <a href="{{ path('topic_add') }}" class="btn btn-outline-primary">{{ 'button.add'|trans }}</a>
+    {% endif %}
 {% endblock %}
