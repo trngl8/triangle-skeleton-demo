@@ -1,0 +1,14 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}{{ 'text.must_be_replaced'|trans }}{% endblock %}
+
+{% block main %}
+    <p>{{ 'text.must_be_replaced'|trans }}</p>
+    <ul>
+    {% for item in items %}
+        <li><a href="{{ path('topic_show', { id: item.id}) }}">{{ item.title }}</a></li>
+    {% endfor %}
+    </ul>
+
+    <a href="{{ path('topic_add') }}" class="btn btn-outline-primary">{{ 'button.add'|trans }}</a>
+{% endblock %}

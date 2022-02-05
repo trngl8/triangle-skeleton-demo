@@ -6,6 +6,13 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class SubscribeControllerTest extends WebTestCase
 {
+    public function testSubscribeExpiredSuccess() : void
+    {
+        $this->markTestIncomplete(
+            'This test has not been implemented yet.'
+        );
+    }
+
     public function testSubmitSuccess(): void
     {
         $client = static::createClient();

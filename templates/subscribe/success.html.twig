@@ -1,11 +1,6 @@
 {% extends 'subscribe/index.html.twig' %}
 
 {% block form %}
-    {% for message in app.flashes('success') %}
-        <div class="alert alert-secondary" role="alert">
-            {{ message }}
-        </div>
-    {% endfor %}
     <div class="mt-5 mb-5"><p>{{ 'text.success'|trans }}</p></div>
     <a href="#" class="btn btn-lg, btn-outline-primary">Go external website</a>
 

@@ -10,4 +10,4 @@ tests:
 
 trans:
 	#php bin/console translation:extract --force --format=yaml --as-tree=3 --sort=asc --domain=messages en
-.PHONY: tests
+.PHONY: trans

@@ -1,5 +1,7 @@
 {% extends 'base.html.twig' %}
 
+{% block title %}{{ app_name }} {{ app_version }} ({{ app.environment|upper }}){% endblock %}
+
 {% block body %}
 
     <!-- Modal -->

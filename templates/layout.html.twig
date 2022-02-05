@@ -1,5 +1,7 @@
 {% extends 'base.html.twig' %}
 
+{% block title %}{{ app_name }}{% endblock %}
+
 {% block body %}
     <div class="container">
         <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
@@ -21,6 +23,13 @@
 
     <div class="container">
         <main>
+
+            {% for message in app.flashes('success') %}
+                <div class="alert alert-secondary" role="alert">
+                    {{ message }}
+                </div>
+            {% endfor %}
+
             {% block main %}
             {% endblock %}
         </main>
