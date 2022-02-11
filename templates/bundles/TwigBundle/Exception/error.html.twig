@@ -1,0 +1,8 @@
+{% extends 'layout.html.twig' %}
+
+{% block main %}
+    <h1 class="mb-4">{{ status_code }} {{ status_text  }}</h1>
+    {% block error_body %}
+        <p><a href="{{ path('app_index') }}">{{ 'error.text_return_homepage'|trans }}</a>.</p>
+    {% endblock %}
+{% endblock %}
