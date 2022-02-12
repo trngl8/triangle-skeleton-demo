@@ -4,6 +4,7 @@ twig:
     globals:
         app_name: '%env(APP_NAME)%'
         app_version: '%env(APP_VERSION)%'
+        app_navbar: '%env(APP_NAVBAR)%'
 
 when@test:
     twig:
