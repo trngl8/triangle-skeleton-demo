@@ -73,9 +73,18 @@ class TopicControllerTest extends WebTestCase
         $this->assertResponseIsSuccessful();
     }
 
+    public function test404Notfound() : void
+    {
+        $client = static::createClient();
+        $client->request('GET','topic/200');
+        $response = $client->getResponse();
+        $this->assertEquals(404, $response->getStatusCode());
+    }
+
     public function getUris() : iterable
     {
         yield ['topic'];
         yield ['topic/add'];
+        yield ['topic/1'];
     }
 }
