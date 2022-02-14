@@ -15,26 +15,35 @@ use Symfony\Component\Serializer\SerializerInterface;
 class ApiController extends AbstractController
 {
     private const API_GROUP = 'show_topics_api';
+    private const API_FORMAT = 'json';
 
     private static array $contentType = ["Content-type" => "application/json"];
+    private static array $apiContext = ['groups' => self::API_GROUP];
+
+    private $serializer;
+
+    public function __construct(SerializerInterface $serializer)
+    {
+        $this->serializer = $serializer;
+    }
 
     #[Route('', name: 'index', methods: ['GET'])]
-    public function index(ManagerRegistry $doctrine, SerializerInterface $serializer): Response
+    public function index(ManagerRegistry $doctrine): Response
     {
         $topics = $doctrine->getRepository(Topic::class)->findAll();
-        $json = $serializer->serialize($topics, 'json', ['groups' => self::API_GROUP]);
+        $json = $this->serializer->serialize($topics, self::API_FORMAT, self::$apiContext);
 
         return new JsonResponse($json, 200, self::$contentType, true);
     }
 
     #[Route('', name: 'add', methods: ['POST'])]
-    public function post(Request $request, SerializerInterface $serializer): Response
+    public function post(Request $request): Response
     {
         //TODO: write $request and check $result
-        $result = 'ok';
-        $json = $serializer->serialize(['result' => $result], 'json');
+        $result = ['result' => 'ok'];
+        $json = $this->serializer->serialize($result, self::API_FORMAT);
 
-        return new JsonResponse($json, 201, ["Content-type" => "application/json"], true);
+        return new JsonResponse($json, Response::HTTP_CREATED, self::$contentType, true);
     }
 
     #[Route('/{id}', name: 'get', methods: ['GET', 'HEAD'])]
@@ -42,8 +51,8 @@ class ApiController extends AbstractController
     {
         //TODO: check 404
         $result = $doctrine->getRepository(Topic::class)->find($id);
-        $json = $serializer->serialize($result, 'json', ['groups' => self::API_GROUP]);
+        $json = $this->serializer->serialize($result, self::API_FORMAT, self::$apiContext);
 
-        return new JsonResponse($json, 200, self::$contentType, true);
+        return new JsonResponse($json, Response::HTTP_OK, self::$contentType, true);
     }
 }
