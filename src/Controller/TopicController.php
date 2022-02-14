@@ -7,6 +7,7 @@ use App\Form\TopicType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -49,6 +50,10 @@ class TopicController extends AbstractController
     public function show(int $id, ManagerRegistry $doctrine): Response
     {
         $topic = $doctrine->getRepository(Topic::class)->find($id);
+
+        if(!$topic) {
+            throw new NotFoundHttpException(sprintf("Topic %d not found", $id));
+        }
 
         return $this->render('topic/show.html.twig', [
             'item' => $topic
