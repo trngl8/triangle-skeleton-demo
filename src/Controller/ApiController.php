@@ -14,13 +14,17 @@ use Symfony\Component\Serializer\SerializerInterface;
 #[Route(path: "/api/topic", name: "api_topic_")]
 class ApiController extends AbstractController
 {
+    private const API_GROUP = 'show_topics_api';
+
+    private static array $contentType = ["Content-type" => "application/json"];
+
     #[Route('', name: 'index', methods: ['GET'])]
     public function index(ManagerRegistry $doctrine, SerializerInterface $serializer): Response
     {
         $topics = $doctrine->getRepository(Topic::class)->findAll();
-        $json = $serializer->serialize($topics, 'json', ['groups' => 'show_topics_api']);
+        $json = $serializer->serialize($topics, 'json', ['groups' => self::API_GROUP]);
 
-        return new JsonResponse($json, 200, ["Content-type" => "application/json"], true);
+        return new JsonResponse($json, 200, self::$contentType, true);
     }
 
     #[Route('', name: 'add', methods: ['POST'])]
@@ -38,8 +42,8 @@ class ApiController extends AbstractController
     {
         //TODO: check 404
         $result = $doctrine->getRepository(Topic::class)->find($id);
-        $json = $serializer->serialize($result, 'json');
+        $json = $serializer->serialize($result, 'json', ['groups' => self::API_GROUP]);
 
-        return new JsonResponse($json, 200, ["Content-type" => "application/json"], true);
+        return new JsonResponse($json, 200, self::$contentType, true);
     }
 }
