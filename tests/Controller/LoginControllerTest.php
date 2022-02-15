@@ -6,7 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class LoginControllerTest extends WebTestCase
 {
-    public function testAddAnswerToTopicSuccess(): void
+    public function testLoginSuccess(): void
     {
         $client = static::createClient();
         $client->request('GET', '/login');
