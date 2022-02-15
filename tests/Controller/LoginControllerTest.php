@@ -8,8 +8,10 @@ class LoginControllerTest extends WebTestCase
 {
     public function testAddAnswerToTopicSuccess(): void
     {
-        $this->markTestIncomplete(
-            'Login must be implemented'
-        );
+        $client = static::createClient();
+        $client->request('GET', '/login');
+        $response = $client->getResponse();
+
+        $this->assertResponseIsSuccessful();
     }
 }
