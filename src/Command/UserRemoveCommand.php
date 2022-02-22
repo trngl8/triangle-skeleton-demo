@@ -13,10 +13,10 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;;
 
 #[AsCommand(
-    name: 'app:user:add',
-    description: 'Add system user',
+    name: 'app:user:remove',
+    description: 'Remove system user',
 )]
-class UserAddCommand extends Command
+class UserRemoveCommand extends Command
 {
     private $userManager;
 
@@ -33,11 +33,10 @@ class UserAddCommand extends Command
         $this
             ->setHelp(<<<'HELP'
 <info>Add User</info>
-Arguments: username, name, email
+Arguments: username
 HELP
             )
             ->addArgument('username', InputArgument::REQUIRED)
-            ->addArgument('password', InputArgument::REQUIRED)
             ->addOption('v', null, InputOption::VALUE_NONE, 'Verbose')
         ;
     }
@@ -46,14 +45,14 @@ HELP
     {
         $io = new SymfonyStyle($input, $output);
 
-        $plaintextPassword = $input->getArgument('password');
         $username = $input->getArgument('username');
 
-        $user = $this->userManager->create($username, $plaintextPassword);
+        $user = $this->userManager->findOneBy(['username' => $username]);
 
-        $this->userManager->save($user);
+        //TODO: check user exists
+        $this->userManager->remove($user);
 
-        $io->success('User successfully generated!');
+        $io->success(sprintf('User %s successfully removed!', $username));
 
         return Command::SUCCESS;
     }

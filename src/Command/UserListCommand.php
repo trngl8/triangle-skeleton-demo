@@ -2,10 +2,11 @@
 
 namespace App\Command;
 
-
+use App\Entity\User;
 use App\Services\UserService;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -42,10 +43,18 @@ HELP
     {
         $io = new SymfonyStyle($input, $output);
 
-        $users = $this->userManager->findBy([]);
-        foreach ($users as $user) {
-            $io->writeln(sprintf('<info>%d</info> %s', $user->getId(), $user->getUsername()));
-        }
+        $users = array_map(function ($item) {
+            /** @var User $item */
+            $roles = implode(', ', $item->getRoles());
+            return [$item->getId(), $item->getUsername(), $roles];
+        }, $this->userManager->findBy([]));
+
+        $table = new Table($output);
+        $table
+            ->setHeaders(['ID', 'username', 'roles'])
+            ->setRows($users)
+        ;
+        $table->render();
 
         $io->success('OK');
 
