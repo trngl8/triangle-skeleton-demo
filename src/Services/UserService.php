@@ -29,18 +29,28 @@ class UserService
         );
         $user->setPassword($hashedPassword);
 
-        $this->em->persist($user);
-
         return $user;
     }
 
-    public function flush() : void
+    public function save(User $user) : void
     {
+        $this->em->persist($user);
+        $this->em->flush();
+    }
+
+    public function remove(User $user)
+    {
+        $this->em->remove($user);
         $this->em->flush();
     }
 
     public function findBy(array $criteria) : array
     {
         return $this->em->getRepository(User::class)->findBy($criteria);
+    }
+
+    public function findOneBy(array $criteria) : User
+    {
+        return $this->em->getRepository(User::class)->findOneBy($criteria);
     }
 }
