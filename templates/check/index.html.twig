@@ -1,0 +1,15 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}{{ 'text.must_be_replaced'|trans }}{% endblock %}
+
+{% block main %}
+    <ul>
+        {% for item in items %}
+            <li><a href="{{ path('check_show', { id: item.id}) }}">{{ item.title }}</a></li>
+        {% endfor %}
+    </ul>
+
+    {% if button is defined %}
+        <a href="{{ path('check_add') }}" class="btn btn-outline-primary">{{ 'button.add'|trans }}</a>
+    {% endif %}
+{% endblock %}

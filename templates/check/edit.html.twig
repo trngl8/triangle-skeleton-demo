@@ -1,0 +1,14 @@
+{% extends 'topic/index.html.twig' %}
+
+{% block title %}{{ 'title.check.add'|trans }}{% endblock %}
+
+{% block main %}
+    <h1 class="mb-4">{{ 'title.check.add'|trans }}</h1>
+
+    <div class="row">
+        <div class="col-md-6">
+            {{ form(form) }}
+        </div>
+    </div>
+
+{% endblock %}
