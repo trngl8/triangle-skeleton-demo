@@ -38,7 +38,12 @@
 {#                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="{{ 'menu.search'|trans }}">#}
 {#                    <button class="btn btn-outline-success" type="submit">{{ 'menu.ok'|trans }}</button>#}
 {#                </form>#}
-                <a class="btn btn-sm btn-outline-secondary ms-lg-2" href="{{ path('app_subscribe') }}"><i class="bi bi-person"></i></a>
+                {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+                    <a class="btn btn-sm btn-link" href="{{ path('logout') }}">Logout</a>
+                {% else %}
+                    <a class="btn btn-sm btn-link" href="{{ path('login') }}">Login</a>
+                {% endif %}
+{#                <a class="btn btn-sm btn-outline-secondary ms-lg-2" href="{{ path('app_subscribe') }}"><i class="bi bi-person"></i></a>#}
 
             </div>
         </div>

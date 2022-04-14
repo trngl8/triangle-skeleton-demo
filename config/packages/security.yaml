@@ -13,6 +13,9 @@ security:
             entity:
                 class: App\Entity\User
                 property: username
+        oauth_aware.user_provider.service:
+            id: App\Security\OAuthUserProvider
+
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
@@ -24,6 +27,10 @@ security:
                 # "login" is the name of the route created previously
                 login_path: login
                 check_path: login
+                default_target_path: app_index
+            logout:
+                path: logout
+
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#the-firewall
 
@@ -33,10 +40,24 @@ security:
                 secret: '%kernel.secret%'
                 always_remember_me: true
 
+            entry_point: form_login
+
+            oauth:
+                resource_owners:
+                    google:          "/login/check-google"
+                login_path:        /login/social
+                use_forward:       false
+                failure_path:      /login/fail
+                default_target_path: app_index
+
+                oauth_user_provider:
+                    service: App\Security\OAuthUserProvider
+
         secured_area:
             # ...
             form_login:
                 # ...
+                provider: app_user_provider
                 enable_csrf: true
 
     # Easy way to control access for large sections of your site
