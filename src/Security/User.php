@@ -10,9 +10,21 @@ class User implements UserInterface
 
     private $password;
 
+    private $name;
+
     public function __construct(string $username)
     {
         $this->username = $username;
+    }
+
+    public function getUserIdentifier(): string
+    {
+        return $this->username;
+    }
+
+    public function getName()
+    {
+        return $this->name;
     }
 
     public function getRoles(): array
@@ -25,13 +37,16 @@ class User implements UserInterface
         return $this->password;
     }
 
+    public function setName(string $name) : self
+    {
+        $this->name = $name;
+        return $this;
+    }
+
     public function eraseCredentials()
     {
         $this->password = null;
     }
 
-    public function getUserIdentifier(): string
-    {
-        return $this->username;
-    }
+
 }

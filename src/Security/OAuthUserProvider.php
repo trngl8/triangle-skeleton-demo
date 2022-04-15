@@ -61,6 +61,8 @@ class OAuthUserProvider implements UserProviderInterface, OAuthAwareUserProvider
     public function loadUserByOAuthUserResponse(UserResponseInterface $response)
     {
         //TODO: save user date into the storage
-        return new User($response->getEmail());
+        return (new User($response->getEmail()))
+            ->setName($response->getRealName())
+        ;
     }
 }

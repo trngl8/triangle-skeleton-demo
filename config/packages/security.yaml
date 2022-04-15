@@ -30,6 +30,7 @@ security:
                 default_target_path: app_index
             logout:
                 path: logout
+                target: app_index
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#the-firewall
