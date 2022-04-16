@@ -45,5 +45,19 @@ class CheckRepository extends ServiceEntityRepository
         }
     }
 
+    public function getMaxOptionPosition(Check $entity) : int
+    {
+        $entityManager = $this->getEntityManager();
+
+        $query = $entityManager->createQuery(
+            'SELECT MAX(o.position)
+            FROM App\Entity\Option o
+            WHERE o.parent = :parent
+            '
+        )->setParameter('parent', $entity->getId());
+
+        return $query->getSingleScalarResult() ?? 0;
+    }
+
 
 }

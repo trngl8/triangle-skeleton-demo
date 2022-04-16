@@ -15,7 +15,6 @@ class OptionType extends AbstractType
             ->add('title')
             ->add('correct')
             ->add('open')
-            ->add('position')
         ;
     }
 
