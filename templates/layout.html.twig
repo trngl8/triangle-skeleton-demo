@@ -19,27 +19,28 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{{ path('topic_index') }}">{{ 'menu.products'|trans }}</a>
                     </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            {{ 'menu.info'|trans }}
-                        </a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="#">{{ 'menu.profile'|trans }}</a></li>
-                            <li><a class="dropdown-item" href="#">{{ 'menu.configuration'|trans }}</a></li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="{{ path('app_info') }}">{{ 'menu.settings'|trans }}</a></li>
-                        </ul>
-                    </li>
                     <li class="nav-item">
-                        <a class="nav-link disabled">{{ 'menu.admin'|trans }}</a>
+                        <a class="nav-link" href="{{ path('app_info') }}">{{ 'menu.info'|trans }}</a>
                     </li>
+{#                    <li class="nav-item">#}
+{#                        <a class="nav-link disabled">{{ 'menu.admin'|trans }}</a>#}
+{#                    </li>#}
                 </ul>
-{#                <form class="d-flex">#}
-{#                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="{{ 'menu.search'|trans }}">#}
-{#                    <button class="btn btn-outline-success" type="submit">{{ 'menu.ok'|trans }}</button>#}
-{#                </form>#}
-                <a class="btn btn-sm btn-outline-secondary ms-lg-2" href="{{ path('app_subscribe') }}"><i class="bi bi-person"></i></a>
-
+                {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+                    <div class="dropdown">
+                        <button class="btn btn-outline-light dropdown-toggle" type="button" id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
+                            {{ app.user.name }}
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                            <li><a class="dropdown-item" href="#">{{ 'profile'|trans }}</a></li>
+                            <li><a class="dropdown-item" href="#">{{ 'settings'|trans }}</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="{{path('logout')}}">{{ 'logout'|trans }}</a></li>
+                        </ul>
+                    </div>
+                {% else %}
+                    <a class="btn btn-outline-secondary ms-lg-2" href="{{ path('login') }}"><i class="bi bi-person"></i> {{ 'login'|trans }}</a>
+                {% endif %}
             </div>
         </div>
     </nav>
