@@ -24,11 +24,9 @@ class Option
     private $parent;
 
     #[ORM\Column(type: 'string', length: 255)]
-    #[Assert\NotBlank]
     private $type;
 
     #[ORM\Column(type: 'integer')]
-    #[Assert\NotBlank]
     private $position;
 
     #[ORM\Column(type: 'boolean', options: ['default' => false])]

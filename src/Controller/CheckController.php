@@ -7,6 +7,7 @@ use App\Entity\Check;
 use App\Entity\Option;
 use App\Form\CheckType;
 use App\Form\OptionType;
+use App\Repository\CheckRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\RadioType;
@@ -20,15 +21,19 @@ class CheckController extends AbstractController
 {
     private $doctrine;
 
+    private $repository;
+
     public function __construct(ManagerRegistry $doctrine)
     {
         $this->doctrine = $doctrine;
+        /** @var CheckRepository repository */
+        $this->repository = $this->doctrine->getRepository(Check::class);
     }
 
     #[Route('/check', name: 'check_index')]
     public function index(): Response
     {
-        $topics = $this->doctrine->getRepository(Check::class)->findBy([]);
+        $topics = $this->repository->findBy([]);
 
         $button = new LinkToRoute('check_add', 'button.add');
 
@@ -76,7 +81,11 @@ class CheckController extends AbstractController
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()) {
-            //TODO: set position field
+            //TODO: move to some service or to event listener
+            $position = $this->repository->getMaxOptionPosition($check);
+            $option->setPosition(++$position);
+            $option->setType($check->getType());
+
             $check->addOption($option);
 
             $entityManager = $this->doctrine->getManager();
