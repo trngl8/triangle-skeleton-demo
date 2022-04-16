@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "64db0c3c71bd59da42669d7247353ff7",
+    "content-hash": "d6377e4a5bceec3e182162016fa2b54c",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -1444,6 +1444,164 @@
                 }
             ],
             "time": "2022-03-02T09:29:19+00:00"
+        },
+        {
+            "name": "hwi/oauth-bundle",
+            "version": "2.0.0-BETA2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/hwi/HWIOAuthBundle.git",
+                "reference": "05d28ec9b724d27911d1064d47a17761a4b32dc8"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/hwi/HWIOAuthBundle/zipball/05d28ec9b724d27911d1064d47a17761a4b32dc8",
+                "reference": "05d28ec9b724d27911d1064d47a17761a4b32dc8",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.4 || ^8.0",
+                "symfony/form": "^4.4 || ^5.4 || ^6.0",
+                "symfony/framework-bundle": "^4.4.20 || ^5.4 || ^6.0",
+                "symfony/http-client": "^4.4 || ^5.4 || ^6.0",
+                "symfony/options-resolver": "^4.4 || ^5.4 || ^6.0",
+                "symfony/security-bundle": "^4.4 || ^5.4 || ^6.0",
+                "symfony/templating": "^4.4 || ^5.4 || ^6.0"
+            },
+            "conflict": {
+                "twig/twig": "<1.43|>=2.0,<2.13"
+            },
+            "require-dev": {
+                "doctrine/doctrine-bundle": "^2.4",
+                "doctrine/orm": "^2.9",
+                "friendsofphp/php-cs-fixer": "^3.2",
+                "phpstan/extension-installer": "^1.1",
+                "phpstan/phpstan": "^1.2",
+                "phpstan/phpstan-symfony": "^1.0",
+                "phpunit/phpunit": "^9.5.12",
+                "symfony/browser-kit": "^4.4.20 || ^5.4 || ^6.0",
+                "symfony/css-selector": "^4.4 || ^5.4 || ^6.0",
+                "symfony/monolog-bundle": "^3.4",
+                "symfony/phpunit-bridge": "^5.4 || ^6.0",
+                "symfony/property-access": "^4.4 || ^5.4 || ^6.0",
+                "symfony/stopwatch": "^5.4 || ^6.0",
+                "symfony/translation": "^4.4 || ^5.4 || ^6.0",
+                "symfony/twig-bundle": "^4.4 || ^5.4 || ^6.0",
+                "symfony/validator": "^4.4 || ^5.4 || ^6.0",
+                "symfony/yaml": "^4.4 || ^5.4 || ^6.0"
+            },
+            "suggest": {
+                "doctrine/doctrine-bundle": "to use Doctrine user provider",
+                "symfony/property-access": "to use FOSUB integration with this bundle",
+                "symfony/twig-bundle": "to use the Twig hwi_oauth_* functions"
+            },
+            "type": "symfony-bundle",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "HWI\\Bundle\\OAuthBundle\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Alexander",
+                    "email": "iam.asm89@gmail.com"
+                },
+                {
+                    "name": "Joseph Bielawski",
+                    "email": "stloyd@gmail.com"
+                },
+                {
+                    "name": "Geoffrey Bachelet",
+                    "email": "geoffrey.bachelet@gmail.com"
+                },
+                {
+                    "name": "Contributors",
+                    "homepage": "https://github.com/hwi/HWIOAuthBundle/contributors"
+                }
+            ],
+            "description": "Support for authenticating users using both OAuth1.0a and OAuth2 in Symfony.",
+            "homepage": "https://github.com/hwi/HWIOAuthBundle",
+            "keywords": [
+                "37signals",
+                "Authentication",
+                "Deezer",
+                "EVE Online",
+                "amazon",
+                "apple",
+                "asana",
+                "auth0",
+                "azure",
+                "bitbucket",
+                "bitly",
+                "box",
+                "bufferapp",
+                "clever",
+                "dailymotion",
+                "deviantart",
+                "discogs",
+                "disqus",
+                "dropbox",
+                "eventbrite",
+                "facebook",
+                "firewall",
+                "fiware",
+                "flickr",
+                "foursquare",
+                "genius",
+                "github",
+                "gitlab",
+                "google",
+                "hubic",
+                "instagram",
+                "jawbone",
+                "jira",
+                "linkedin",
+                "mail.ru",
+                "oauth",
+                "oauth1",
+                "oauth2",
+                "odnoklassniki",
+                "paypal",
+                "qq",
+                "reddit",
+                "runkeeper",
+                "salesforce",
+                "security",
+                "sensio connect",
+                "sina weibo",
+                "slack",
+                "sound cloud",
+                "spotify",
+                "stack exchange",
+                "stereomood",
+                "strava",
+                "toshl",
+                "trakt",
+                "trello",
+                "twitch",
+                "twitter",
+                "vkontakte",
+                "windows live",
+                "wordpress",
+                "xing",
+                "yahoo",
+                "yandex",
+                "youtube"
+            ],
+            "support": {
+                "issues": "https://github.com/hwi/HWIOAuthBundle/issues",
+                "source": "https://github.com/hwi/HWIOAuthBundle/tree/2.0.0-BETA2"
+            },
+            "time": "2022-01-16T15:45:37+00:00"
         },
         {
             "name": "laminas/laminas-code",
@@ -3319,6 +3477,168 @@
                 }
             ],
             "time": "2022-03-05T21:04:00+00:00"
+        },
+        {
+            "name": "symfony/http-client",
+            "version": "v6.0.7",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/http-client.git",
+                "reference": "a7930c47248b9b57e9d0b8da100ffc1e031536dc"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/http-client/zipball/a7930c47248b9b57e9d0b8da100ffc1e031536dc",
+                "reference": "a7930c47248b9b57e9d0b8da100ffc1e031536dc",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.0.2",
+                "psr/log": "^1|^2|^3",
+                "symfony/http-client-contracts": "^3",
+                "symfony/service-contracts": "^1.0|^2|^3"
+            },
+            "provide": {
+                "php-http/async-client-implementation": "*",
+                "php-http/client-implementation": "*",
+                "psr/http-client-implementation": "1.0",
+                "symfony/http-client-implementation": "3.0"
+            },
+            "require-dev": {
+                "amphp/amp": "^2.5",
+                "amphp/http-client": "^4.2.1",
+                "amphp/http-tunnel": "^1.0",
+                "amphp/socket": "^1.1",
+                "guzzlehttp/promises": "^1.4",
+                "nyholm/psr7": "^1.0",
+                "php-http/httplug": "^1.0|^2.0",
+                "psr/http-client": "^1.0",
+                "symfony/dependency-injection": "^5.4|^6.0",
+                "symfony/http-kernel": "^5.4|^6.0",
+                "symfony/process": "^5.4|^6.0",
+                "symfony/stopwatch": "^5.4|^6.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Component\\HttpClient\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Nicolas Grekas",
+                    "email": "p@tchwork.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Provides powerful methods to fetch HTTP resources synchronously or asynchronously",
+            "homepage": "https://symfony.com",
+            "support": {
+                "source": "https://github.com/symfony/http-client/tree/v6.0.7"
+            },
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2022-04-01T12:27:43+00:00"
+        },
+        {
+            "name": "symfony/http-client-contracts",
+            "version": "v3.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/http-client-contracts.git",
+                "reference": "f7525778c712be78ad5b6ca31f47fdcfd404c280"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/http-client-contracts/zipball/f7525778c712be78ad5b6ca31f47fdcfd404c280",
+                "reference": "f7525778c712be78ad5b6ca31f47fdcfd404c280",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.0.2"
+            },
+            "suggest": {
+                "symfony/http-client-implementation": ""
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-main": "3.0-dev"
+                },
+                "thanks": {
+                    "name": "symfony/contracts",
+                    "url": "https://github.com/symfony/contracts"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Contracts\\HttpClient\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Nicolas Grekas",
+                    "email": "p@tchwork.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Generic abstractions related to HTTP clients",
+            "homepage": "https://symfony.com",
+            "keywords": [
+                "abstractions",
+                "contracts",
+                "decoupling",
+                "interfaces",
+                "interoperability",
+                "standards"
+            ],
+            "support": {
+                "source": "https://github.com/symfony/http-client-contracts/tree/v3.0.1"
+            },
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2022-03-13T20:10:05+00:00"
         },
         {
             "name": "symfony/http-foundation",
@@ -5436,6 +5756,74 @@
             ],
             "support": {
                 "source": "https://github.com/symfony/string/tree/v6.0.3"
+            },
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2022-01-02T09:55:41+00:00"
+        },
+        {
+            "name": "symfony/templating",
+            "version": "v6.0.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/templating.git",
+                "reference": "41af87aed807ac8284b42b5dfc528a0dc8d77d81"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/templating/zipball/41af87aed807ac8284b42b5dfc528a0dc8d77d81",
+                "reference": "41af87aed807ac8284b42b5dfc528a0dc8d77d81",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.0.2",
+                "symfony/polyfill-ctype": "~1.8"
+            },
+            "require-dev": {
+                "psr/log": "^1|^2|^3"
+            },
+            "suggest": {
+                "psr/log-implementation": "For using debug logging in loaders"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Component\\Templating\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Provides all the tools needed to build any kind of template system",
+            "homepage": "https://symfony.com",
+            "support": {
+                "source": "https://github.com/symfony/templating/tree/v6.0.3"
             },
             "funding": [
                 {
@@ -8954,7 +9342,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "hwi/oauth-bundle": 10
+    },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
