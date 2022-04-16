@@ -117,10 +117,17 @@ class CheckController extends AbstractController
                 $type = CheckboxType::class;
             }
 
-            $builder->add(sprintf('option_%d', $option->getId()), $type);
+            $builder->add(sprintf('option_%d', $option->getId()), $type, ['label' => $option->getTitle()]);
         }
 
         $form = $builder->getForm();
+
+        if($form->isSubmitted() && $form->isValid()) {
+            //TODO: save result
+            $this->addFlash('success', 'flash.success.next');
+
+            return $this->redirectToRoute('check_index');
+        }
 
         return $this->render('check/run.html.twig', [
             'item' => $check,
