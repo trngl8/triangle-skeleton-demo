@@ -13,7 +13,8 @@ class OptionType extends AbstractType
     {
         $builder
             ->add('title')
-            ->add('type')
+            ->add('correct')
+            ->add('open')
             ->add('position')
         ;
     }

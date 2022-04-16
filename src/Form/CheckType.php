@@ -4,8 +4,7 @@ namespace App\Form;
 
 use App\Entity\Check;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\CollectionType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -16,11 +15,12 @@ class CheckType extends AbstractType
         $builder
             ->add('title')
             ->add('description')
-            ->add('options', CollectionType::class, [
-                'entry_type'   => OptionType::class,
-                'allow_add' => true,
+            ->add('type', ChoiceType::class, [
+                'choices' => [
+                    'type.single' => 'single',     // radio
+                    'type.multiply' =>  'multiply' // checkbox
+                ]
             ])
-            ->add('submit', SubmitType::class)
         ;
     }
 

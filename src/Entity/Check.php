@@ -6,6 +6,7 @@ use App\Repository\CheckRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: CheckRepository::class)]
 #[ORM\Table(name: 'app_checks')]
@@ -17,13 +18,18 @@ class Check
     private $id;
 
     #[ORM\Column(type: 'string', length: 255)]
+    #[Assert\NotBlank]
     private $title;
 
     #[ORM\Column(type: 'text')]
+    #[Assert\NotBlank]
     private $description;
 
-    #[ORM\OneToMany(mappedBy: 'parent', targetEntity: Option::class)]
+    #[ORM\OneToMany(mappedBy: 'parent', targetEntity: Option::class, cascade: ["remove"])]
     private $options;
+
+    #[ORM\Column(type: 'string', length: 255)]
+    private $type;
 
     public function __construct()
     {
@@ -85,6 +91,18 @@ class Check
                 $option->setParent(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getType(): ?string
+    {
+        return $this->type;
+    }
+
+    public function setType(string $type): self
+    {
+        $this->type = $type;
 
         return $this;
     }
