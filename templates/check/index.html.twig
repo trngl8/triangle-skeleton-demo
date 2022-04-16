@@ -1,0 +1,35 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}{{ 'text.must_be_replaced'|trans }}{% endblock %}
+
+{% block main %}
+
+    {% if items is defined and items|length > 0 %}
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col" style="width: 80%">{{ 'title'| trans }}</th>
+                <th scope="col">{{ 'actions'| trans }}</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for item in items %}
+            <tr>
+                <th scope="row">{{ item.id }}</th>
+                <td><a href="{{ path('check_show', { id: item.id }) }}">{{ item.title }}</a></td>
+                <td><a href="{{ path('check_run', { id: item.id }) }}" class="btn btn-outline-primary">{{ 'button.run'|trans }}</a></td>
+                <td><a href="{{ path('check_remove', { id: item.id }) }}" class="btn btn-outline-danger">{{ 'button.remove'|trans }}</a></td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>{{ 'message.no_items'|trans}}</p>
+    {% endif %}
+
+    {% if button is defined %}
+        <a href="{{ path('check_add') }}" class="btn btn-outline-primary">{{ 'button.add'|trans }}</a>
+    {% endif %}
+
+{% endblock %}
