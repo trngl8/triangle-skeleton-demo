@@ -10,6 +10,7 @@ class AdminControllerTest extends WebTestCase
     {
         $client = static::createClient();
         $client->request('GET', '/admin');
+        $client->followRedirect();
         $response = $client->getResponse();
 
         $this->assertResponseIsSuccessful();
