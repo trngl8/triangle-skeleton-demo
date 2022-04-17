@@ -17,8 +17,8 @@
             {% for item in items %}
             <tr>
                 <th scope="row">{{ item.id }}</th>
-                <td><a href="{{ path('check_show', { id: item.id }) }}">{{ item.title }}</a></td>
-                <td><a href="{{ path('check_run', { id: item.id }) }}" class="btn btn-outline-primary">{{ 'button.run'|trans }}</a></td>
+                <td><a href="{{ path('check_run', { id: item.id }) }}">{{ item.title }}</a></td>
+                <td><a href="{{ path('check_show', { id: item.id }) }}" class="btn btn-outline-primary">{{ 'button.edit'|trans }}</a></td>
                 <td><a href="{{ path('check_remove', { id: item.id }) }}" class="btn btn-outline-danger">{{ 'button.remove'|trans }}</a></td>
             </tr>
             {% endfor %}

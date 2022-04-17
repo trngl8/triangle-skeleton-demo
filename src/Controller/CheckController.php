@@ -8,14 +8,15 @@ use App\Entity\Option;
 use App\Form\CheckType;
 use App\Form\OptionType;
 use App\Repository\CheckRepository;
+use App\Service\CheckService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
-use Symfony\Component\Form\Extension\Core\Type\RadioType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\Validator\Constraints as Assert;
 
 class CheckController extends AbstractController
 {
@@ -23,9 +24,12 @@ class CheckController extends AbstractController
 
     private $repository;
 
-    public function __construct(ManagerRegistry $doctrine)
+    private $checkSevice;
+
+    public function __construct(ManagerRegistry $doctrine, CheckService $checkService)
     {
         $this->doctrine = $doctrine;
+        $this->checkSevice = $checkService;
         /** @var CheckRepository repository */
         $this->repository = $this->doctrine->getRepository(Check::class);
     }
@@ -110,20 +114,49 @@ class CheckController extends AbstractController
 
         $builder = $this->createFormBuilder();
 
-        foreach ($check->getOptions() as $option) {
-            if($option->getType() === 'single') {
-                $type = RadioType::class;
-            } else {
-                $type = CheckboxType::class;
-            }
+        $options = $check->getOptions()->toArray();
+        $choices = array_combine(
+            array_map(function($item) {
+                return $item->getTitle();
+                }, $options),
+            array_map(function($item) {
+                return $item->getId();
+            }, $options)
+        );
 
-            $builder->add(sprintf('option_%d', $option->getId()), $type, ['label' => $option->getTitle()]);
-        }
+        $builder->add('features', ChoiceType::class, [
+            'label' => $check->getDescription(),
+            'choices' => $choices, //TODO: separate keys and values
+            'multiple' => $check->getType() === 'multiply', //TODO: set common type
+            'expanded' => true,
+            'constraints' => [
+                new Assert\NotBlank(),
+            ]
+        ]);
 
         $form = $builder->getForm();
 
+        $form->handleRequest($request);
+
         if($form->isSubmitted() && $form->isValid()) {
-            //TODO: save result
+
+            $data = $form->getData();
+            $entityManager = $this->doctrine->getManager();
+            $user = $this->getUser();
+
+            //TODO: write different strategies
+            if(is_array($data['features'])) {
+                foreach ($data['features'] as $feature) {
+                    $result = $this->checkSevice->createCheckResult($user, $feature);
+                    $entityManager->persist($result);
+                }
+            } else {
+                $result = $this->checkSevice->createCheckResult($user, (int)$data['features']);
+                $entityManager->persist($result);
+            }
+
+            $entityManager->flush();
+
             $this->addFlash('success', 'flash.success.next');
 
             return $this->redirectToRoute('check_index');
@@ -147,7 +180,7 @@ class CheckController extends AbstractController
             $entityManager->remove($check);
             $entityManager->flush();
 
-            $this->addFlash('success', 'Card removed');
+            $this->addFlash('success', 'flash.success.removed');
 
             return $this->redirectToRoute('check_index');
         }
