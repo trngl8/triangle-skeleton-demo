@@ -147,11 +147,13 @@ class CheckController extends AbstractController
             //TODO: write different strategies
             if(is_array($data['features'])) {
                 foreach ($data['features'] as $feature) {
-                    $result = $this->checkSevice->createCheckResult($user, $feature);
+                    $option =  $this->checkSevice->getOption($feature);
+                    $result = $this->checkSevice->createCheckResult($user, $option);
                     $entityManager->persist($result);
                 }
             } else {
-                $result = $this->checkSevice->createCheckResult($user, (int)$data['features']);
+                $option =  $this->checkSevice->getOption($data['features']);
+                $result = $this->checkSevice->createCheckResult($user, $option);
                 $entityManager->persist($result);
             }
 
