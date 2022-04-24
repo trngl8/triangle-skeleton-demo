@@ -1,0 +1,18 @@
+{% extends 'layout.html.twig' %}
+
+{% block main %}
+    <h1 class="mb-4">{{ profile.name }}</h1>
+
+    <div class="row">
+        <div class="col-md-6">
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item"><b>Name:</b> {{ profile.name }}</li>
+                <li class="list-group-item"><b>Email:</b> {{ profile.email }}</li>
+                <li class="list-group-item"><b>Locale:</b> {{ profile.locale }}</li>
+                <li class="list-group-item"><b>Timezone:</b> {{ profile.timezone }}</li>
+            </ul>
+            <a href="{{ path('app_profile_edit') }}" class="btn btn-outline-primary">{{ 'button.edit'|trans }}</a>
+        </div>
+    </div>
+
+{% endblock %}
