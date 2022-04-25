@@ -1,47 +1,72 @@
 {% extends 'layout.html.twig' %}
 
-{% block main %}
-    <h1 class="mb-4">{{ 'title.projects'|trans }} </h1>
+{% block add_stylesheets %}
+    <style>
+        .bi {
+            vertical-align: -.125em;
+            fill: currentColor;
+        }
 
-    <div class="container" id="hanging-icons">
-        <h2 class="pb-2 border-bottom">Hanging icons</h2>
-        <div class="row g-4 py-5 row-cols-1 row-cols-lg-3">
-            <div class="col d-flex align-items-start">
-                <div class="icon-square bg-light text-dark flex-shrink-0 me-3">
-                    <svg class="bi" width="1em" height="1em"><use xlink:href="#toggles2"/></svg>
-                </div>
-                <div>
-                    <h2>Featured title</h2>
-                    <p>Paragraph of text beneath the heading to explain the heading. We'll add onto it with another sentence and probably just keep going until we run out of words.</p>
-                    <a href="#" class="btn btn-primary">
-                        Primary button
-                    </a>
-                </div>
+        .icon-link > .bi {
+            margin-top: .125rem;
+            margin-left: .125rem;
+            transition: transform .25s ease-in-out;
+            fill: currentColor;
+        }
+        .icon-link:hover > .bi {
+            transform: translate(.25rem);
+        }
+
+        .icon-square {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 3rem;
+            height: 3rem;
+            font-size: 1.5rem;
+            border-radius: .75rem;
+        }
+    </style>
+{% endblock %}
+{% block main %}
+    <h1 class="mb-4 pb-2 border-bottom">{{ 'title.projects'|trans }}</h1>
+
+    <div class="row g-4 py-5 row-cols-1 row-cols-lg-3">
+        <div class="col d-flex align-items-start">
+            <div class="icon-square bg-light text-dark flex-shrink-0 me-3">
+                <i class="bi bi-check-square"></i>
             </div>
-            <div class="col d-flex align-items-start">
-                <div class="icon-square bg-light text-dark flex-shrink-0 me-3">
-                    <svg class="bi" width="1em" height="1em"><use xlink:href="#cpu-fill"/></svg>
-                </div>
-                <div>
-                    <h2>Featured title</h2>
-                    <p>Paragraph of text beneath the heading to explain the heading. We'll add onto it with another sentence and probably just keep going until we run out of words.</p>
-                    <a href="#" class="btn btn-primary">
-                        Primary button
-                    </a>
-                </div>
-            </div>
-            <div class="col d-flex align-items-start">
-                <div class="icon-square bg-light text-dark flex-shrink-0 me-3">
-                    <svg class="bi" width="1em" height="1em"><use xlink:href="#tools"/></svg>
-                </div>
-                <div>
-                    <h2>Featured title</h2>
-                    <p>Paragraph of text beneath the heading to explain the heading. We'll add onto it with another sentence and probably just keep going until we run out of words.</p>
-                    <a href="#" class="btn btn-primary">
-                        Primary button
-                    </a>
-                </div>
+            <div>
+                <h2>Checks</h2>
+                <p>Check your knowledge on simple tests forms. You can set own test cases</p>
+                <a href="{{ path('check_index') }}" class="btn btn-primary">
+                    Check yourself
+                </a>
             </div>
         </div>
-    </div>
+        <div class="col d-flex align-items-start">
+            <div class="icon-square bg-light text-dark flex-shrink-0 me-3">
+                <i class="bi bi-box-seam"></i>
+            </div>
+            <div>
+                <h2>Inventory</h2>
+                <p>Build storage of products and inventory rules. You can build a simple marketplace system os simple CRM</p>
+                <a href="#" class="btn btn-primary">
+                    Look on storage
+                </a>
+            </div>
+        </div>
+        <div class="col d-flex align-items-start">
+            <div class="icon-square bg-light text-dark flex-shrink-0 me-3">
+                <i class="bi bi-people-fill"></i>
+            </div>
+            <div>
+                <h2>Community</h2>
+                <p>Topics, entries of topics and comments to the topics. You can communicate with users and rate each part of content. </p>
+                <a href="{{ path('topic_index') }}" class="btn btn-primary">
+                    See topics
+                </a>
+            </div>
+        </div>
+
 {% endblock %}
