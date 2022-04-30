@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Button\LinkToRoute;
 use App\Entity\Topic;
 use App\Form\TopicType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -18,8 +19,11 @@ class TopicController extends AbstractController
     {
         $topics = $doctrine->getRepository(Topic::class)->findBy([]);
 
+        $button = new LinkToRoute('topic_add', 'button.add');
+
         return $this->render('topic/index.html.twig', [
-            'items' => $topics
+            'topics' => $topics,
+            'button' => $button
         ]);
     }
 

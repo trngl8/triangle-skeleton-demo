@@ -12,14 +12,21 @@
 {% endblock %}
 
 {% block main %}
-    <p>{{ 'text.must_be_replaced'|trans }}</p>
-    <ul>
-    {% for item in items %}
-        <li><a href="{{ path('topic_show', { id: item.id}) }}">{{ item.title }}</a></li>
-    {% endfor %}
-    </ul>
+        <h1 class="mb-4">{{ 'title.index'|trans }}</h1>
 
-    {% if buton is defined %}
-    <a href="{{ path('topic_add') }}" class="btn btn-outline-primary">{{ 'button.add'|trans }}</a>
-    {% endif %}
+        <div class="row">
+            <div class="col-md-6">
+                <ul>
+                    {% for topic in topics %}
+                        <li><a href="{{ path('topic_show', { id: topic.id}) }}">{{ topic.title }}</a></li>
+                    {% endfor %}
+                </ul>
+
+                {% if button is defined %}
+                    <a href="{{ path(button.route) }}" class="{{ button.classes }}">{{ button.caption|trans }}</a>
+                {% endif %}
+
+            </div>
+        </div>
+
 {% endblock %}
