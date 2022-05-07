@@ -29,17 +29,4 @@ class LoginController extends AbstractController
         // controller can be blank: it will never be called!
         throw new \Exception('Don\'t forget to activate logout in security.yaml');
     }
-
-    #[Route('/login/fail', name: 'login_fail')]
-    public function fail(AuthenticationUtils $authenticationUtils): Response
-    {
-        $error = $authenticationUtils->getLastAuthenticationError();
-
-        return $this->render('login/fail.html.twig', [
-            'error' => $error,
-        ]);
-    }
-
-
-
 }
