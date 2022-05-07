@@ -1,6 +1,6 @@
-## Skeleton (Symfony Demo Application) 
+## Triangle Skeleton (Demo Application) 
 
-The "Skeleton" is a reference application created to show how
+The "Triangle Skeleton" is a reference application created to show how
 to develop applications following the Symfony Best Practices.
 
 Requirements
