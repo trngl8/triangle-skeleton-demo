@@ -17,3 +17,7 @@ app_info:
 app_index:
   path: /index
   controller: App\Controller\DefaultController::index
+
+admin:
+  path: /admin
+  controller: App\Controller\Admin\AdminController::admin

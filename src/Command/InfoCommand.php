@@ -50,7 +50,7 @@ HELP
             $io->writeln(sprintf("Credits: %s", $this->getCopyright()));
         }
 
-        $io->success('You copy is legal');
+        $io->success('Your copy is legal');
 
         return $result;
     }
