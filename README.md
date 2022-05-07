@@ -14,7 +14,7 @@ Installation
 ------------
 
 ```bash
-$ git clone https://github.com/trngl8/symfony-skeleton-demo.git my_project
+$ git clone https://github.com/trngl8/triangle-skeleton-demo.git my_project
 $ cd my_project/
 $ composer install 
 ```
