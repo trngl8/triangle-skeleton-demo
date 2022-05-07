@@ -1,6 +1,6 @@
-## Skeleton (Symfony Demo Application) 
+## Triangle Skeleton (Demo Application) 
 
-The "Skeleton" is a reference application created to show how
+The "Triangle Skeleton" is a reference application created to show how
 to develop applications following the Symfony Best Practices.
 
 Requirements
@@ -14,7 +14,7 @@ Installation
 ------------
 
 ```bash
-$ git clone https://github.com/trngl8/symfony-skeleton-demo.git my_project
+$ git clone https://github.com/trngl8/triangle-skeleton-demo.git my_project
 $ cd my_project/
 $ composer install 
 ```
