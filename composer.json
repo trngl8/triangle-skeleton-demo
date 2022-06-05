@@ -4,7 +4,7 @@
     "minimum-stability": "stable",
     "prefer-stable": true,
     "require": {
-        "php": ">=8.0.2",
+        "php": ">=8.1.0",
         "ext-ctype": "*",
         "ext-iconv": "*",
         "doctrine/doctrine-bundle": "^2.5",
@@ -12,22 +12,22 @@
         "doctrine/orm": "^2.11",
         "hwi/oauth-bundle": "2.0.0-BETA2",
         "sensio/framework-extra-bundle": "^6.2",
-        "symfony/console": "6.0.*",
-        "symfony/dotenv": "6.0.*",
+        "symfony/console": "6.1.*",
+        "symfony/dotenv": "6.1.*",
         "symfony/flex": "^2",
-        "symfony/form": "6.0.*",
-        "symfony/framework-bundle": "6.0.*",
+        "symfony/form": "6.1.*",
+        "symfony/framework-bundle": "6.1.*",
         "symfony/monolog-bundle": "^3.7",
-        "symfony/proxy-manager-bridge": "6.0.*",
-        "symfony/runtime": "6.0.*",
-        "symfony/security-bundle": "6.0.*",
-        "symfony/serializer": "6.0.*",
-        "symfony/translation": "6.0.*",
-        "symfony/twig-bundle": "6.0.*",
-        "symfony/uid": "6.0.*",
-        "symfony/validator": "6.0.*",
+        "symfony/proxy-manager-bridge": "6.1.*",
+        "symfony/runtime": "6.1.*",
+        "symfony/security-bundle": "6.1.*",
+        "symfony/serializer": "6.1.*",
+        "symfony/translation": "6.1.*",
+        "symfony/twig-bundle": "6.1.*",
+        "symfony/uid": "6.1.*",
+        "symfony/validator": "6.1.*",
         "symfony/webpack-encore-bundle": "^1.13",
-        "symfony/yaml": "6.0.*",
+        "symfony/yaml": "6.1.*",
         "twig/extra-bundle": "^2.12|^3.0",
         "twig/intl-extra": "^3.3",
         "twig/twig": "^2.12|^3.0"
@@ -80,17 +80,17 @@
     "extra": {
         "symfony": {
             "allow-contrib": false,
-            "require": "6.0.*"
+            "require": "6.1.*"
         }
     },
     "require-dev": {
         "doctrine/doctrine-fixtures-bundle": "^3.4",
         "phpunit/phpunit": "^9.5",
-        "symfony/browser-kit": "6.0.*",
-        "symfony/css-selector": "6.0.*",
+        "symfony/browser-kit": "6.1.*",
+        "symfony/css-selector": "6.1.*",
         "symfony/maker-bundle": "^1.36",
-        "symfony/phpunit-bridge": "^6.0",
-        "symfony/stopwatch": "6.0.*",
-        "symfony/web-profiler-bundle": "6.0.*"
+        "symfony/phpunit-bridge": "^6.1",
+        "symfony/stopwatch": "6.1.*",
+        "symfony/web-profiler-bundle": "6.1.*"
     }
 }
