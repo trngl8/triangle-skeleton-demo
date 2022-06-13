@@ -13,11 +13,4 @@ class CheckControllerTest extends WebTestCase
 
         $this->assertResponseIsSuccessful();
     }
-
-    public function testPostTopicsSuccess(): void
-    {
-        $client = static::createClient();
-        $client->request('POST', '/check/add');
-        $this->assertResponseIsSuccessful();
-    }
 }
