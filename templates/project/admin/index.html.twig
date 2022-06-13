@@ -1,0 +1,50 @@
+{% extends 'admin.html.twig' %}
+
+{% block title %}{{ 'text.must_be_replaced'|trans }}{% endblock %}
+
+{% block page_title %}
+    <h1 class="mt-4">{{ 'title.projects'|trans }}</h1>
+{%endblock%}
+
+{% block breadcrumb %}
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item"><a href="{{ path('admin') }}">{{ 'menu.dashboard'|trans }}</a></li>
+        <li class="breadcrumb-item active">{{ 'menu.project'|trans }}</li>
+    </ol>
+{% endblock %}
+
+{% block main %}
+
+    {% if items is defined and items|length > 0 %}
+        <table class="table">
+            <thead class="table-light">
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">{{ 'title'| trans }}</th>
+                <th scope="col">{{ 'description'| trans }}</th>
+                <th scope="col">{{ 'type'| trans }}</th>
+                <th scope="col" class="col-2">{{ 'actions'| trans }}</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for item in items %}
+                <tr>
+                    <th scope="row"><a href="{{ path('admin_project_edit', { id: item.id }) }}">{{ item.id }}</a></th>
+                    <td><a href="{{ path('admin_project_edit', { id: item.id }) }}">{{ item.title }}</a></td>
+                    <td>{{ item.description|u.truncate(48, '...') }}</td>
+                    <td>{{ item.type }}</td>
+                    <td>
+                        <a href="{{ path('admin_project_edit', { id: item.id }) }}" class="btn btn-sm btn-outline-primary">{{ 'button.edit'|trans }}</a>
+                        <a href="{{ path('admin_project_remove', { id: item.id }) }}" class="btn btn-sm btn-outline-danger">{{ 'button.remove'|trans }}</a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+
+    {% if button is defined %}
+        <a href="{{ path('admin_project_add') }}" class="btn btn-outline-primary">{{ 'button.add'|trans }}</a>
+    {% endif %}
+
+{% endblock %}
