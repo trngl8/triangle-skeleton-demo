@@ -15,7 +15,7 @@ class TopicType extends AbstractType
         $builder
             ->add('title')
             ->add('type')
-            ->add('submit', SubmitType::class)
+            ->add('save', SubmitType::class)
         ;
     }
 

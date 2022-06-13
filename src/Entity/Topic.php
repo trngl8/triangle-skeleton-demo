@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: TopicRepository::class)]
 #[ORM\Table(name: 'app_topics')]
@@ -18,11 +19,16 @@ class Topic
     #[Groups(['show_topics_api'])]
     private $id;
 
+    #[ORM\Column(type: 'datetime_immutable')]
+    private $createdAt;
+
     #[ORM\Column(type: 'string', length: 255)]
     #[Groups(['show_topics_api'])]
+    #[Assert\NotBlank]
     private $title;
 
     #[ORM\Column(type: 'string', length: 32)]
+    #[Assert\NotBlank]
     private $type;
 
     #[ORM\OneToMany(mappedBy: 'topic', targetEntity: Answer::class)]
@@ -31,6 +37,7 @@ class Topic
     public function __construct()
     {
         $this->answers = new ArrayCollection();
+        $this->createdAt = new \DateTimeImmutable();
     }
 
     public function __toString(): string
@@ -41,6 +48,11 @@ class Topic
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getCreatedAt(): ?\DateTimeImmutable
+    {
+        return $this->createdAt;
     }
 
     public function getTitle(): ?string

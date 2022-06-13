@@ -1,0 +1,37 @@
+{% extends 'check/admin/index.html.twig' %}
+
+{% block add_javascript %}
+
+{% endblock %}
+{% block title %}{{ 'title.edit_topic'|trans }}{% endblock %}
+
+{% block page_title %}
+    <h1 class="mt-4">{{ 'title.edit_topic'|trans }}</h1>
+{%endblock%}
+
+{% block breadcrumb %}
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item"><a href="{{ path('admin') }}">{{ 'menu.dashboard'|trans }}</a></li>
+        <li class="breadcrumb-item"><a href="{{ path('admin_check_index') }}">{{ 'menu.topics'|trans }}</a></li>
+        <li class="breadcrumb-item active">{{ 'title.add_topic'|trans }}</li>
+    </ol>
+{% endblock %}
+
+{% block main %}
+    <div class="row">
+        <div class="col-md-8">
+            {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+            <div class="card">
+                <div class="card-body">
+                    {{ form_row(form.title) }}
+                    {{ form_row(form.type) }}
+                </div>
+            </div>
+            <div class="mt-4">
+                {{ form_widget(form.save, {label : 'button.submit'|trans, attr: {class : 'btn btn-lg btn-primary' }}) }}
+            </div>
+            {{ form_end(form) }}
+
+        </div>
+    </div>
+{% endblock %}
