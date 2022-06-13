@@ -41,27 +41,6 @@ class TopicControllerTest extends WebTestCase
         );
     }
 
-    public function testTopicAddSuccess(): void
-    {
-        $client = static::createClient();
-        $client->followRedirects();
-
-        $client->request('GET', 'topic/add');
-
-        $client->submitForm('Submit', [
-            'topic[title]' => 'test_title',
-            'topic[type]' => 'test_type',
-        ]);
-        //$client->followRedirect();
-
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
-
-        //$this->assertResponseRedirects();
-        //$this->assertSelectorExists('div:contains("There are 2 topics")');
-    }
-
     /**
      * @dataProvider getUris
      */
@@ -84,7 +63,5 @@ class TopicControllerTest extends WebTestCase
     public function getUris() : iterable
     {
         yield ['topic'];
-        yield ['topic/add'];
-        yield ['topic/1'];
     }
 }
