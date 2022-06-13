@@ -25,7 +25,8 @@ class Check
     #[Assert\NotBlank]
     private $description;
 
-    #[ORM\OneToMany(mappedBy: 'parent', targetEntity: Option::class, cascade: ["remove"])]
+    #[ORM\OneToMany(mappedBy: 'parent', targetEntity: Option::class, cascade: ["persist", "remove"])]
+    #[Assert\Valid]
     private $options;
 
     #[ORM\Column(type: 'string', length: 255)]
@@ -76,8 +77,8 @@ class Check
     public function addOption(Option $option): self
     {
         if (!$this->options->contains($option)) {
-            $this->options[] = $option;
             $option->setParent($this);
+            $this->options[] = $option;
         }
 
         return $this;

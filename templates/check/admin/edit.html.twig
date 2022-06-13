@@ -1,0 +1,97 @@
+{% extends 'check/admin/index.html.twig' %}
+
+{% block add_javascript %}
+    <script>
+        const addFormDeleteLink = (item) => {
+            const removeFormButton = document.createElement('button');
+            removeFormButton.className = 'btn btn-sm btn-outline-danger';
+            removeFormButton.innerText = 'remove';
+
+            item.append(removeFormButton);
+
+            removeFormButton.addEventListener('click', (e) => {
+                e.preventDefault();
+                item.remove();
+            });
+        }
+
+        const addFormToCollection = (e) => {
+            const collectionHolder = document.querySelector('.' + e.currentTarget.dataset.collectionHolderClass);
+
+            const item = document.createElement('li');
+
+            item.innerHTML = collectionHolder
+                .dataset
+                .prototype
+                .replace(
+                    /__name__/g,
+                    collectionHolder.dataset.index
+                );
+
+            collectionHolder.appendChild(item);
+
+            collectionHolder.dataset.index++;
+
+            addTagFormDeleteLink(item);
+        };
+
+
+
+        document
+            .querySelectorAll('.add_item_link')
+            .forEach(btn => {
+                btn.addEventListener("click", addFormToCollection)
+            });
+
+        document
+            .querySelectorAll('ul.options li')
+            .forEach((tag) => {
+                addFormDeleteLink(tag)
+            })
+
+    </script>
+{% endblock %}
+{% block title %}{{ 'title.edit_check'|trans }}{% endblock %}
+
+{% block page_title %}
+    <h1 class="mt-4">{{ 'title.edit_check'|trans }}</h1>
+{%endblock%}
+
+{% block breadcrumb %}
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item"><a href="{{ path('admin') }}">{{ 'menu.dashboard'|trans }}</a></li>
+        <li class="breadcrumb-item"><a href="{{ path('admin_check_index') }}">{{ 'menu.checks'|trans }}</a></li>
+        <li class="breadcrumb-item active">{{ 'title.add_check'|trans }}</li>
+    </ol>
+{% endblock %}
+
+{% block main %}
+    <div class="row">
+        <div class="col-md-8">
+            {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+            <div class="card">
+                <div class="card-body">
+                    {{ form_row(form.title) }}
+                    {{ form_row(form.description) }}
+                    {{ form_row(form.type) }}
+                    <ul class="options"
+                        data-index="{{ form.options|length > 0 ? form.options|last.vars.name + 1 : 0 }}"
+                        data-prototype="{{ form_widget(form.options.vars.prototype)|e('html_attr') }}"
+                    >
+                        {% for option in form.options %}
+                            <li>{{ form_widget(option) }}</li>
+                        {% endfor %}
+                    </ul>
+                    <button type="button" class="btn btn-outline-primary add_item_link" data-collection-holder-class="options">{{ 'button.add_option'|trans }}</button>
+                </div>
+            </div>
+            <div class="mt-4">
+                {{ form_widget(form.save, {label : 'button.submit'|trans, attr: {class : 'btn btn-lg btn-primary' }}) }}
+                <span class="mx-4">or</span>
+                {{ form_widget(form.saveAndAdd, {label : 'button.submit_and_add'|trans, attr: {class : 'btn btn-lg btn-primary' }}) }}
+            </div>
+            {{ form_end(form) }}
+
+        </div>
+    </div>
+{% endblock %}

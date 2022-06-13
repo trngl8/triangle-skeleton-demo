@@ -38,6 +38,13 @@ class Option
     public function __construct()
     {
         $this->open = false;
+        $this->type = 'default';
+        $this->position = 0;
+    }
+
+    public function __toString()
+    {
+        return $this->title;
     }
 
     public function getId(): ?int
@@ -62,7 +69,7 @@ class Option
         return $this->parent;
     }
 
-    public function setParent(?Check $parent): self
+    public function setParent(Check $parent): self
     {
         $this->parent = $parent;
 

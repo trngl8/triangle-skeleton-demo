@@ -5,7 +5,6 @@ namespace App\Controller;
 use App\Button\LinkToRoute;
 use App\Entity\Check;
 use App\Entity\Option;
-use App\Form\CheckType;
 use App\Form\OptionType;
 use App\Repository\CheckRepository;
 use App\Service\CheckService;
@@ -44,29 +43,6 @@ class CheckController extends AbstractController
         return $this->render('check/index.html.twig', [
             'items' => $topics,
             'button' => $button
-        ]);
-    }
-
-    #[Route('/check/add', name: 'check_add')]
-    public function add(Request $request): Response
-    {
-        $check = new Check();
-        $form = $this->createForm(CheckType::class, $check);
-
-        $form->handleRequest($request);
-
-        if($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->doctrine->getManager();
-            $entityManager->persist($check);
-            $entityManager->flush();
-
-            $this->addFlash('success', 'flash.success.check_created');
-
-            return $this->redirectToRoute('check_index');
-        }
-
-        return $this->render('check/edit.html.twig', [
-            'form' => $form->createView()
         ]);
     }
 
@@ -170,25 +146,4 @@ class CheckController extends AbstractController
         ]);
     }
 
-    #[Route('/check/remove/{id}', name: 'check_remove', methods: ['GET', 'POST', 'HEAD'] )]
-    public function remove(Check $check, Request $request)
-    {
-        $this->denyAccessUnlessGranted('ROLE_ADMIN');
-
-        $submittedToken = $request->request->get('token');
-
-        if ($this->isCsrfTokenValid('remove', $submittedToken)) {
-            $entityManager = $this->doctrine->getManager();
-            $entityManager->remove($check);
-            $entityManager->flush();
-
-            $this->addFlash('success', 'flash.success.removed');
-
-            return $this->redirectToRoute('check_index');
-        }
-
-        return $this->render('check/remove.html.twig', [
-            'item' => $check,
-        ]);
-    }
 }
