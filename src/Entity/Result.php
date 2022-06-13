@@ -4,9 +4,10 @@ namespace App\Entity;
 
 use App\Repository\ResultRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Uid\Uuid;
 
 #[ORM\Entity(repositoryClass: ResultRepository::class)]
-#[ORM\Table(name: 'app_result')]
+#[ORM\Table(name: 'app_results')]
 class Result
 {
     #[ORM\Id]
@@ -14,13 +15,16 @@ class Result
     #[ORM\Column(type: 'integer')]
     private $id;
 
+    #[ORM\Column(type: 'datetime_immutable')]
+    private $createdAt;
+
     #[ORM\ManyToOne(targetEntity: Check::class)]
     #[ORM\JoinColumn(nullable: false)]
     private $checkItem;
 
     #[ORM\ManyToOne(targetEntity: Option::class)]
     #[ORM\JoinColumn(nullable: false)]
-    private $CheckOption;
+    private $checkOption;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $value;
@@ -31,9 +35,19 @@ class Result
     #[ORM\Column(type: 'string', length: 255)]
     private $username;
 
+    public function __construct()
+    {
+        $this->createdAt = new \DateTimeImmutable();
+    }
+
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getCreatedAt(): ?\DateTimeImmutable
+    {
+        return $this->createdAt;
     }
 
     public function getCheckItem(): ?Check
@@ -50,12 +64,12 @@ class Result
 
     public function getCheckOption(): ?Option
     {
-        return $this->CheckOption;
+        return $this->checkOption;
     }
 
-    public function setCheckOption(?Option $CheckOption): self
+    public function setCheckOption(?Option $checkOption): self
     {
-        $this->CheckOption = $CheckOption;
+        $this->checkOption = $checkOption;
 
         return $this;
     }

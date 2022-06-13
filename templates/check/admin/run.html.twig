@@ -1,0 +1,32 @@
+{% extends 'check/admin/index.html.twig' %}
+
+{% block page_title %}
+    <h1 class="mt-4">{{ 'title.check_run'|trans }}</h1>
+{%endblock%}
+
+{% block breadcrumb %}
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item"><a href="{{ path('admin') }}">{{ 'menu.dashboard'|trans }}</a></li>
+        <li class="breadcrumb-item"><a href="{{ path('admin_check_index') }}">{{ 'menu.checks'|trans }}</a></li>
+        <li class="breadcrumb-item active">{{ 'title.check_run'|trans }}</li>
+    </ol>
+{% endblock %}
+
+{% block main %}
+    <div class="row">
+        <div class="col-md-8">
+            {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+            <div class="card">
+                <div class="card-body">
+                    <p>{{ item.title }}</p>
+                    <pre>{{ item.description }}</pre>
+                    {{ form_row(form.options) }}
+                </div>
+            </div>
+            <div class="mt-4">
+                {{ form_row(form.submit) }}
+            </div>
+            {{ form_end(form) }}
+        </div>
+    </div>
+{% endblock %}

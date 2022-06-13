@@ -34,6 +34,7 @@
                     <td>{{ item.description|u.truncate(48, '...') }}</td>
                     <td>{{ item.type }}</td>
                     <td>
+                        <a href="{{ path('admin_check_run', { id: item.id }) }}" class="btn btn-sm btn-outline-primary">{{ 'button.run'|trans }}</a>
                         <a href="{{ path('admin_check_edit', { id: item.id }) }}" class="btn btn-sm btn-outline-primary">{{ 'button.edit'|trans }}</a>
                         <a href="{{ path('admin_check_remove', { id: item.id }) }}" class="btn btn-sm btn-outline-danger">{{ 'button.remove'|trans }}</a>
                     </td>
