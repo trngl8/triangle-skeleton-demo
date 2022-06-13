@@ -7,7 +7,7 @@
     {% if app_navbar == 'true' %}  {# TODO: set boolean value #}
     <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
         <div class="container"> {# container-fluid #}
-            <a class="navbar-brand" href="#"><i class="bi bi-triangle"></i></a>
+            <a class="navbar-brand" href="{{ path('app_home') }}"><i class="bi bi-triangle"></i></a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -19,13 +19,20 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{{ path('app_project') }}">{{ 'menu.projects'|trans }}</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ path('app_info') }}">{{ 'menu.info'|trans }}</a>
-                    </li>
 {#                    <li class="nav-item">#}
 {#                        <a class="nav-link disabled">{{ 'menu.admin'|trans }}</a>#}
 {#                    </li>#}
                 </ul>
+                <div class="dropdown me-2">
+                    <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="dropdownLocales" data-bs-toggle="dropdown" aria-expanded="false">
+                        {{ app.request.locale|locale_name(app.request.locale)|u.title }}
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownLocales">
+                        <li><a class="dropdown-item" href="{{ path('app_index', {_locale: 'en'}) }}">English</a></li>
+                        <li><a class="dropdown-item" href="{{ path('app_index', {_locale: 'uk'}) }}">Ukrainian</a></li>
+                        <li><a class="dropdown-item" href="{{ path('app_index', {_locale: 'ru'}) }}">Russian</a></li>
+                    </ul>
+                </div>
                 {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
                     <div class="dropdown">
                         <button class="btn btn-outline-light dropdown-toggle" type="button" id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
@@ -88,7 +95,7 @@
 
     <div class="container">
         <footer class="pt-3 my-5 text-muted border-top">
-            <small>{{ 'message.created'|trans }} {{ app_name }} {{ app_version }} &middot; &copy;</small>
+            <small>{{ 'message.created'|trans }} {{ app_name }} <a href="{{ path('app_info') }}">{{ app_version }}</a> &middot; &copy;</small>
         </footer>
     </div>
 

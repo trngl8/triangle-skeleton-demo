@@ -26,7 +26,17 @@
     <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
         <header class="mb-auto">
             <div class="text-end">
-                <h3 class=""><a href="#" class="btn btn-sm btn-outline-secondary" title="{{ 'app.login'|trans }}" data-bs-toggle="modal" data-bs-target="#loginModal"><i class="bi bi-person"></i></a></h3>
+                <span class="dropdown me-2">
+                    <button class="btn btn-sm btn-outline-secondary dropdown-toggle" type="button" id="dropdownLocales" data-bs-toggle="dropdown" aria-expanded="false">
+                        {{ app.request.locale|locale_name(app.request.locale)|u.title }}
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu" aria-labelledby="dropdownLocales">
+                        <li><a class="dropdown-item" href="{{ path('app_index', {_locale: 'en'}) }}">English</a></li>
+                        <li><a class="dropdown-item" href="{{ path('app_index', {_locale: 'uk'}) }}">Ukrainian</a></li>
+                        <li><a class="dropdown-item" href="{{ path('app_index', {_locale: 'ru'}) }}">Russian</a></li>
+                    </ul>
+                </span>
+                <a href="#" class="btn btn-sm btn-outline-secondary" title="{{ 'app.login'|trans }}" data-bs-toggle="modal" data-bs-target="#loginModal"><i class="bi bi-person"></i></a>
             </div>
         </header>
 
