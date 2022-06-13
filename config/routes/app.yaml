@@ -15,7 +15,7 @@ app_info:
   controller: App\Controller\DefaultController::info
 
 app_index:
-  path: /index
+  path: /{_locale}/index
   controller: App\Controller\DefaultController::index
 
 admin:
