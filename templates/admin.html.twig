@@ -68,6 +68,12 @@
                             {{ 'menu.profiles'|trans }}
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if app.request.pathInfo starts with '/admin/topic' %}active{% endif %}" href="{{ path('admin_topic_index')}}">
+                            <i class="bi bi-list-task"></i>
+                            {{ 'menu.topics'|trans }}
+                        </a>
+                    </li>
 {#                    <li class="nav-item">#}
 {#                        <a class="nav-link" href="{{ path('admin')}}">#}
 {#                            <i class="bi bi-gear"></i>#}
@@ -93,8 +99,9 @@
 
             {% for label, messages in app.flashes(['success', 'warning']) %}
                 {% for message in messages %}
-                    <div class="alert alert-{{ label }}" role="alert">
+                    <div class="alert alert-{{ label }} alert-dismissible fade show" role="alert">
                         {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="{{ 'button.close'|trans }}"></button>
                     </div>
                 {% endfor %}
             {% endfor %}
