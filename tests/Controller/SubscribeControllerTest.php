@@ -2,15 +2,22 @@
 
 namespace App\Tests\Controller;
 
+use App\Model\Subscribe;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class SubscribeControllerTest extends WebTestCase
 {
     public function testSubscribeExpiredSuccess() : void
     {
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        //TODO: write story about expired subscriptions.
+
+        $subscription = new Subscribe();
+
+        //TODO: create service
+        $subscriptionsService = new SubscriptionsService();
+
+        $result = $subscriptionsService->checkValidSubscription($subscription);
+        $this->assertTrue($result);
     }
 
     public function testSubmitSuccess(): void
@@ -20,14 +27,16 @@ class SubscribeControllerTest extends WebTestCase
 
         $client->request('GET', '/subscribe');
 
-        $crawler = $client->submitForm('form.label.submit', [
+         $client->submitForm('form.label.submit', [
             'subscribe[name]' => 'test',
             'subscribe[email]' => 'test@test.com',
             'subscribe[agree]' => true,
             'subscribe[know]' => true,
         ]);
 
-        $this->assertResponseIsSuccessful();
+        $response = $client->getResponse();
+
+        $this->assertTrue($response->isRedirect('/subscribe/unsucess'));
     }
 
     /**
@@ -36,7 +45,7 @@ class SubscribeControllerTest extends WebTestCase
     public function testUriSuccess($uri) : void
     {
         $client = static::createClient();
-        $crawler = $client->request('GET', $uri);
+        $client->request('GET', $uri);
 
         $this->assertResponseIsSuccessful();
     }
