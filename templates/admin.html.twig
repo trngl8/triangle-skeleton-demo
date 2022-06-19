@@ -80,6 +80,13 @@
                             {{ 'menu.projects'|trans }}
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if app.request.pathInfo starts with '/admin/invite' %}active{% endif %}" href="{{ path('admin_invite_index')}}">
+                            <i class="bi bi-node-plus-fill"></i>
+                            {{ 'menu.invites'|trans }}
+                        </a>
+                    </li>
+
 
 {#                    <li class="nav-item">#}
 {#                        <a class="nav-link" href="{{ path('admin')}}">#}
