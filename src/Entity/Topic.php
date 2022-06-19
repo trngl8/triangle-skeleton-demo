@@ -19,15 +19,7 @@ class Topic
     #[Groups(['show_topics_api'])]
     private $id;
 
-    //TODO: maybe trait
-    #[ORM\Column(type: 'datetime_immutable')]
-    private $createdAt;
-
-    #[ORM\Column(type: 'datetime_immutable', nullable: true)]
-    private $startedAt;
-
-    #[ORM\Column(type: 'datetime', nullable: true)]
-    private $closedAt;
+    use TimestampTrait;
 
     #[ORM\Column(type: 'string', length: 255)]
     #[Groups(['show_topics_api'])]
