@@ -1,0 +1,49 @@
+{% extends 'topic/admin/index.html.twig' %}
+
+{% block add_javascript %}
+
+{% endblock %}
+{% block title %}{{ 'title.show_topic'|trans }}{% endblock %}
+
+{% block page_title %}
+    <h1 class="mt-4">{{ 'title.show_topic'|trans }}</h1>
+{%endblock%}
+
+{% block breadcrumb %}
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item"><a href="{{ path('admin') }}">{{ 'menu.dashboard'|trans }}</a></li>
+        <li class="breadcrumb-item"><a href="{{ path('admin_topic_index') }}">{{ 'menu.topics'|trans }}</a></li>
+        <li class="breadcrumb-item active">{{ 'title.show_topic'|trans }}</li>
+    </ol>
+{% endblock %}
+
+{% block filters %}
+{% endblock %}
+
+{% block paginator %}
+{% endblock %}
+
+{% block main %}
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-body">
+                    <div>{{ item.title }}</div>
+                    <div>{{ item.type }}</div>
+                    <div>{{ item.createdAt|date }}</div>
+                    <div>
+                        {% if item.closedAt %}
+                            {{ item.closedAt|date }}
+                        {% endif %}
+                    </div>
+
+                </div>
+            </div>
+            <div class="mt-4">
+                <a href="{{ path('admin_topic_edit', {id: item.id}) }}" class="btn btn-outline-primary">{{ 'button.edit'|trans }}</a>
+                <a href="{{ path('admin_topic_remove', {id: item.id}) }}" class="btn btn-outline-danger">{{ 'button.remove'|trans }}</a>
+                <a href="{{ path('admin_topic_close', {id: item.id}) }}" class="btn btn-outline-secondary">{{ 'button.close'|trans }}</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}
