@@ -274,6 +274,21 @@
     "symfony/css-selector": {
         "version": "v6.0.2"
     },
+    "symfony/debug-bundle": {
+        "version": "6.1",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "main",
+            "version": "5.3",
+            "ref": "5aa8aa48234c8eb6dbdd7b3cd5d791485d2cec4b"
+        },
+        "files": [
+            "config/packages/debug.yaml"
+        ]
+    },
+    "symfony/debug-pack": {
+        "version": "v1.0.10"
+    },
     "symfony/dependency-injection": {
         "version": "v6.0.2"
     },
@@ -415,6 +430,9 @@
     },
     "symfony/polyfill-uuid": {
         "version": "v1.25.0"
+    },
+    "symfony/profiler-pack": {
+        "version": "v1.0.6"
     },
     "symfony/property-access": {
         "version": "v6.0.2"

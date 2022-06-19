@@ -13,6 +13,38 @@
     </ol>
 {% endblock %}
 
+{% block action_panel %}
+    <div class="mb-4">
+        {% if button is defined %}
+            <a href="{{ path('admin_topic_add') }}" class="btn btn-lg btn-outline-primary"><i class="bi bi-plus-circle"></i> {{ 'button.add'|trans }}</a>
+        {% endif %}
+    </div>
+{% endblock %}
+
+{% block filters %}
+    <div class="accordion mb-4" id="accordionExample">
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="headingOne">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="{{ filters_expanded }}" aria-controls="collapseOne">
+                    {{ 'caption.filters' }}
+                </button>
+            </h2>
+            <div id="collapseOne" class="accordion-collapse {% if filters_expanded %}show{% else %}collapse{% endif %}" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+{#                    {% form_theme filters 'bootstrap_base_layout.html.twig' %}#}
+                    {{ form_start(filters, {'attr': {'novalidate': 'novalidate'}}) }}
+{#                        {{ form_row(filters.title) }}#}
+                        {{ form_row(filters.type) }}
+                        {{ form_row(filters.apply) }}
+                        {{ form_row(filters.clear) }}
+                        {{ form_row(filters.save) }}
+                    {{ form_end(filters) }}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
 {% block main %}
 
     {% if items is defined and items|length > 0 %}
@@ -22,16 +54,25 @@
                 <th scope="col">#</th>
                 <th scope="col">{{ 'title'| trans }}</th>
                 <th scope="col">{{ 'type'| trans }}</th>
+                <th scope="col">{{ 'createdAt'| trans }}</th>
+                <th scope="col">{{ 'closeAt'| trans }}</th>
                 <th scope="col" class="col-2">{{ 'actions'| trans }}</th>
             </tr>
             </thead>
             <tbody>
             {% for item in items %}
                 <tr>
-                    <th scope="row"><a href="{{ path('admin_topic_edit', { id: item.id }) }}">{{ item.id }}</a></th>
-                    <td><a href="{{ path('admin_topic_edit', { id: item.id }) }}">{{ item.title }}</a></td>
+                    <th scope="row"><a href="{{ path('admin_topic_show', { id: item.id }) }}">{{ item.id }}</a></th>
+                    <td><a href="{{ path('admin_topic_show', { id: item.id }) }}">{{ item.title }}</a></td>
                     <td>{{ item.type }}</td>
+                    <td>{{ item.createdAt|date }}</td>
                     <td>
+                        {% if item.closedAt %}
+                            {{ item.closedAt|date }}
+                        {% endif %}
+                    </td>
+                    <td>
+                        <a href="{{ path('admin_topic_show', { id: item.id }) }}" class="btn btn-sm btn-outline-secondary">{{ 'button.show'|trans }}</a>
                         <a href="{{ path('admin_topic_edit', { id: item.id }) }}" class="btn btn-sm btn-outline-primary">{{ 'button.edit'|trans }}</a>
                         <a href="{{ path('admin_topic_remove', { id: item.id }) }}" class="btn btn-sm btn-outline-danger">{{ 'button.remove'|trans }}</a>
                     </td>
@@ -41,8 +82,68 @@
         </table>
     {% endif %}
 
-    {% if button is defined %}
-        <a href="{{ path('admin_topic_add') }}" class="btn btn-outline-primary">{{ 'button.add'|trans }}</a>
+    {% if paginator is defined %}
+        <table class="table">
+            <thead class="table-light">
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">{{ 'title'| trans }}</th>
+                <th scope="col">{{ 'type'| trans }}</th>
+                <th scope="col">{{ 'createdAt'| trans }}</th>
+                <th scope="col">{{ 'closedAt'| trans }}</th>
+                <th scope="col" class="col-2"></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for item in paginator %}
+                <tr>
+                    <th scope="row"><a href="{{ path('admin_topic_show', { id: item.id }) }}">{{ item.id }}</a></th>
+                    <td>
+                        {% if  item.closedAt %}
+                            <del>{{ item.title }}</del>
+                        {% else %}
+                            <a href="{{ path('admin_topic_show', { id: item.id }) }}">{{ item.title }}</a>
+                        {% endif%}
+                    </td>
+                    <td>{{ item.type }}</td>
+                    <td>{{ item.createdAt|date }}</td>
+                    <td>
+                        {% if item.closedAt %}
+                            {{ item.closedAt|date }}
+                        {% endif %}
+                    </td>
+                    <td class="text-end">
+                        <a href="{{ path('admin_topic_show', { id: item.id }) }}" class="btn btn-sm btn-outline-secondary">{{ 'button.show'|trans }}</a>
+                        <a href="{{ path('admin_topic_edit', { id: item.id }) }}" class="btn btn-sm btn-outline-primary">{{ 'button.edit'|trans }}</a>
+                        <a href="{{ path('admin_topic_remove', { id: item.id }) }}" class="btn btn-sm btn-outline-danger">{{ 'button.remove'|trans }}</a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
     {% endif %}
 
+{% endblock %}
+
+{% block paginator %}
+    <div class="d-flex">
+        <div>{{ 'total'|trans }} {{ count }} {{ 'items'|trans }}</div>
+        <ul class="pagination m-0 ms-auto">
+            <li class="page-item">
+                <a class="page-link" href="{{ path('admin_topic_index', {page: pages|first}) }}" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+            {% for current in pages %}
+            <li class="page-item {% if page == current %}active{% endif%}" {% if page == current %}aria-current="page"{% endif%}>
+                <a class="page-link" href="{{ path('admin_topic_index', {page: current}) }}">{{ current }}</a>
+            </li>
+            {% endfor %}
+            <li class="page-item">
+                <a class="page-link" href="{{ path('admin_topic_index', {page: pages|last}) }}" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        </ul>
+    </div>
 {% endblock %}

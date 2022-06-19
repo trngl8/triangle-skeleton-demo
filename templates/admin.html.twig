@@ -104,6 +104,9 @@
                 </ol>
             {% endblock %}
 
+            {% block action_panel %}
+            {% endblock %}
+
             {% for label, messages in app.flashes(['success', 'warning']) %}
                 {% for message in messages %}
                     <div class="alert alert-{{ label }} alert-dismissible fade show" role="alert">
@@ -113,6 +116,9 @@
                 {% endfor %}
             {% endfor %}
 
+            {% block filters %}
+            {% endblock %}
+
             {% block main %}
                 <div class="card mb-4">
                     <div class="card-body">
@@ -121,6 +127,10 @@
                     </div>
                 </div>
             {% endblock %}
+
+            {% block paginator %}
+            {% endblock %}
+
         </main>
 
     </div>

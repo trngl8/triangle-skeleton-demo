@@ -19,8 +19,15 @@ class Topic
     #[Groups(['show_topics_api'])]
     private $id;
 
+    //TODO: maybe trait
     #[ORM\Column(type: 'datetime_immutable')]
     private $createdAt;
+
+    #[ORM\Column(type: 'datetime_immutable', nullable: true)]
+    private $startedAt;
+
+    #[ORM\Column(type: 'datetime', nullable: true)]
+    private $closedAt;
 
     #[ORM\Column(type: 'string', length: 255)]
     #[Groups(['show_topics_api'])]
@@ -53,6 +60,30 @@ class Topic
     public function getCreatedAt(): ?\DateTimeImmutable
     {
         return $this->createdAt;
+    }
+
+    public function getStartedAt(): ?\DateTimeImmutable
+    {
+        return $this->startedAt;
+    }
+
+    public function setStartedAt(\DateTimeImmutable $startedAt): self
+    {
+        $this->startedAt = $startedAt;
+
+        return $this;
+    }
+
+    public function getClosedAt(): ?\DateTime
+    {
+        return $this->closedAt;
+    }
+
+    public function setClosedAt(?\DateTime $closedAt): self
+    {
+        $this->closedAt = $closedAt;
+
+        return $this;
     }
 
     public function getTitle(): ?string
