@@ -6,6 +6,12 @@
     <h1 class="mt-4">{{ 'title.add_check'|trans }}</h1>
 {%endblock%}
 
+{% block filters %}
+{% endblock %}
+
+{% block paginator %}
+{% endblock %}
+
 {% block breadcrumb %}
     <ol class="breadcrumb mb-4">
         <li class="breadcrumb-item"><a href="{{ path('admin') }}">{{ 'menu.dashboard'|trans }}</a></li>

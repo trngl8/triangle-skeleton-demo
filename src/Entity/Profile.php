@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ProfileRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -32,9 +34,22 @@ class Profile
     #[ORM\Column(type: 'boolean')]
     private $active;
 
+    #[ORM\OneToMany(mappedBy: 'profile', targetEntity: Topic::class)]
+    private $topics;
+
+    #[ORM\OneToMany(mappedBy: 'profile', targetEntity: Invite::class)]
+    private $invites;
+
     public function __construct()
     {
         $this->active = true;
+        $this->topics = new ArrayCollection();
+        $this->invites = new ArrayCollection();
+    }
+
+    public function __toString()
+    {
+        return $this->email;
     }
 
     public function getId(): ?int
@@ -98,6 +113,66 @@ class Profile
     public function setActive(bool $active): self
     {
         $this->active = $active;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Topic>
+     */
+    public function getTopics(): Collection
+    {
+        return $this->topics;
+    }
+
+    public function addTopic(Topic $topic): self
+    {
+        if (!$this->topics->contains($topic)) {
+            $this->topics[] = $topic;
+            $topic->setProfile($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTopic(Topic $topic): self
+    {
+        if ($this->topics->removeElement($topic)) {
+            // set the owning side to null (unless already changed)
+            if ($topic->getProfile() === $this) {
+                $topic->setProfile(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Invite>
+     */
+    public function getInvites(): Collection
+    {
+        return $this->invites;
+    }
+
+    public function addInvite(Invite $invite): self
+    {
+        if (!$this->invites->contains($invite)) {
+            $this->invites[] = $invite;
+            $invite->setProfile($this);
+        }
+
+        return $this;
+    }
+
+    public function removeInvite(Invite $invite): self
+    {
+        if ($this->invites->removeElement($invite)) {
+            // set the owning side to null (unless already changed)
+            if ($invite->getProfile() === $this) {
+                $invite->setProfile(null);
+            }
+        }
 
         return $this;
     }

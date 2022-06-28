@@ -2,14 +2,6 @@ app_home:
   path: /
   controller: App\Controller\DefaultController::home
 
-app_subscribe:
-  path: /subscribe
-  controller: App\Controller\SubscribeController::index
-
-app_subscribe_success:
-  path: /subscribe/success
-  controller: App\Controller\SubscribeController::success
-
 app_info:
   path: /info
   controller: App\Controller\DefaultController::info
@@ -17,6 +9,14 @@ app_info:
 app_index:
   path: /index
   controller: App\Controller\DefaultController::index
+
+app_features:
+  path: /features
+  controller: App\Controller\DefaultController::features
+
+app_contact:
+  path: /contact
+  controller: App\Controller\DefaultController::contact
 
 admin:
   path: /admin

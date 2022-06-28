@@ -4,8 +4,10 @@ namespace App\Controller\Admin;
 
 use App\Button\LinkToRoute;
 use App\Entity\Topic;
-use App\Form\TopicType;
-use App\Repository\TopicRepository;
+use App\Form\Filter\TopicAdminFilter;
+use App\Form\Admin\TopicAdminType;
+use App\Model\TopicFilter;
+use App\Service\TopicService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,31 +18,77 @@ use Doctrine\Persistence\ManagerRegistry;
 #[Route('/admin/topic', name: 'admin_topic_')]
 class TopicController extends AbstractController
 {
+    //TODO: explain constants
+    CONST PAGINATOR_COUNT = 20;
+    CONST START_PAGE = 1;
+    CONST MIN_COUNT = 0;
+
     private $doctrine;
 
-    private $repository;
+    private $topicService;
 
-    public function __construct(ManagerRegistry $doctrine)
+    public function __construct(ManagerRegistry $doctrine, TopicService $topicService)
     {
         $this->doctrine = $doctrine;
-        /** @var TopicRepository repository */
-        $this->repository = $this->doctrine->getRepository(Topic::class);
+        $this->topicService = $topicService;
     }
 
     #[Route('', name: 'index')]
-    public function index() : Response
+    public function index(Request $request) : Response
     {
-        $items = $this->repository->findBy([]);
+        //TODO: filters on separate flow
+        $filterData = $request->get('filters') ?? [];
+        $filtersExpanded = (bool)$filterData;
+        $topicsFilter = new TopicFilter($filterData);
 
-        $button = new LinkToRoute('topic_add', 'button.add');
+        $page = $request->get('page') ?? self::START_PAGE;
 
-        if(sizeof($items) === 0) {
+        $paginator = $this->topicService->addCriteria($filterData)->getPaginator($page, self::PAGINATOR_COUNT);
+        $c = count($paginator);
+
+        $filters = $this->createForm(TopicAdminFilter::class, $topicsFilter);
+
+        $filters->handleRequest($request);
+
+        if($filters->isSubmitted() && $filters->isValid()) {
+            $filterData = $filters->getData();
+
+            //TODO: maybe strategy pattern instead if statements
+
+            if($filters->get('clear')->isClicked()) {
+                $this->addFlash('warning', 'flash.warning.filter_cleared');
+                return $this->redirectToRoute('admin_topic_index');
+            }
+
+            if($filters->get('save')->isClicked()) {
+                //TODO implement filter storage
+                $this->addFlash('success', sprintf('flash.success.filter_save %d items', $c));
+                return $this->redirectToRoute('admin_topic_index');
+            }
+
+            if($filters->get('apply')->isClicked()) {
+                return $this->redirectToRoute('admin_topic_index', ['filters' => $filterData]);
+            }
+        }
+
+        if($c === self::MIN_COUNT) {
             $this->addFlash('warning', 'flash.warning.no_items');
         }
 
+        $lastPage = intdiv($c,  self::PAGINATOR_COUNT) + 1;
+        if($c % self::PAGINATOR_COUNT === 0) {
+            --$lastPage;
+        }
+        $pages = range(self::START_PAGE, $lastPage);
+
         return $this->render('topic/admin/index.html.twig', [
-            'items' => $items,
-            'button' => $button
+            'button' => new LinkToRoute('topic_add', 'button.add'),
+            'paginator' => $paginator,
+            'count' => $c,
+            'page' => $page,
+            'pages' => $pages,
+            'filters' => $filters->createView(),
+            'filters_expanded' => $filtersExpanded
         ]);
     }
 
@@ -48,7 +96,7 @@ class TopicController extends AbstractController
     public function add(Request $request): Response
     {
         $topic = new Topic();
-        $form = $this->createForm(TopicType::class, $topic);
+        $form = $this->createForm(TopicAdminType::class, $topic);
 
         $form->handleRequest($request);
 
@@ -68,7 +116,7 @@ class TopicController extends AbstractController
     }
 
     #[Route('/edit/{id}', name: 'edit', methods: ['GET', 'POST', 'HEAD'] )]
-    public function show(Request $request, int $id) : Response
+    public function edit(Request $request, int $id) : Response
     {
         $topic = $this->doctrine->getRepository(Topic::class)->find($id);
 
@@ -76,7 +124,7 @@ class TopicController extends AbstractController
             throw new NotFoundHttpException(sprintf("Topic %d not found", $id));
         }
 
-        $form = $this->createForm(TopicType::class, $topic);
+        $form = $this->createForm(TopicAdminType::class, $topic);
 
         $form->handleRequest($request);
 
@@ -88,9 +136,9 @@ class TopicController extends AbstractController
 
             $this->addFlash('success', 'flash.success.topic_updated');
 
-            $nextAction = $form->get('saveAndAdd')->isClicked()
-                ? 'admin_topic_add'
-                : 'admin_topic_index';
+            //TODO: choose next action dynamically
+
+            $nextAction = 'admin_topic_index';
 
             return $this->redirectToRoute($nextAction);
         }
@@ -119,6 +167,61 @@ class TopicController extends AbstractController
         }
 
         return $this->render('topic/admin/remove.html.twig', [
+            'item' => $topic,
+        ]);
+    }
+
+    #[Route('/close/{id}', name: 'close', methods: ['GET', 'POST', 'HEAD'] )]
+    public function close(Topic $topic, Request $request) : Response
+    {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+
+        $submittedToken = $request->request->get('token');
+
+        if ($this->isCsrfTokenValid('remove', $submittedToken)) {
+            if($this->topicService->close($topic)) {
+                $this->addFlash('success', 'flash.success.closed');
+
+                return $this->redirectToRoute('admin_topic_index');
+            }
+
+            $this->addFlash('warning', 'flash.warning.cannot');
+
+        }
+
+        return $this->render('topic/admin/close.html.twig', [
+            'item' => $topic,
+        ]);
+    }
+
+    #[Route('/run/{id}', name: 'run', methods: ['GET', 'POST', 'HEAD'] )]
+    public function run(Topic $topic, Request $request) : Response
+    {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+
+        $submittedToken = $request->request->get('token');
+
+        if ($this->isCsrfTokenValid('remove', $submittedToken)) {
+            if($this->topicService->run($topic)) {
+                $this->addFlash('success', 'flash.success.runned');
+
+                return $this->redirectToRoute('admin_topic_index');
+            }
+
+            $this->addFlash('warning', 'flash.warning.cannot');
+
+        }
+
+        //TODO: maybe run should be without confirm
+        return $this->render('topic/admin/run.html.twig', [
+            'item' => $topic,
+        ]);
+    }
+
+    #[Route('/show/{id}', name: 'show', methods: ['GET', 'HEAD'] )]
+    public function show(Topic $topic) : Response
+    {
+        return $this->render('topic/admin/show.html.twig', [
             'item' => $topic,
         ]);
     }

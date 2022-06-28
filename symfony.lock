@@ -1,4 +1,16 @@
 {
+    "dama/doctrine-test-bundle": {
+        "version": "7.1",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "main",
+            "version": "4.0",
+            "ref": "56eaa387b5e48ebcc7c95a893b47dfa1ad51449c"
+        },
+        "files": [
+            "config/packages/test/dama_doctrine_test_bundle.yaml"
+        ]
+    },
     "doctrine/annotations": {
         "version": "1.13",
         "recipe": {
@@ -112,6 +124,9 @@
     },
     "laminas/laminas-code": {
         "version": "4.5.1"
+    },
+    "liip/test-fixtures-bundle": {
+        "version": "2.4.0"
     },
     "masterminds/html5": {
         "version": "2.7.5"
@@ -274,6 +289,21 @@
     "symfony/css-selector": {
         "version": "v6.0.2"
     },
+    "symfony/debug-bundle": {
+        "version": "6.1",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "main",
+            "version": "5.3",
+            "ref": "5aa8aa48234c8eb6dbdd7b3cd5d791485d2cec4b"
+        },
+        "files": [
+            "config/packages/debug.yaml"
+        ]
+    },
+    "symfony/debug-pack": {
+        "version": "v1.0.10"
+    },
     "symfony/dependency-injection": {
         "version": "v6.0.2"
     },
@@ -353,6 +383,18 @@
     "symfony/intl": {
         "version": "v6.0.1"
     },
+    "symfony/mailer": {
+        "version": "6.1",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "main",
+            "version": "4.3",
+            "ref": "97a61eabb351d7f6cb7702039bcfe07fe9d7e03c"
+        },
+        "files": [
+            "config/packages/mailer.yaml"
+        ]
+    },
     "symfony/maker-bundle": {
         "version": "1.36",
         "recipe": {
@@ -415,6 +457,9 @@
     },
     "symfony/polyfill-uuid": {
         "version": "v1.25.0"
+    },
+    "symfony/profiler-pack": {
+        "version": "v1.0.6"
     },
     "symfony/property-access": {
         "version": "v6.0.2"

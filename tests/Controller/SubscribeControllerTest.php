@@ -7,29 +7,16 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class SubscribeControllerTest extends WebTestCase
 {
-    public function testSubscribeExpiredSuccess() : void
-    {
-        //TODO: write story about expired subscriptions.
-
-        $subscription = new Subscribe();
-
-        //TODO: create service
-        $subscriptionsService = new SubscriptionsService();
-
-        $result = $subscriptionsService->checkValidSubscription($subscription);
-        $this->assertTrue($result);
-    }
-
     public function testSubmitSuccess(): void
     {
         $client = static::createClient();
         $client->followRedirects();
 
-        $client->request('GET', '/subscribe');
+        $client->request('GET', '/subscribe/add');
 
          $client->submitForm('form.label.submit', [
             'subscribe[name]' => 'test',
-            'subscribe[email]' => 'test@test.com',
+            'subscribe[email]' => 'test@example.com',
             'subscribe[agree]' => true,
             'subscribe[know]' => true,
         ]);
@@ -52,6 +39,6 @@ class SubscribeControllerTest extends WebTestCase
 
     public function getUris() : iterable
     {
-        yield ['subscribe/success'];
+        yield ['subscribe/verify'];
     }
 }

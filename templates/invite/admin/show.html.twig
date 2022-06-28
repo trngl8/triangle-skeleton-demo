@@ -1,0 +1,48 @@
+{% extends 'invite/admin/index.html.twig' %}
+
+{% block add_javascript %}
+
+{% endblock %}
+{% block title %}{{ 'title.show_invite'|trans }}{% endblock %}
+
+{% block page_title %}
+    <h1 class="mt-4">{{ 'title.show_invite'|trans }}</h1>
+{%endblock%}
+
+{% block breadcrumb %}
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item"><a href="{{ path('admin') }}">{{ 'menu.dashboard'|trans }}</a></li>
+        <li class="breadcrumb-item"><a href="{{ path('admin_invite_index') }}">{{ 'menu.invites'|trans }}</a></li>
+        <li class="breadcrumb-item active">{{ 'title.show_invite'|trans }}</li>
+    </ol>
+{% endblock %}
+
+{% block filters %}
+{% endblock %}
+
+{% block paginator %}
+{% endblock %}
+
+{% block main %}
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-body">
+                    <div>{{ item.name }}</div>
+                    <div>{{ item.description }}</div>
+                    <div>{{ item.createdAt|date }}</div>
+                    <div>
+                        {% if item.closedAt %}
+                            {{ item.closedAt|date }}
+                        {% endif %}
+                    </div>
+
+                </div>
+            </div>
+            <div class="mt-4">
+                <a href="{{ path('admin_invite_edit', {id: item.id}) }}" class="btn btn-outline-primary">{{ 'button.edit'|trans }}</a>
+                <a href="#CLOSE_INVITE" class="btn btn-outline-secondary">{{ 'button.close'|trans }}</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

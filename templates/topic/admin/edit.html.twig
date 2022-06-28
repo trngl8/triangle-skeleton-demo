@@ -1,4 +1,4 @@
-{% extends 'check/admin/index.html.twig' %}
+{% extends 'topic/admin/index.html.twig' %}
 
 {% block add_javascript %}
 
@@ -12,9 +12,15 @@
 {% block breadcrumb %}
     <ol class="breadcrumb mb-4">
         <li class="breadcrumb-item"><a href="{{ path('admin') }}">{{ 'menu.dashboard'|trans }}</a></li>
-        <li class="breadcrumb-item"><a href="{{ path('admin_check_index') }}">{{ 'menu.topics'|trans }}</a></li>
+        <li class="breadcrumb-item"><a href="{{ path('admin_topic_index') }}">{{ 'menu.topics'|trans }}</a></li>
         <li class="breadcrumb-item active">{{ 'title.add_topic'|trans }}</li>
     </ol>
+{% endblock %}
+
+{% block filters %}
+{% endblock %}
+
+{% block paginator %}
 {% endblock %}
 
 {% block main %}
@@ -23,8 +29,11 @@
             {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
             <div class="card">
                 <div class="card-body">
-                    {{ form_row(form.title) }}
                     {{ form_row(form.type) }}
+                    {{ form_row(form.title) }}
+                    {{ form_row(form.description) }}
+                    {{ form_row(form.branch) }}
+                    {{ form_row(form.profile) }}
                 </div>
             </div>
             <div class="mt-4">
