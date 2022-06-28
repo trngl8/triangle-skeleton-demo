@@ -23,6 +23,7 @@ class Project
     #[ORM\Column(type: 'string', length: 255)]
     private $description;
 
+    //TODO: maybe trait
     #[ORM\Column(type: 'datetime_immutable')]
     private $createdAt;
 

@@ -6,6 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
+    <link rel="shortcut icon" type="image/svg+xml" href="{{ asset('favicons/favicon.svg') }}">
+    <link rel="alternate icon" type="image/png" sizes="16x16" href="{{ asset('favicons/favicon16x16.png') }}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('favicons/apple-touch-icon.png') }}" />
     <title>{{ app_name }}{{ app_version }}</title>
 
     {% block stylesheets %}
@@ -53,6 +56,7 @@
                         <a class="nav-link {% if app.request.pathInfo == '/admin' %}active{% endif %}" aria-current="page" href="{{ path('admin')}}">
                             <i class="bi bi-speedometer"></i>
                             {{ 'menu.dashboard'|trans }}
+                            {% if topics|length %}<span class="badge bg-secondary">+{{ topics|length }}</span>{% endif %}
                         </a>
                     </li>
 
@@ -66,6 +70,7 @@
                         <a class="nav-link {% if app.request.pathInfo starts with '/admin/profile' %}active{% endif %}" href="{{ path('admin_profile_index')}}">
                             <i class="bi bi-people-fill"></i>
                             {{ 'menu.profiles'|trans }}
+                            {% if app.flashes('profile')|length %}<span class="badge bg-secondary">+{{ app.flashes('profile')|length }}</span>{% endif %}
                         </a>
                     </li>
                     <li class="nav-item">
@@ -80,6 +85,13 @@
                             {{ 'menu.projects'|trans }}
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if app.request.pathInfo starts with '/admin/invite' %}active{% endif %}" href="{{ path('admin_invite_index')}}">
+                            <i class="bi bi-node-plus-fill"></i>
+                            {{ 'menu.invites'|trans }}
+                        </a>
+                    </li>
+
 
 {#                    <li class="nav-item">#}
 {#                        <a class="nav-link" href="{{ path('admin')}}">#}
@@ -104,6 +116,9 @@
                 </ol>
             {% endblock %}
 
+            {% block action_panel %}
+            {% endblock %}
+
             {% for label, messages in app.flashes(['success', 'warning']) %}
                 {% for message in messages %}
                     <div class="alert alert-{{ label }} alert-dismissible fade show" role="alert">
@@ -113,14 +128,20 @@
                 {% endfor %}
             {% endfor %}
 
-            {% block main %}
-                <div class="card mb-4">
-                    <div class="card-body">
-                        TODO: Create release plan
-                        {{ app.request.pathInfo }}
-                    </div>
-                </div>
+            {% block filters %}
             {% endblock %}
+
+            {% block main %}
+                <ul class="list-group">
+                {% for topic in topics %}
+                    <li class="list-group-item"><a href="{{ path('admin_topic_show', {id: topic.id}) }}">{{ topic.title }}</a></li>
+                {% endfor %}
+                </ul>
+            {% endblock %}
+
+            {% block paginator %}
+            {% endblock %}
+
         </main>
 
     </div>

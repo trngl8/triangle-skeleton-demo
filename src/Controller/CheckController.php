@@ -36,19 +36,24 @@ class CheckController extends AbstractController
     #[Route('/check', name: 'check_index')]
     public function index(): Response
     {
+        $app_navbar = false;
+
         $topics = $this->repository->findBy([]);
 
         $button = new LinkToRoute('check_add', 'button.add');
 
         return $this->render('check/index.html.twig', [
             'items' => $topics,
-            'button' => $button
+            'button' => $button,
+            'app_navbar' => $app_navbar
         ]);
     }
 
     #[Route('/check/show/{id}', name: 'check_show', methods: ['GET', 'POST', 'HEAD'] )]
     public function show(Request $request, int $id): Response
     {
+        $app_navbar = false;
+
         $check = $this->doctrine->getRepository(Check::class)->find($id);
 
         if(!$check) {
@@ -79,7 +84,8 @@ class CheckController extends AbstractController
 
         return $this->render('check/show.html.twig', [
             'item' => $check,
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'app_navbar' => $app_navbar
         ]);
     }
 

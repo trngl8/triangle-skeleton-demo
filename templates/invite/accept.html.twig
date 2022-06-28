@@ -1,0 +1,23 @@
+{% extends 'layout.html.twig' %}
+
+{% block main %}
+    <h1 class="mb-4">{{ 'title.accept_invite'|trans }}</h1>
+
+    <div class="row">
+        <div class="col-md-6">
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item"><b>Name:</b> {{ app_name }}</li>
+                <li class="list-group-item"><b>Version:</b> {{ app_version }}</li>
+                <li class="list-group-item"><b>Environment:</b> {{ app.environment|upper }}</li>
+                <li class="list-group-item"><b>Debug:</b> {{ app.debug ? 'Yes' : 'No' }}</li>
+                {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+                <div class="card">
+                    <div class="card-body">
+                        {{ form(form) }}
+                    </div>
+                </div>
+                {{ form_end(form) }}
+            </ul>
+        </div>
+    </div>
+{% endblock %}

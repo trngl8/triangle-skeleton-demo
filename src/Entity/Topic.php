@@ -19,13 +19,15 @@ class Topic
     #[Groups(['show_topics_api'])]
     private $id;
 
-    #[ORM\Column(type: 'datetime_immutable')]
-    private $createdAt;
+    use TimestampTrait;
 
     #[ORM\Column(type: 'string', length: 255)]
     #[Groups(['show_topics_api'])]
     #[Assert\NotBlank]
     private $title;
+
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    private $description;
 
     #[ORM\Column(type: 'string', length: 32)]
     #[Assert\NotBlank]
@@ -33,6 +35,12 @@ class Topic
 
     #[ORM\OneToMany(mappedBy: 'topic', targetEntity: Answer::class)]
     private $answers;
+
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    private $branch;
+
+    #[ORM\ManyToOne(targetEntity: Profile::class, inversedBy: 'topics')]
+    private $profile;
 
     public function __construct()
     {
@@ -50,10 +58,7 @@ class Topic
         return $this->id;
     }
 
-    public function getCreatedAt(): ?\DateTimeImmutable
-    {
-        return $this->createdAt;
-    }
+    use TimestampTrait;
 
     public function getTitle(): ?string
     {
@@ -63,6 +68,18 @@ class Topic
     public function setTitle(string $title): self
     {
         $this->title = $title;
+
+        return $this;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(?string $description): self
+    {
+        $this->description = $description;
 
         return $this;
     }
@@ -105,6 +122,30 @@ class Topic
                 $answer->setTopic(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getBranch(): ?string
+    {
+        return $this->branch;
+    }
+
+    public function setBranch(?string $branch): self
+    {
+        $this->branch = $branch;
+
+        return $this;
+    }
+
+    public function getProfile(): ?Profile
+    {
+        return $this->profile;
+    }
+
+    public function setProfile(?Profile $profile): self
+    {
+        $this->profile = $profile;
 
         return $this;
     }

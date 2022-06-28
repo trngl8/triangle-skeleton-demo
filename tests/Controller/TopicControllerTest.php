@@ -6,40 +6,12 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class TopicControllerTest extends WebTestCase
 {
-    public function testAddAnswerToTopicSuccess() : void
-    {
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
-    }
-
-    public function testRemoveAnswerSuccess() : void
-    {
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
-    }
-
-    public function testRemoveAnswerFailed() : void
-    {
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
-    }
-
-    public function testTopicChangeSuccess() : void
-    {
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
-    }
-
-    public function testTopicRemoveSuccess() : void
-    {
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
-    }
+//    public function testAddAnswerToTopicSuccess() : void
+//    {
+//        $this->markTestIncomplete(
+//            'This test has not been implemented yet.'
+//        );
+//    }
 
     /**
      * @dataProvider getUris

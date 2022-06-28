@@ -29,8 +29,7 @@ class DefaultControllerPhpTest extends WebTestCase
     public function getUris() : iterable
     {
         yield ['index'];
-        yield ['subscribe'];
+        yield ['project'];
         yield ['info'];
-        yield ['subscribe/success'];
     }
 }
