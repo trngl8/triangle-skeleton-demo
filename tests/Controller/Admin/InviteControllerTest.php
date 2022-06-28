@@ -7,6 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class InviteControllerTest extends WebTestCase
 {
+
     public function testAdminSuccess(): void
     {
         $client = static::createClient();
@@ -38,7 +39,6 @@ class InviteControllerTest extends WebTestCase
 
         $client->request('GET', '/admin/invite/add');
 
-        //TODO: valid node for the form submit
         $crawler = $client->submitForm('invite_admin_save', [
             'invite_admin[name]' => 'test',
             'invite_admin[email]' => 'test@test.com',
@@ -50,7 +50,21 @@ class InviteControllerTest extends WebTestCase
 
         $this->assertResponseIsSuccessful();
 
+        $client->request('GET', '/admin/invite/show/1');
+
+        $this->assertResponseIsSuccessful();
+
+        $client->request('GET', '/admin/invite/edit/1');
+
+        $client->submitForm('invite_admin_save', [
+            'invite_admin[name]' => 'new name',
+            'invite_admin[email]' => 'test2@test.com',
+            'invite_admin[description]' =>  'set another description',
+        ]);
+
+        $this->assertResponseIsSuccessful();
     }
+
     public function testSubmitFail(): void
     {
         $client = static::createClient();
@@ -78,9 +92,10 @@ class InviteControllerTest extends WebTestCase
 
         $this->assertResponseIsSuccessful();
         $this->assertSelectorTextContains('h1', 'title.add_invite');
+        //TODO: get flash id
+        //$this->assertSelectorTextContains('flash', 'flash.success.invite_created');
 
-        //TODO Test form valid
-        $this->assertTrue(false);
+
 
 
     }

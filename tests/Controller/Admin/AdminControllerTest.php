@@ -7,6 +7,8 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class AdminControllerTest extends WebTestCase
 {
+    //TODO: maybe should be negative test case here
+
     public function testAdminSuccess(): void
     {
         $client = static::createClient();

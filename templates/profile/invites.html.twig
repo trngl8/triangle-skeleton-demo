@@ -1,0 +1,13 @@
+{% extends 'layout.html.twig' %}
+
+{% block main %}
+    <h1 class="mb-4">{{ 'profile.invites'|trans }}</h1>
+
+    <div class="row">
+        <div class="col-md-6">
+
+            <a href="{{ path('app_profile_edit') }}" class="btn btn-outline-primary">{{ 'button.edit'|trans }}</a>
+        </div>
+    </div>
+
+{% endblock %}

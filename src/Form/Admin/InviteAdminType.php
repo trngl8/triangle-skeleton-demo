@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Form\Filter;
+namespace App\Form\Admin;
 
 use App\Entity\Invite;
 use Symfony\Component\Form\AbstractType;

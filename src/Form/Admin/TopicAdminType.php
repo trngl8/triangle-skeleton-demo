@@ -1,11 +1,15 @@
 <?php
 
-namespace App\Form\Filter;
+namespace App\Form\Admin;
 
-use App\Model\TopicFilter;
+use App\Entity\Profile;
+use App\Entity\Topic;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -27,8 +31,10 @@ class TopicAdminType extends AbstractType
                 'filter.logger' => 'logger',
                 'filter.migration' => 'migration',
             ]])
-            ->add('apply', SubmitType::class)
-            ->add('clear', SubmitType::class)
+            ->add('title')
+            ->add('description', TextareaType::class)
+            ->add('branch', TextType::class)
+            ->add('profile')
             ->add('save', SubmitType::class)
         ;
     }
@@ -36,7 +42,7 @@ class TopicAdminType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => TopicFilter::class,
+            'data_class' => Topic::class,
         ]);
     }
 }

@@ -34,8 +34,11 @@ class TopicService
         return $this;
     }
 
+
     public function getPaginator($page, $max) : Paginator
     {
+        $this->baseDql .= " ORDER BY t.branch ASC, t.createdAt DESC";
+
         $this->query = $this->doctrine->getManager()->createQuery($this->baseDql)
             ->setFirstResult(($page-1) * $max)
             ->setMaxResults($max);
@@ -47,7 +50,22 @@ class TopicService
     {
         //TODO: check ability or permissions
         $topic->setClosedAt(new \DateTime());
+        if(null === $topic->getStartedAt()) {
+            $topic->setStartedAt($topic->getClosedAt());
+        }
         $this->doctrine->getManager()->flush();
+
+        return true;
+    }
+
+    public function run(Topic $topic) : bool
+    {
+        //TODO: check ability or permissions
+        $topic->setStartedAt(new \DateTime());
+        $this->doctrine->getManager()->flush();
+
+        //TODO: connect profile
+        //TODO: make tests
 
         return true;
     }

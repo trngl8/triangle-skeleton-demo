@@ -32,6 +32,12 @@ class Invite
     #[Assert\NotBlank]
     private $phone;
 
+    #[ORM\Column(type: 'integer', nullable: true)]
+    private $lifetime;
+
+    #[ORM\ManyToOne(targetEntity: Profile::class, inversedBy: 'invites')]
+    private $profile; //seconds
+
     use TimestampTrait;
 
     public function __construct()
@@ -88,6 +94,31 @@ class Invite
     public function setPhone(?string $phone): self
     {
         $this->phone = $phone;
+
+        return $this;
+    }
+
+    public function getLifetime(): ?int
+    {
+        return $this->lifetime;
+    }
+
+    public function setLifetime(?int $lifetime): self
+    {
+        //seconds
+        $this->lifetime = $lifetime;
+
+        return $this;
+    }
+
+    public function getProfile(): ?Profile
+    {
+        return $this->profile;
+    }
+
+    public function setProfile(?Profile $profile): self
+    {
+        $this->profile = $profile;
 
         return $this;
     }

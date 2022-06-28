@@ -11,8 +11,11 @@ class ProjectController extends AbstractController
     #[Route('/project', name: 'app_project')]
     public function index(): Response
     {
+        $app_navbar = false;
+
         return $this->render('project/index.html.twig', [
             'controller_name' => 'ProjectController',
+            'app_navbar' => $app_navbar
         ]);
     }
 }

@@ -26,12 +26,21 @@ class Topic
     #[Assert\NotBlank]
     private $title;
 
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    private $description;
+
     #[ORM\Column(type: 'string', length: 32)]
     #[Assert\NotBlank]
     private $type;
 
     #[ORM\OneToMany(mappedBy: 'topic', targetEntity: Answer::class)]
     private $answers;
+
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    private $branch;
+
+    #[ORM\ManyToOne(targetEntity: Profile::class, inversedBy: 'topics')]
+    private $profile;
 
     public function __construct()
     {
@@ -49,34 +58,7 @@ class Topic
         return $this->id;
     }
 
-    public function getCreatedAt(): ?\DateTimeImmutable
-    {
-        return $this->createdAt;
-    }
-
-    public function getStartedAt(): ?\DateTimeImmutable
-    {
-        return $this->startedAt;
-    }
-
-    public function setStartedAt(\DateTimeImmutable $startedAt): self
-    {
-        $this->startedAt = $startedAt;
-
-        return $this;
-    }
-
-    public function getClosedAt(): ?\DateTime
-    {
-        return $this->closedAt;
-    }
-
-    public function setClosedAt(?\DateTime $closedAt): self
-    {
-        $this->closedAt = $closedAt;
-
-        return $this;
-    }
+    use TimestampTrait;
 
     public function getTitle(): ?string
     {
@@ -86,6 +68,18 @@ class Topic
     public function setTitle(string $title): self
     {
         $this->title = $title;
+
+        return $this;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(?string $description): self
+    {
+        $this->description = $description;
 
         return $this;
     }
@@ -128,6 +122,30 @@ class Topic
                 $answer->setTopic(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getBranch(): ?string
+    {
+        return $this->branch;
+    }
+
+    public function setBranch(?string $branch): self
+    {
+        $this->branch = $branch;
+
+        return $this;
+    }
+
+    public function getProfile(): ?Profile
+    {
+        return $this->profile;
+    }
+
+    public function setProfile(?Profile $profile): self
+    {
+        $this->profile = $profile;
 
         return $this;
     }

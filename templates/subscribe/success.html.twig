@@ -1,7 +1,12 @@
 {% extends 'subscribe/index.html.twig' %}
 
 {% block form %}
-    <div class="mt-5 mb-5"><p>{{ 'text.success'|trans }}</p></div>
-    <a href="#" class="btn btn-lg, btn-outline-primary">Go external website</a>
+    <p>{{ 'text.subscription created'|trans }}</p>
+    <p>{{ item.id }}</p>
+    <p>{{ item.email }}</p>
+    <p>{{ item.name }}</p>
+    <p>{{ item.locale }}</p>
+    <p>{{ item.active }}</p>
+    <a href="{{ path('subscribe_list') }}" class="btn btn-lg, btn-outline-primary">Return to the list</a>
 
 {% endblock %}

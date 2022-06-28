@@ -4,8 +4,8 @@ namespace App\Controller\Admin;
 
 use App\Button\LinkToRoute;
 use App\Entity\Topic;
-use App\Form\Filter\TopicAdminType;
-use App\Form\TopicType;
+use App\Form\Filter\TopicAdminFilter;
+use App\Form\Admin\TopicAdminType;
 use App\Model\TopicFilter;
 use App\Service\TopicService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -46,7 +46,7 @@ class TopicController extends AbstractController
         $paginator = $this->topicService->addCriteria($filterData)->getPaginator($page, self::PAGINATOR_COUNT);
         $c = count($paginator);
 
-        $filters = $this->createForm(TopicAdminType::class, $topicsFilter);
+        $filters = $this->createForm(TopicAdminFilter::class, $topicsFilter);
 
         $filters->handleRequest($request);
 
@@ -75,7 +75,11 @@ class TopicController extends AbstractController
             $this->addFlash('warning', 'flash.warning.no_items');
         }
 
-        $pages = range(self::START_PAGE, ceil($c / (self::PAGINATOR_COUNT + 1)));
+        $lastPage = intdiv($c,  self::PAGINATOR_COUNT) + 1;
+        if($c % self::PAGINATOR_COUNT === 0) {
+            --$lastPage;
+        }
+        $pages = range(self::START_PAGE, $lastPage);
 
         return $this->render('topic/admin/index.html.twig', [
             'button' => new LinkToRoute('topic_add', 'button.add'),
@@ -92,7 +96,7 @@ class TopicController extends AbstractController
     public function add(Request $request): Response
     {
         $topic = new Topic();
-        $form = $this->createForm(TopicType::class, $topic);
+        $form = $this->createForm(TopicAdminType::class, $topic);
 
         $form->handleRequest($request);
 
@@ -120,7 +124,7 @@ class TopicController extends AbstractController
             throw new NotFoundHttpException(sprintf("Topic %d not found", $id));
         }
 
-        $form = $this->createForm(TopicType::class, $topic);
+        $form = $this->createForm(TopicAdminType::class, $topic);
 
         $form->handleRequest($request);
 
@@ -186,6 +190,30 @@ class TopicController extends AbstractController
         }
 
         return $this->render('topic/admin/close.html.twig', [
+            'item' => $topic,
+        ]);
+    }
+
+    #[Route('/run/{id}', name: 'run', methods: ['GET', 'POST', 'HEAD'] )]
+    public function run(Topic $topic, Request $request) : Response
+    {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+
+        $submittedToken = $request->request->get('token');
+
+        if ($this->isCsrfTokenValid('remove', $submittedToken)) {
+            if($this->topicService->run($topic)) {
+                $this->addFlash('success', 'flash.success.runned');
+
+                return $this->redirectToRoute('admin_topic_index');
+            }
+
+            $this->addFlash('warning', 'flash.warning.cannot');
+
+        }
+
+        //TODO: maybe run should be without confirm
+        return $this->render('topic/admin/run.html.twig', [
             'item' => $topic,
         ]);
     }

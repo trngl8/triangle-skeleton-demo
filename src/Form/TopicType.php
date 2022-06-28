@@ -18,6 +18,7 @@ class TopicType extends AbstractType
         $builder
             ->add('title', TextType::class)
             ->add('type', TextType::class)
+            ->add('branch', TextType::class)
 //            ->add('closeAt', DateTimeType::class)
             ->add('save', SubmitType::class)
         ;

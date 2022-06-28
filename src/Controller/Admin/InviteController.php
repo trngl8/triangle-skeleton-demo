@@ -4,17 +4,15 @@ namespace App\Controller\Admin;
 
 use App\Button\LinkToRoute;
 use App\Entity\Invite;
-use App\Entity\Topic;
+use App\Form\Admin\InviteAdminType;
 use App\Form\Filter\InviteAdminFilter;
-use App\Form\Filter\InviteAdminType;
-use App\Form\TopicType;
 use App\Service\InviteService;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
-use Doctrine\Persistence\ManagerRegistry;
 
 #[Route('/admin/invite', name: 'admin_invite_')]
 class InviteController extends AbstractController

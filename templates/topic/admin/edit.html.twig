@@ -29,9 +29,11 @@
             {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
             <div class="card">
                 <div class="card-body">
-                    {{ form_row(form.title) }}
                     {{ form_row(form.type) }}
-{#                    {{ form_row(form.closeAt) }}#}
+                    {{ form_row(form.title) }}
+                    {{ form_row(form.description) }}
+                    {{ form_row(form.branch) }}
+                    {{ form_row(form.profile) }}
                 </div>
             </div>
             <div class="mt-4">
