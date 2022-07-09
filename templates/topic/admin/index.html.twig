@@ -54,6 +54,7 @@
                 <th scope="col">#</th>
                 <th scope="col">{{ 'title'| trans }}</th>
                 <th scope="col">{{ 'type'| trans }}</th>
+                <th scope="col">{{ 'priority'| trans }}</th>
                 <th scope="col">{{ 'branch'| trans }}</th>
                 <th scope="col">{{ 'createdAt'| trans }}</th>
                 <th scope="col">{{ 'profile'| trans }}</th>
@@ -67,6 +68,7 @@
                     <th scope="row"><a href="{{ path('admin_topic_show', { id: item.id }) }}">{{ item.id }}</a></th>
                     <td><a href="{{ path('admin_topic_show', { id: item.id }) }}">{{ item.title }}</a></td>
                     <td>{{ item.type }}</td>
+                    <td>{{ item.priority }}</td>
                     <td><span class="badge rounded-pill bg-success">{{ item.branch }}</span></td>
                     <td>{{ item.createdAt|date }}</td>
                     <td>
@@ -105,6 +107,7 @@
                 <th scope="col">#</th>
                 <th scope="col">{{ 'title'| trans }}</th>
                 <th scope="col">{{ 'type'| trans }}</th>
+                <th scope="col">{{ 'priority'| trans }}</th>
                 <th scope="col">{{ 'branch'| trans }}</th>
                 <th scope="col">{{ 'createdAt'| trans }}</th>
                 <th scope="col">{{ 'profile'| trans }}</th>
@@ -124,6 +127,7 @@
                         {% endif%}
                     </td>
                     <td>{{ item.type }}</td>
+                    <td>{{ item.priority }}</td>
                     <td><span class="badge rounded-pill bg-success">{{ item.branch }}</span></td>
                     <td>{{ item.createdAt|date }}</td>
                     <td>

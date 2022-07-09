@@ -34,11 +34,25 @@ class TopicService
         return $this;
     }
 
+    public function addOrder($data) : self
+    {
+        $this->baseDql .= ' ORDER BY ';
+
+        //TODO: check array format (keys must be present)
+        if(is_array($data)) {
+            foreach ($data as $key => $value) {
+                $this->baseDql .= sprintf("t.%s %s", $key, $value);
+            }
+        }
+
+        $this->baseDql .= ", t.branch ASC, t.createdAt DESC";
+
+        return $this;
+    }
+
 
     public function getPaginator($page, $max) : Paginator
     {
-        $this->baseDql .= " ORDER BY t.branch ASC, t.createdAt DESC";
-
         $this->query = $this->doctrine->getManager()->createQuery($this->baseDql)
             ->setFirstResult(($page-1) * $max)
             ->setMaxResults($max);

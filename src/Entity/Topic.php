@@ -40,7 +40,10 @@ class Topic
     private $branch;
 
     #[ORM\ManyToOne(targetEntity: Profile::class, inversedBy: 'topics')]
-    private $profile;
+    private $profile;  //current profile (topic owner)
+
+    #[ORM\Column(type: 'integer')]
+    private $priority;
 
     public function __construct()
     {
@@ -146,6 +149,18 @@ class Topic
     public function setProfile(?Profile $profile): self
     {
         $this->profile = $profile;
+
+        return $this;
+    }
+
+    public function getPriority(): ?int
+    {
+        return $this->priority;
+    }
+
+    public function setPriority(int $priority): self
+    {
+        $this->priority = $priority;
 
         return $this;
     }

@@ -29,15 +29,16 @@
             <div class="card">
                 <div class="card-body">
                     <div>{{ item.type }}</div>
+                    <div>{{ item.priority }}</div>
                     <div>{{ item.title }}</div>
                     <div>{{ item.description }}</div>
                     <div>{{ item.branch }}</div>
                     <div>{{ item.createdAt|date }}</div>
-                    <td>
+                    <div>
                         {% if item.startedAt %}
                             <b>Started:</b> {{ item.startedAt|date }}
                         {% endif %}
-                    </td>
+                    </div>
                     <div>
                         {% if item.closedAt %}
                             {{ item.closedAt|date }}
