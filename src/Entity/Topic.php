@@ -42,13 +42,14 @@ class Topic
     #[ORM\ManyToOne(targetEntity: Profile::class, inversedBy: 'topics')]
     private $profile;  //current profile (topic owner)
 
-    #[ORM\Column(type: 'integer')]
+    #[ORM\Column(type: 'integer', options: ["default" => 0])]
     private $priority;
 
     public function __construct()
     {
         $this->answers = new ArrayCollection();
         $this->createdAt = new \DateTimeImmutable();
+        $this->priority = 0;
     }
 
     public function __toString(): string
