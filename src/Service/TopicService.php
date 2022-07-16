@@ -36,16 +36,15 @@ class TopicService
 
     public function addOrder($data) : self
     {
-        $this->baseDql .= ' ORDER BY ';
+        if(is_array($data) && sizeof($data) > 0 && sizeof(array_keys($data)) > 0) {
+            $this->baseDql .= ' ORDER BY ';
 
-        //TODO: check array format (keys must be present)
-        if(is_array($data)) {
             foreach ($data as $key => $value) {
-                $this->baseDql .= sprintf("t.%s %s", $key, $value);
+                $this->baseDql .= sprintf("t.%s %s, ", $key, $value);
             }
-        }
 
-        $this->baseDql .= ", t.branch ASC, t.createdAt DESC";
+            $this->baseDql = substr($this->baseDql, 0, -2); //cuting space and , here
+        }
 
         return $this;
     }

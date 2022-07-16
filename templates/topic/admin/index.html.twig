@@ -26,7 +26,7 @@
         <div class="accordion-item">
             <h2 class="accordion-header" id="headingOne">
                 <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="{{ filters_expanded }}" aria-controls="collapseOne">
-                    {{ 'caption.filters' }}
+                    <i class="bi bi-filter"></i> {{ 'caption.filters' }}
                 </button>
             </h2>
             <div id="collapseOne" class="accordion-collapse {% if filters_expanded %}show{% else %}collapse{% endif %}" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
@@ -54,7 +54,7 @@
                 <th scope="col">#</th>
                 <th scope="col">{{ 'title'| trans }}</th>
                 <th scope="col">{{ 'type'| trans }}</th>
-                <th scope="col">{{ 'priority'| trans }}</th>
+                <th scope="col">{{ 'priority'| trans }} <i class="bi bi-sort-up"></i></th>
                 <th scope="col">{{ 'branch'| trans }}</th>
                 <th scope="col">{{ 'createdAt'| trans }}</th>
                 <th scope="col">{{ 'profile'| trans }}</th>
@@ -107,9 +107,21 @@
                 <th scope="col">#</th>
                 <th scope="col">{{ 'title'| trans }}</th>
                 <th scope="col">{{ 'type'| trans }}</th>
-                <th scope="col">{{ 'priority'| trans }}</th>
+                {% if 'priority' in sort|keys %}
+                    {% set prioritySort = sort.priority == 'desc' ?  'asc' : 'desc'  %}
+                    {% set priorityIcon = sort.priority == 'desc' ?  'up' : 'down'  %}
+                    <th scope="col"><a href="{{ path(app.request.attributes.get('_route'), { sort : {'priority' : prioritySort } }) }}">{{ 'priority'| trans }} <i class="bi bi-sort-{{ priorityIcon }}"></i></a></th>
+                {% else %}
+                    <th scope="col"><a href="{{ path(app.request.attributes.get('_route'), { sort : { 'priority' : 'desc' } }) }}">{{ 'priority'| trans }}</a></th>
+                {% endif %}
                 <th scope="col">{{ 'branch'| trans }}</th>
-                <th scope="col">{{ 'createdAt'| trans }}</th>
+                {% if 'createdAt' in sort|keys %}
+                    {% set createdSort = sort.createdAt == 'desc' ?  'asc' : 'desc'  %}
+                    {% set createdIcon = sort.createdAt == 'desc' ?  'up' : 'down'  %}
+                    <th scope="col"><a href="{{ path(app.request.attributes.get('_route'), { sort : { 'createdAt' : createdSort } }) }}">{{ 'createdAt'| trans }} <i class="bi bi-sort-{{ createdIcon }}"></i></a></th>
+                {% else %}
+                    <th scope="col"><a href="{{ path(app.request.attributes.get('_route'), { sort : { 'createdAt' : 'desc' } }) }}">{{ 'createdAt'| trans }}</a></th>
+                {% endif %}
                 <th scope="col">{{ 'profile'| trans }}</th>
                 <th scope="col">{{ 'progress'| trans }}</th>
                 <th scope="col" class="col-2"></th>
@@ -135,7 +147,6 @@
                             <a href="{{ path('admin_profile_show', {id:item.profile.id}) }}">{{ item.profile }}</a>
                         {% else %}
                             <a href="{{ path('admin_topic_edit', {id:item.id})}}"> <i class="bi bi-person-plus"></i></a>
-{#                            {{ item.profile }}#}
                         {% endif %}
                     </td>
                     <td>

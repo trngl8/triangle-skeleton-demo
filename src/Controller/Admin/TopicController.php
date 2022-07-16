@@ -40,11 +40,13 @@ class TopicController extends AbstractController
         $filterData = $request->get('filters') ?? [];
         $filtersExpanded = (bool)$filterData;
         $topicsFilter = new TopicFilter($filterData);
-        $defaultOrder = ['priority' => 'DESC'];
 
         $page = $request->get('page') ?? self::START_PAGE;
+        $sort = $request->get('sort', ['id' => 'desc']);
 
-        $paginator = $this->topicService->addCriteria($filterData)->addOrder($defaultOrder)->getPaginator($page, self::PAGINATOR_COUNT);
+        //TODO: validate $sort
+
+        $paginator = $this->topicService->addCriteria($filterData)->addOrder($sort)->getPaginator($page, self::PAGINATOR_COUNT);
         $c = count($paginator);
 
         $filters = $this->createForm(TopicAdminFilter::class, $topicsFilter);
@@ -89,7 +91,8 @@ class TopicController extends AbstractController
             'page' => $page,
             'pages' => $pages,
             'filters' => $filters->createView(),
-            'filters_expanded' => $filtersExpanded
+            'filters_expanded' => $filtersExpanded,
+            'sort' => $sort
         ]);
     }
 
