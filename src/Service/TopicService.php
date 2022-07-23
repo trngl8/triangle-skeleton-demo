@@ -91,4 +91,9 @@ class TopicService
 
         return $this;
     }
+
+    public function export() : array
+    {
+        return $this->query->getArrayResult();
+    }
 }
