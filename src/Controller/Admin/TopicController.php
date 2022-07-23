@@ -251,4 +251,31 @@ class TopicController extends AbstractController
             'item' => $topic,
         ]);
     }
+
+    #[Route('/export', name: 'export' )]
+    public function export() : Response
+    {
+        $list = $this->topicService->export();
+
+        $fp = fopen('php://temp', 'w');
+
+        foreach ($list as $topic) {
+            $topic = array_map(function ($value) {
+                if($value instanceof \DateTimeInterface) {
+                    return $value->format('Y-m-d');
+                }
+                return $value;
+            }, $topic);
+            fputcsv($fp, $topic, ';');
+        }
+
+        rewind($fp);
+        $response = new Response(stream_get_contents($fp));
+        fclose($fp);
+
+        $response->headers->set('Content-Type', 'text/csv');
+        $response->headers->set('Content-Disposition', 'attachment; filename="topic.csv"');
+
+        return $response;
+    }
 }
