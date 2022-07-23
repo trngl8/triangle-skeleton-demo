@@ -229,4 +229,26 @@ class TopicController extends AbstractController
             'item' => $topic,
         ]);
     }
+
+    #[Route('/change/{id}/priority', name: 'change' )]
+    public function change(Topic $topic, Request $request) : Response
+    {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+
+        $submittedToken = $request->request->get('token');
+
+        if ($this->isCsrfTokenValid('change', $submittedToken)) {
+
+            $this->addFlash('success', 'flash.success.changed');
+
+            //TODO: set dynamic weight property
+            $this->topicService->updateWeight($topic, $topic->getPriority() + 1);
+
+            return $this->redirectToRoute('admin_topic_show', ['id' => $topic->getId()]);
+        }
+
+        return $this->render('topic/admin/change.html.twig', [
+            'item' => $topic,
+        ]);
+    }
 }
