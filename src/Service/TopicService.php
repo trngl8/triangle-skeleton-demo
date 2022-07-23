@@ -82,4 +82,13 @@ class TopicService
 
         return true;
     }
+
+    public function updateWeight(Topic $topic, int $weight) : self
+    {
+        //TODO: create event
+        $topic->setPriority($weight);
+        $this->doctrine->getManager()->flush();
+
+        return $this;
+    }
 }
