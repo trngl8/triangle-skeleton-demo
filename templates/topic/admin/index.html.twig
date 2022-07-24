@@ -17,6 +17,7 @@
     <div class="mb-4">
         {% if button is defined %}
             <a href="{{ path('admin_topic_add') }}" class="btn btn-lg btn-outline-primary"><i class="bi bi-plus-circle"></i> {{ 'button.add'|trans }}</a>
+            <a href="{{ path('admin_topic_export') }}" class="btn btn-lg btn-outline-primary"><i class="bi bi-download"></i> {{ 'button.export'|trans }}</a>
         {% endif %}
     </div>
 {% endblock %}
