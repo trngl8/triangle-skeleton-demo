@@ -4,6 +4,15 @@ cc:
 	php bin/console cache:clear
 .PHONY: cc
 
+update:
+	composer update
+	yarn upgrade
+.PHONY: update
+
+deploy:
+	echo "TODO: create deploy process"
+.PHONY: deploy
+
 tests:
 	php bin/console doctrine:database:drop --env=test --force
 	php bin/console doctrine:database:create --env=test
