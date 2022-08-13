@@ -18,6 +18,8 @@ class TopicAdminType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
+            ->add('product')
+            ->add('project')
             ->add('type', ChoiceType::class, ['choices' => [
                 '' => null,
                 'filter.task' => 'task',
