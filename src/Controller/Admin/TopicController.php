@@ -119,7 +119,7 @@ class TopicController extends AbstractController
         ]);
     }
 
-    #[Route('/edit/{id}', name: 'edit', methods: ['GET', 'POST', 'HEAD'] )]
+    #[Route('/{id}/edit', name: 'edit', methods: ['GET', 'POST', 'HEAD'] )]
     public function edit(Request $request, int $id) : Response
     {
         $topic = $this->doctrine->getRepository(Topic::class)->find($id);
@@ -153,7 +153,7 @@ class TopicController extends AbstractController
         ]);
     }
 
-    #[Route('/remove/{id}', name: 'remove', methods: ['GET', 'POST', 'HEAD'] )]
+    #[Route('/{id}/remove', name: 'remove', methods: ['GET', 'POST', 'HEAD'] )]
     public function remove(Topic $topic, Request $request) : Response
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
@@ -175,7 +175,7 @@ class TopicController extends AbstractController
         ]);
     }
 
-    #[Route('/close/{id}', name: 'close', methods: ['GET', 'POST', 'HEAD'] )]
+    #[Route('/{id}/close', name: 'close', methods: ['GET', 'POST', 'HEAD'] )]
     public function close(Topic $topic, Request $request) : Response
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
@@ -198,7 +198,7 @@ class TopicController extends AbstractController
         ]);
     }
 
-    #[Route('/run/{id}', name: 'run', methods: ['GET', 'POST', 'HEAD'] )]
+    #[Route('/{id}/run', name: 'run', methods: ['GET', 'POST', 'HEAD'] )]
     public function run(Topic $topic, Request $request) : Response
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
@@ -222,7 +222,7 @@ class TopicController extends AbstractController
         ]);
     }
 
-    #[Route('/show/{id}', name: 'show', methods: ['GET', 'HEAD'] )]
+    #[Route('/{id}/show', name: 'show', methods: ['GET', 'HEAD'] )]
     public function show(Topic $topic) : Response
     {
         return $this->render('topic/admin/show.html.twig', [
@@ -230,7 +230,7 @@ class TopicController extends AbstractController
         ]);
     }
 
-    #[Route('/change/{id}/priority', name: 'change' )]
+    #[Route('/{id}/change/priority', name: 'change' )]
     public function change(Topic $topic, Request $request) : Response
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
