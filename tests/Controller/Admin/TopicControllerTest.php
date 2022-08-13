@@ -7,7 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class TopicControllerTest extends WebTestCase
 {
-    public function testAdminSuccess(): void
+    public function testTopicExportSuccess(): void
     {
         $client = static::createClient();
 
@@ -26,5 +26,54 @@ class TopicControllerTest extends WebTestCase
         $this->assertResponseHeaderSame('content-disposition', 'attachment; filename="topic.csv"');
 
         //TODO: check file content
+    }
+
+    public function testTopicEditSuccess(): void
+    {
+        $client = static::createClient();
+
+        $userRepository = static::getContainer()->get(UserRepository::class);
+        $testUser = $userRepository->findOneByUsername('admin@test.com');
+
+        $client->loginUser($testUser);
+
+        $client->request('GET', '/admin/topic/1/edit');
+        $this->assertResponseIsSuccessful();
+        $this->assertSelectorTextContains('h1', 'title.edit_topic');
+    }
+
+    public function testTopicSubmitSuccess(): void
+    {
+        $client = static::createClient();
+        $client->followRedirects();
+
+        $userRepository = static::getContainer()->get(UserRepository::class);
+        $testUser = $userRepository->findOneByUsername('admin@test.com');
+
+        $client->loginUser($testUser);
+
+        $client->request('GET', '/admin/topic/1/edit');
+        $crawler = $client->submitForm('button.submit', [
+            'topic_admin[description]' => 'changed description',
+        ]);
+
+        $this->assertResponseIsSuccessful();
+
+        $client->request('GET', '/admin/topic/1/show');
+
+        $this->assertResponseIsSuccessful();
+    }
+
+    public function testTopic404NotFound(): void
+    {
+        $client = static::createClient();
+
+        $userRepository = static::getContainer()->get(UserRepository::class);
+        $testUser = $userRepository->findOneByUsername('admin@test.com');
+
+        $client->loginUser($testUser);
+
+        $client->request('GET', '/admin/topic/10000000/edit');
+        $this->assertResponseStatusCodeSame(404);
     }
 }

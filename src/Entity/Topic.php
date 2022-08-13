@@ -45,6 +45,12 @@ class Topic
     #[ORM\Column(type: 'integer', options: ["default" => 0])]
     private $priority;
 
+    #[ORM\ManyToOne(inversedBy: 'topics')]
+    private ?Project $project = null;
+
+    #[ORM\ManyToOne(inversedBy: 'topics')]
+    private ?Product $product = null;
+
     public function __construct()
     {
         $this->answers = new ArrayCollection();
@@ -162,6 +168,30 @@ class Topic
     public function setPriority(int $priority): self
     {
         $this->priority = $priority;
+
+        return $this;
+    }
+
+    public function getProject(): ?Project
+    {
+        return $this->project;
+    }
+
+    public function setProject(?Project $project): self
+    {
+        $this->project = $project;
+
+        return $this;
+    }
+
+    public function getProduct(): ?Product
+    {
+        return $this->product;
+    }
+
+    public function setProduct(?Product $product): self
+    {
+        $this->product = $product;
 
         return $this;
     }
