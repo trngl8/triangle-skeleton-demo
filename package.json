@@ -22,6 +22,6 @@
     "dependencies": {
         "bootstrap-icons": "^1.7.2",
         "startbootstrap-sb-admin": "^7.0.4",
-        "webpack": "^5.73.0"
+        "webpack": "^5.74.0"
     }
 }
