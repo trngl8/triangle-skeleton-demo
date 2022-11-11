@@ -10,14 +10,12 @@ class Message
     public string $to;
 
     #[Assert\NotBlank]
-    public string $subject;
+    public string $subject = '';
 
-    public ?string $message;
+    public string $text = '';
 
-    public function __construct(string $to, string $subject)
+    public function __construct(string $to)
     {
         $this->to = $to;
-        $this->subject = $subject;
-        $this->message = $subject;
     }
 }

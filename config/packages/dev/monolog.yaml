@@ -13,6 +13,11 @@ monolog:
         #chromephp:
         #    type: chromephp
         #    level: info
+        paid_orders:
+            type: stream
+            path: "%kernel.logs_dir%/paid_orders_%kernel.environment%.log"
+            level: INFO
+            channels: ["!event", "!doctrine", "!request"]
         console:
             type: console
             process_psr_3_messages: false

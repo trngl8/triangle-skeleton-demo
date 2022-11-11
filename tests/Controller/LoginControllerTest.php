@@ -27,7 +27,6 @@ class LoginControllerTest extends WebTestCase
 
         $client->request('GET', '/');
         $this->assertResponseIsSuccessful();
-        $this->assertSelectorTextContains('h1', '1.0.1-test');
 
         $client->request('GET', '/logout');
         $client->followRedirect();

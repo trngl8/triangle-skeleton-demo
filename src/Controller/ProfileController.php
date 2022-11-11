@@ -31,6 +31,10 @@ class ProfileController extends AbstractController
         $this->denyAccessUnlessGranted('ROLE_USER');
 
         $user = $this->getUser();
+
+        //TODO: show different profiles in view
+        $profiles = $this->repository->findBy(['email' => $user->getUserIdentifier()]);
+
         $profile = $this->repository->findOneBy(['email' => $user->getUserIdentifier()]);
 
         if(!$profile) {
@@ -39,6 +43,7 @@ class ProfileController extends AbstractController
 
         return $this->render('profile/index.html.twig', [
             'profile' => $profile,
+            'profiles' => $profiles,
         ]);
     }
 
@@ -91,6 +96,7 @@ class ProfileController extends AbstractController
 
         return $this->render('profile/edit.html.twig', [
             'form' => $form->createView(),
+            'profile' => $profile,
         ]);
     }
 }

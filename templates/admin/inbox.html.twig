@@ -1,0 +1,25 @@
+{% extends 'admin/index.html.twig' %}
+
+{%block hero %}
+
+{% endblock hero %}
+
+{% block main %}
+    <h1>Inbox</h1>
+    {% if inbox is not defined %}
+        <H3>No inbox items</H3>
+        <!-- TODO: no inbox variable -->
+    {% elseif inbox|length == 0 %}
+        <H4>Empty inbox</H4>
+        <!-- TODO: inbox is empty. Would you to add a new one? -->
+    {% else %}
+        <ul class="list-group">
+            {% for i, item in inbox %}
+                <li class="list-group-item">
+                    <input class="form-check-input me-2" type="checkbox" value="" id="firstCheckbox">
+                    <label class="form-check-label" for="firstCheckbox">{{ item.time }} {{ item.recipient }} {{ item.subject }} {{ item.text }}</label>
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+{% endblock %}

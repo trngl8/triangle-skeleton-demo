@@ -4,7 +4,15 @@
     <h1 class="mb-4">{{ 'title.contact'|trans }}</h1>
 
     <div class="row">
+
         <div class="col-md-6">
+            <ul>
+                <li>{{ 'contacts.info'|trans }}</li>
+                <li>{{ 'contacts.adress'|trans }}</li>
+                <li>{{ 'contacts.box'|trans }}</li>
+                <li>{{ 'contacts.phone'|trans }}</li>
+            </ul>
+            <p><b>Quick answer form</b></p>
             {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
             {{ form_widget(form) }}
             <button type="submit" class="btn-primary btn">{{ 'button.submit'|trans }}</button>

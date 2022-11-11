@@ -17,28 +17,11 @@ class SubscribeController extends AbstractController
 {
     private $subscribeService;
 
-    private $adminEmail;
-
-    public function __construct(SubscribeService $subscribeService, string $adminEmail)
+    public function __construct(SubscribeService $subscribeService)
     {
         $this->subscribeService = $subscribeService;
-        $this->adminEmail = $adminEmail;
     }
 
-    #[Route('/list', name: 'list')]
-    public function list() : Response
-    {
-        $items = [
-            new Subscribe('test', $this->adminEmail, 'uk', 'name', ),
-            new Subscribe('test2', $this->adminEmail, 'uk','name', ),
-            new Subscribe('test MAX', $this->adminEmail, 'uk', 'testmax')
-        ];
-
-        return $this->render('subscribe/list.html.twig', [
-            'items' => $items,
-            'activeName' => 'name',
-        ]);
-    }
 
     #[Route('/add', name: 'add')]
     public function add(Request $request) : Response
@@ -49,6 +32,7 @@ class SubscribeController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
 
+            //TODO: generate event
             $this->subscribeService->initSubscribe($form->getData());
 
             $this->addFlash('success', 'flash.success.subscribe_created');
@@ -71,7 +55,7 @@ class SubscribeController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->addFlash('success', 'flash.success.verify');
-            return $this->redirectToRoute('subscribe_list');
+            return $this->redirectToRoute('app_profile');
         }
 
         return $this->render('subscribe/verify.html.twig', [

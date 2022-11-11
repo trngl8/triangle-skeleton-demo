@@ -14,8 +14,8 @@ class ProjectController extends AbstractController
         $app_navbar = false;
 
         return $this->render('project/index.html.twig', [
-            'controller_name' => 'ProjectController',
-            'app_navbar' => $app_navbar
+            //'controller_name' => 'ProjectController',
+            //'app_navbar' => $app_navbar
         ]);
     }
 }
