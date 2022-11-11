@@ -1,0 +1,33 @@
+{% extends 'offer/offer.html.twig' %}
+
+{% block breadcrumbs %}
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ path('app_index') }}">{{ 'brcmbs.home'|trans }}</a></li>
+            <li class="breadcrumb-item"><a href="{{ path('app_order_index') }}">{{ 'title.orders'|trans }}</a></li>
+            <li class="breadcrumb-item" aria-current="page">{{ 'title.order.payment'|trans }}</li>
+        </ol>
+    </nav>
+{% endblock %}
+
+{% block main %}
+    <h1 class="mb-4">
+        {{ 'title.order.payment'|trans }}
+    </h1>
+    <div class="row">
+        <p>{{ order.offer }}</p>
+        <p>{{ order.uuid }}</p>
+        <p>{{ order.status }}</p>
+        <p>{{ order.description }}</p>
+        <p>{{ order.amount }}{{ order.currency }}</p>
+        <p>{{ order.deliveryEmail }}</p>
+        <div class="col-md-6">
+            <form method="POST" action="{{ form.action }}" accept-charset="utf-8">
+                <input type="hidden" name="data" value="{{ form.data }}" />
+                <input type="hidden" name="signature" value="{{ form.signature }}" />
+                <input type="submit" value="Pay" class="btn btn-lg btn-primary" />
+{#                <input type="image" src="//static.liqpay.ua/buttons/p1en.radius.png" name="btn_text" />#}
+            </form>
+        </div>
+    </div>
+{% endblock %}

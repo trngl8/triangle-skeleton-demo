@@ -1,0 +1,33 @@
+{% extends 'layout.html.twig' %}
+
+{% block breadcrumbs %}
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ path('app_index') }}">{{ 'brcmbs.home'|trans }}</a></li>
+            <li class="breadcrumb-item" aria-current="page">{{ 'title.orders'|trans }}</li>
+        </ol>
+    </nav>
+{% endblock %}
+
+{% block main %}
+    <h1 class="mb-4">
+        {{ 'title.orders'|trans }}
+    </h1>
+    <div class="row">
+        <div class="col-md-6">
+            {% block order_list %}
+                {% if orders is not defined %}
+                    <h3>No orders</h3>
+                {% elseif orders|length == 0 %}
+                    <p><b>Orders list is empty</b></p>
+                {% else %}
+                    <ul>
+                        {% for order in orders %}
+                            <li><a href="{{ path('app_order_status', {'id': order.id}) }}">{{ order }} {{ order.deliveryEmail }}</a></li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            {% endblock  %}
+        </div>
+    </div>
+{% endblock %}

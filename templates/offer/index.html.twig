@@ -1,0 +1,45 @@
+{% extends 'layout.html.twig' %}
+
+{% block breadcrumbs %}
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ path('app_index') }}">{{ 'brcmbs.home'|trans }}</a></li>
+            <li class="breadcrumb-item" aria-current="page">{{ 'title.offer'|trans }}</li>
+        </ol>
+    </nav>
+{% endblock %}
+
+{% block main %}
+    <h1 class="mb-4">
+        {{ 'title.offer'|trans }}
+    </h1>
+    <div class="row">
+        <div class="col-md-6">
+            {% block offer_list %}
+                {% if offers is not defined %}
+                    <h3>No offers</h3>
+{#                    <a href="{{ path('app_offer_add') }}" class="btn btn-outline-primary mt-4">Create new offer</a>#}
+                {% elseif offers|length == 0 %}
+                    <p><b>Offers list is empty</b></p>
+{#                    <a href="{{ path('app_offer_add') }}" class="btn btn-outline-primary mt-4">Create new offer</a>#}
+                {% else %}
+                    <div class="list-group w-auto">
+                    {% for item in offers %}
+                        <a href="{{ path('app_offer_order', {'id': item.id}) }}" class="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">
+                            <div class="d-flex gap-2 w-100 justify-content-between">
+                                <div>
+                                    <h6 class="mb-0">{{ item.id }} {{ item.title }}</h6>
+                                    <p class="mb-0 opacity-75">{{ item.amount }}{{ item.currency }}</p>
+                                    {% if item.active %}<span class="badge bg-success">Best</span>{% endif %}
+                                </div>
+                                <small class="opacity-50 text-nowrap">{{ item.createdAt|date("Y-m-d") }}</small>
+                            </div>
+                        </a>
+                    {% endfor %}
+                    </div>
+                    <a href="{{ path('admin_offer_add') }}" class="btn btn-outline-primary mt-4">Create new offer</a>
+                {% endif %}
+            {% endblock  %}
+        </div>
+    </div>
+{% endblock %}

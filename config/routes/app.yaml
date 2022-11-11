@@ -1,10 +1,10 @@
 app_home:
   path: /
-  controller: App\Controller\DefaultController::home
+  controller: App\Controller\DefaultController::index # home with splash screen
 
-app_info:
-  path: /info
-  controller: App\Controller\DefaultController::info
+app_restricted:
+  path: /restricted
+  controller: App\Controller\DefaultController::home
 
 app_index:
   path: /index
@@ -14,10 +14,30 @@ app_features:
   path: /features
   controller: App\Controller\DefaultController::features
 
-app_contact:
-  path: /contact
-  controller: App\Controller\DefaultController::contact
+app_info:
+  path: /info
+  controller: App\Controller\DefaultController::info
 
 admin:
   path: /admin
   controller: App\Controller\Admin\AdminController::admin
+
+default_module:
+  path: /app
+  controller: App\Controller\OfferController::index
+
+default_action:
+  path: /register
+  controller: App\Controller\SubscribeController::add
+
+app_contact:
+  path: /contact
+  controller: App\Controller\InboxController::contact
+
+app_inbox:
+  path: /inbox
+  controller: App\Controller\InboxController::inbox
+
+admin_inbox:
+  path: /admin/inbox
+  controller: App\Controller\Admin\AdminController::inbox

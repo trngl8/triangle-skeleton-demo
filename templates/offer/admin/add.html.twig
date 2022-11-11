@@ -1,0 +1,20 @@
+{% extends 'offer/admin/index.html.twig' %}
+
+{% block main %}
+    <div class="row">
+        <div class="col-md-8">
+            {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+            <div class="card">
+                <div class="card-body">
+                    {{ form_row(form.title) }}
+                    {{ form_row(form.currency) }}
+                    {{ form_row(form.amount) }}
+                </div>
+            </div>
+            <div class="mt-4">
+                {{ form_widget(form.save, {label : 'button.submit'|trans, attr: {class : 'btn btn-lg btn-primary' }}) }}
+            </div>
+            {{ form_end(form) }}
+        </div>
+    </div>
+{% endblock %}

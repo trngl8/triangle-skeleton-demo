@@ -1,5 +1,14 @@
 {% extends 'layout.html.twig' %}
 
+{% block breadcrumbs %}
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ path('app_index') }}">{{ 'brcmbs.home'|trans }}</a></li>
+            <li class="breadcrumb-item" aria-current="page">{{ 'title.subscribe'|trans }}</li>
+        </ol>
+    </nav>
+{% endblock %}
+
 {% block main %}
 <h1 class="mb-4">{{ 'title.subscribe'|trans }}</h1>
 

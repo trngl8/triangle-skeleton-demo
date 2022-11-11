@@ -13,22 +13,14 @@
         }
     </style>
 {% endblock %}
-{% block simple_navbar %}
-    <div class="container">
-        <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
-            <a href="{{ path('app_index') }}" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
-                {#                <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"/></svg>#}
-                <img src="{{ asset('favicons/favicon.svg') }}" width="40" height="32" alt="">
-                {#                <span class="fs-4">Simple header</span>#}
-            </a>
 
-            <ul class="nav nav-pills">
-                <li class="nav-item"><a href="{{ path('app_index') }}" class="nav-link">Home</a></li>
-                <li class="nav-item"><a href="{{ path('app_project') }}" class="nav-link active" aria-current="page">Projects</a></li>
-                <li class="nav-item"><a href="{{ path('app_info') }}" class="nav-link">About</a></li>
-            </ul>
-        </header>
-    </div>
+{% block breadcrumbs %}
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ path('app_index') }}">{{ 'brcmbs.home'|trans }}</a></li>
+            <li class="breadcrumb-item" aria-current="page">{{ 'title.projects'|trans }}</li>
+        </ol>
+    </nav>
 {% endblock %}
 
 {% block main %}
@@ -54,8 +46,8 @@
             <div>
                 <h2>Inventory</h2>
                 <p>Build storage of products and inventory rules. You can build a simple marketplace system os simple CRM</p>
-                <a href="#" class="btn btn-primary">
-                    Look on storage
+                <a href="{{ path('app_order_index') }}" class="btn btn-outline-primary">
+                    Look to the storage
                 </a>
             </div>
         </div>
@@ -66,7 +58,7 @@
             <div>
                 <h2>Community</h2>
                 <p>Topics, entries of topics and comments to the topics. You can communicate with users and rate each part of content. </p>
-                <a href="{{ path('app_profile_invites') }}" class="btn btn-primary">
+                <a href="{{ path('app_profile_invites') }}" class="btn btn-outline-secondary">
                     See topics
                 </a>
             </div>
