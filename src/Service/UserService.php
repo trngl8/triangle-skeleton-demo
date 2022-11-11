@@ -19,7 +19,7 @@ class UserService
 
     public function create(string $username, string $password) : User
     {
-        $user = (new User())
+        $user = (new User($username))
             ->setUsername($username)
         ;
 

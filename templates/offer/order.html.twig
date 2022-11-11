@@ -1,0 +1,31 @@
+{% extends 'order/index.html.twig' %}
+
+{% block breadcrumbs %}
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ path('app_index') }}">{{ 'brcmbs.home'|trans }}</a></li>
+            <li class="breadcrumb-item"><a href="{{ path('app_offer_index') }}">{{ 'title.offer'|trans }}</a></li>
+            <li class="breadcrumb-item active" aria-current="page">{{ 'title.offer.order'|trans }} {{ offer.title }}</li>
+        </ol>
+    </nav>
+{% endblock %}
+
+{% block main %}
+    <h1 class="mb-4">
+        {{ 'title.offer.order'|trans }} {{ order.title }}
+    </h1>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card mb-5">
+                <div class="card-body">
+                    {{ order.title }}
+                    {{ order.amount }}
+                    {{ order.currency }}
+                    {{ offer.createdAt|date('Y-m-d') }} {# TODO choose format in the settings #}
+                </div>
+            </div>
+            {{ form(form, {'attr': {'novalidate': 'novalidate'}}) }}
+        </div>
+    </div>
+{% endblock %}
