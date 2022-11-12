@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use App\Entity\Order;
 use App\Form\OrderType;
-use App\Model\OrderRequest;
 use App\Service\OfferService;
 use Doctrine\Persistence\ManagerRegistry;
 use Psr\Log\LoggerInterface;
@@ -57,15 +56,6 @@ class OfferController extends AbstractController
 
             $user = $this->getUser();
 
-//            if(!$user) {
-//
-//                //TODO: check profile in cookie
-//                $profiles = $request->cookies->get($_ENV['COOKIE_DOMAIN']);
-//
-//                $profiles = json_decode($profiles, true);
-//
-//            }
-
             if($user) {
                 $orderRequest->deliveryEmail = $user->getUserIdentifier();
             } else {
@@ -85,8 +75,9 @@ class OfferController extends AbstractController
                 $response = $this->redirectToRoute('app_order_payment', [
                     'uuid' => $order->getUuid()
                 ]);
-                $response->headers->setCookie(new Cookie('localhost', json_encode(['deliveryEmail' => $orderRequest->deliveryEmail]), strtotime('tomorrow'), '/',
-                    $_ENV['COOKIE_DOMAIN'], true, true));
+                //TODO: use session storage
+                $response->headers->setCookie(new Cookie('cart', json_encode([$order->getUuid() => $orderRequest->deliveryEmail]), strtotime('tomorrow'), '/',
+                    'localhost', true, true));
 
                 return $response;
             }

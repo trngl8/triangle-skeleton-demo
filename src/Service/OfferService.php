@@ -46,9 +46,14 @@ class OfferService
         return $this->offers->findBy([]);
     }
 
-    public function getOrders(string $key, string $identifier) : array
+    public function getOrders(string $key, string $identifiers) : array
     {
-        return $this->orders->findBy([$key => $identifier]);
+        return $this->orders->findBy([$key => $identifiers]);
+    }
+
+    public function getCartOrders(array $cart) : array
+    {
+        return $this->orders->findBy(['uuid' => array_keys($cart)]);;
     }
 
     public function createOrder(Offer $offer, User $user) : Order

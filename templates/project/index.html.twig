@@ -1,67 +1,49 @@
 {% extends 'layout.html.twig' %}
 
-{% block add_stylesheets %}
-    <style>
-        .icon-square {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 3rem;
-            height: 3rem;
-            font-size: 1.5rem;
-            border-radius: .75rem;
-        }
-    </style>
-{% endblock %}
-
 {% block breadcrumbs %}
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ path('app_index') }}">{{ 'brcmbs.home'|trans }}</a></li>
-            <li class="breadcrumb-item" aria-current="page">{{ 'title.projects'|trans }}</li>
+            {% block parent_breadcrumb %}<li class="breadcrumb-item" aria-current="page">{{ 'title.project.items'|trans }}</li>{% endblock %}
+            {% block current_breadcrumb %}{% endblock %}
         </ol>
     </nav>
 {% endblock %}
 
 {% block main %}
-    <h1 class="mb-4 pb-2">{{ 'title.projects'|trans }}</h1>
+    <h1 class="mb-4">
+        {{ 'title.project.items'|trans }}
+    </h1>
+    <div class="row">
+        <div class="col-md-6">
+            {% block item %}
+            {% endblock %}
+            {% block items_list %}
+                {% if items is not defined %}
+                    <h3>no items</h3>
+                    <a href="#">Report</a>
+                {% elseif items|length == 0 %}
+                    <p><b>items list is empty</b></p>
+                    <a href="#">Report empty</a>
+                {% else %}
+                    <div class="list-group w-auto">
+                        {% for item in items %}
+                            <a href="{% if target_path is defined %}{{ path(target_path, {'id': item.id}) }}{% else %}#{% endif %}" class="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">
+                                <div class="d-flex gap-2 w-100 justify-content-between">
+                                    <div>
+                                        <h6 class="mb-0">{{ item.id }} {{ item.title }}</h6>
+                                        <p class="mb-0 opacity-75">{{ item.type }}</p>
+                                        <p class="mb-0 opacity-75">{{ item.description }}</p>
 
-    <div class="row g-4 py-5 row-cols-1 row-cols-lg-3">
-        <div class="col d-flex align-items-start">
-            <div class="icon-square bg-light text-dark flex-shrink-0 me-3">
-                <i class="bi bi-check-square"></i>
-            </div>
-            <div>
-                <h2>Checks</h2>
-                <p>Check your knowledge on simple tests forms. You can set own test cases</p>
-                <a href="{{ path('check_index') }}" class="btn btn-primary">
-                    Check yourself
-                </a>
-            </div>
+                                        {% if item.active %}<span class="badge bg-success">Best</span>{% endif %}
+                                    </div>
+                                    <small class="opacity-50 text-nowrap">{{ item.createdAt|date("Y-m-d") }}</small>
+                                </div>
+                            </a>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            {% endblock  %}
         </div>
-        <div class="col d-flex align-items-start">
-            <div class="icon-square bg-light text-dark flex-shrink-0 me-3">
-                <i class="bi bi-box-seam"></i>
-            </div>
-            <div>
-                <h2>Inventory</h2>
-                <p>Build storage of products and inventory rules. You can build a simple marketplace system os simple CRM</p>
-                <a href="{{ path('app_order_index') }}" class="btn btn-outline-primary">
-                    Look to the storage
-                </a>
-            </div>
-        </div>
-        <div class="col d-flex align-items-start">
-            <div class="icon-square bg-light text-dark flex-shrink-0 me-3">
-                <i class="bi bi-people-fill"></i>
-            </div>
-            <div>
-                <h2>Community</h2>
-                <p>Topics, entries of topics and comments to the topics. You can communicate with users and rate each part of content. </p>
-                <a href="{{ path('app_profile_invites') }}" class="btn btn-outline-secondary">
-                    See topics
-                </a>
-            </div>
-        </div>
-
+    </div>
 {% endblock %}
