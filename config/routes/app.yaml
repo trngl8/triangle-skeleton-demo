@@ -1,10 +1,10 @@
 app_home:
   path: /
-  controller: App\Controller\DefaultController::index # home with splash screen
+  controller: App\Controller\DefaultController::index
 
 app_restricted:
   path: /restricted
-  controller: App\Controller\DefaultController::home
+  controller: App\Controller\DefaultController::home # splash screen
 
 app_index:
   path: /index
@@ -17,10 +17,6 @@ app_features:
 app_info:
   path: /info
   controller: App\Controller\DefaultController::info
-
-admin:
-  path: /admin
-  controller: App\Controller\Admin\AdminController::admin
 
 default_module:
   path: /app
@@ -37,6 +33,14 @@ app_contact:
 app_inbox:
   path: /inbox
   controller: App\Controller\InboxController::inbox
+
+app_cart:
+  path: /cart
+  controller: App\Controller\CartController::cart
+
+admin:
+  path: /admin
+  controller: App\Controller\Admin\AdminController::admin
 
 admin_inbox:
   path: /admin/inbox

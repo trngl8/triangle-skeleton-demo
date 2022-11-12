@@ -19,6 +19,11 @@ class Product
     #[ORM\Column(length: 255)]
     private ?string $title = null;
 
+    #[ORM\Column(length: 255)]
+    private string $type;
+
+    private string $category;
+
     #[ORM\OneToMany(mappedBy: 'product', targetEntity: Topic::class)]
     private Collection $topics;
 

@@ -11,6 +11,9 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Table(name: 'app_offers')]
 class Offer
 {
+
+    CONST BASE_BORDER = 500;
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -81,6 +84,29 @@ class Offer
         $this->currency = $currency;
 
         return $this;
+    }
+
+    public function getBorder(): ?string
+    {
+        if($this->getAmount() > self::BASE_BORDER) {
+            return 'dark';
+        }
+
+        if($this->getAmount() === self::BASE_BORDER) {
+            return 'warning';
+        }
+
+        return '';
+    }
+
+    public function getPublic(): bool
+    {
+        return true;
+    }
+
+    public function getPrivate(): bool
+    {
+        return $this->active ?: $this->getAmount() >= self::BASE_BORDER;
     }
 
     /**

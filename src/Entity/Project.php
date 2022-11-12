@@ -46,7 +46,6 @@ class Project
 
     public function __construct()
     {
-        $this->active = true;
         $this->createdAt = $this->startAt = new \DateTimeImmutable();
         $this->topics = new ArrayCollection();
     }
@@ -155,6 +154,16 @@ class Project
         $this->icon = $icon;
 
         return $this;
+    }
+
+    public function getBorder(): ?string
+    {
+        //TODO: return primary, secondary, success, danger, warning, info, light, dark
+        if($this->active === true) {
+            return '';
+        }
+
+        return '';
     }
 
     /**

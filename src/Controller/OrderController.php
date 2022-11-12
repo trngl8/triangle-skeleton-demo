@@ -29,17 +29,29 @@ class OrderController extends AbstractController
         $this->logger = $logger;
     }
 
-    #[Route('', name: 'index', methods: ['GET'])]
-    public function index() : Response
+    public function cart(Request $request) : Response
     {
-        //TODO: a Cart here
+        $cookie = $request->cookies->get('cart');
+        $cart = $cookie ? json_decode($cookie, true) : [];
+
+        $orders = $this->offerService->getCartOrders($cart);
+
+        return $this->render('order/index.html.twig', [
+            'orders' => $orders
+        ]);
+    }
+
+    #[Route('', name: 'index', methods: ['GET'])]
+    public function index(Request $request) : Response
+    {
+        $this->denyAccessUnlessGranted('ROLE_USER');
+
         $user = $this->getUser();
 
         if($user) {
             $orders = $this->offerService->getOrders('deliveryEmail', $user->getUserIdentifier());
         } else {
-            //TODO: get current orders
-            $orders = $this->offerService->getCurrentOrders();
+            $orders = [];
         }
 
         return $this->render('order/index.html.twig', [
