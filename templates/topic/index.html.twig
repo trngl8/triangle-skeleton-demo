@@ -1,4 +1,4 @@
-{% extends 'layout.html.twig' %}
+{% extends 'default/features.html.twig' %}
 
 {% block title %}{{ 'text.must_be_replaced'|trans }}{% endblock %}
 
@@ -12,20 +12,27 @@
 {% endblock %}
 
 {% block main %}
-        <h1 class="mb-4">{{ 'title.index'|trans }}</h1>
+        <h1 class="mb-4">{{ 'title.topics'|trans }}</h1>
 
         <div class="row">
-            <div class="col-md-6">
-                <ul>
-                    {% for topic in topics %}
-                        <li><a href="{{ path('topic_show', { id: topic.id}) }}">{{ topic.title }}</a></li>
-                    {% endfor %}
-                </ul>
-
-                {% if button is defined %}
-                    <a href="{{ path(button.route) }}" class="{{ button.classes }}">{{ button.caption|trans }}</a>
+            <div class="col-md-12">
+                {% if topics is not defined %}
+                    <h4>No topics defined</h4>
+                {% elseif topics|length == 0 %}
+                    <p><b>Topics list is empty</b></p>
+                {% else %}
+                    <ol class="list-group list-group-numbered">
+                        {% for item in topics %}
+                            <li class="list-group-item d-flex justify-content-between align-items-start">
+                                <div class="ms-2 me-auto">
+                                    <div class="fw-bold">{{ item.title }}</div>
+                                    {{ item.description }}
+                                </div>
+                                {#                    <span class="badge bg-primary rounded-pill">{{ item.answers|length }}</span>#}
+                            </li>
+                        {% endfor %}
+                    </ol>
                 {% endif %}
-
             </div>
         </div>
 

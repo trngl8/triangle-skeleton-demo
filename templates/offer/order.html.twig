@@ -4,27 +4,35 @@
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ path('app_index') }}">{{ 'brcmbs.home'|trans }}</a></li>
-            <li class="breadcrumb-item"><a href="{{ path('app_offer_index') }}">{{ 'title.offer'|trans }}</a></li>
-            <li class="breadcrumb-item active" aria-current="page">{{ 'title.offer.order'|trans }} {{ offer.title }}</li>
+            <li class="breadcrumb-item"><a href="{{ path('app_offer_index') }}">{{ 'title.offers'|trans }}</a></li>
+            <li class="breadcrumb-item active" aria-current="page">{{ 'title.offers.order'|trans }} {{ offer.title }}</li>
         </ol>
     </nav>
 {% endblock %}
 
 {% block main %}
     <h1 class="mb-4">
-        {{ 'title.offer.order'|trans }} {{ order.title }}
+        {{ 'title.offers.order'|trans }} {{ order.title }}
     </h1>
 
     <div class="row">
         <div class="col-md-6">
-            <div class="card mb-5">
+            <div class="card mb-4 rounded-3 shadow-sm border-{{ offer.border }}">
+                <div class="card-header py-3  text-bg-{{ offer.border }} border-{{ offer.border }}">
+                    <h4 class="my-0 fw-normal">{{ offer.title }}</h4>
+                </div>
                 <div class="card-body">
-                    {{ order.title }}
-                    {{ order.amount }}
-                    {{ order.currency }}
-                    {{ offer.createdAt|date('Y-m-d') }} {# TODO choose format in the settings #}
+                    <h1 class="card-title pricing-card-title">{{ offer.amount }}{{ offer.currency }}<small class="text-muted fw-light">/mo</small></h1>
+                    <ul class="list-unstyled mt-3 mb-4">
+                        <li>120 minutes video</li>
+                        <li>30 examples</li>
+                        <li>10 home tasks</li>
+                        <li>ai support</li>
+                        {{ offer.createdAt|date('Y-m-d') }} {# TODO choose format in the settings #}
+                    </ul>
                 </div>
             </div>
+
             {{ form(form, {'attr': {'novalidate': 'novalidate'}}) }}
         </div>
     </div>

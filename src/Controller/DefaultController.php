@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\Button\LinkToRoute;
-use App\Repository\TopicRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -28,20 +27,5 @@ class DefaultController extends AbstractController
     public function info() : Response
     {
         return $this->render('default/info.html.twig');
-    }
-
-    public function features(TopicRepository $repo) : Response
-    {
-        //use some options
-
-        //TODO: set common features
-        //TODO: set features for each module
-        //TODO: set features for current user
-
-        $topics = $repo->findBy([], ['createdAt' => 'DESC'], 20);
-
-        return $this->render('default/features.html.twig', [
-            'topics' => $topics
-        ]);
     }
 }

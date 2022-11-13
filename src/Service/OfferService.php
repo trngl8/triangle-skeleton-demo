@@ -9,6 +9,7 @@ use App\Model\PaymentResult;
 use App\Model\User;
 use App\Repository\OfferRepository;
 use App\Repository\OrderRepository;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Uid\Uuid;
 
 class OfferService
@@ -40,10 +41,16 @@ class OfferService
         return $this->orders->findBy(['status' => 'new']);
     }
 
+    public function getUserOffers(UserInterface $user) : array
+    {
+        $user->getUserIdentifier(); //TODO: find offer by profile or role
+        return $this->offers->findBy(['active' => true]);
+    }
+
     public function getOffers() : array
     {
-        //TODO: use criteria
-        return $this->offers->findBy([]);
+        $criteria = ['active' => true];
+        return $this->offers->findBy($criteria);
     }
 
     public function getOrders(string $key, string $identifiers) : array
@@ -53,7 +60,7 @@ class OfferService
 
     public function getCartOrders(array $cart) : array
     {
-        return $this->orders->findBy(['uuid' => array_keys($cart)]);;
+        return $this->orders->findBy(['uuid' => array_keys($cart), 'status' => 'new']);
     }
 
     public function createOrder(Offer $offer, User $user) : Order
