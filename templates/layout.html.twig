@@ -2,6 +2,8 @@
 
 {% block title %}{{ app_name }} {{ app.request.pathinfo }} {% endblock %}
 
+{% block modal %}{% endblock %}
+
 {% block simple_navbar %}
 <header class="p-3 border-bottom">
     <div class="container">
@@ -22,6 +24,7 @@
 {#                <input type="search" class="form-control" placeholder="Search..." aria-label="Search">#}
 {#            </form>#}
             {% if is_granted('IS_AUTHENTICATED_FULLY') or is_granted('IS_AUTHENTICATED_REMEMBERED')  %}
+                {% if app.request.pathinfo == '/cart/open' %}
                 <div class="text-white">
                     <a class="btn btn-outline-secondary me-5 position-relative" href="{{ path('app_cart') }}" title="{% if cart_items_count is defined %}More than {{ cart_items_count }} item{% else %}No items in the cart{% endif %}">
                         <i class="bi bi-cart"></i>
@@ -33,6 +36,7 @@
                         {% endif %}
                     </a>
                 </div>
+                {% endif %}
 
                 <div class="text-white">
                     <div class="dropdown">
@@ -46,7 +50,7 @@
                                 <li><a class="dropdown-item" href="{{ path('app_inbox') }}">{{ 'app.inbox'|trans }} {% if incoming_unread_count is defined %}<span class="badge text-bg-secondary">{{ incoming_unread_count }}</span>{% endif %}</a></li>
                             {% endif %}
                             <li><a class="dropdown-item" href="{{ path('app_profile_invites') }}">{{ 'app.invites'|trans }}</a></li>
-                            <li><a class="dropdown-item" href="{{ path('app_order_index') }}">{{ 'app.orders'|trans }}</a></li>
+                            <li><a class="dropdown-item" href="{{ path('app_order_index') }}">{{ 'app.orders'|trans }} {% if cart_items_count is defined %}<span class="badge text-bg-secondary">{{ cart_items_count }}{% endif %}</a></li>
                             <li><a class="dropdown-item" href="{{ path('logout') }}">{{ 'app.logout'|trans }}</a></li>
                         </ul>
                     </div>
@@ -55,6 +59,7 @@
                 </div>
             {% else %}
                 <div class="text-end">
+                    {% if app.request.pathinfo == '/cart/open' %}
                     <a class="btn btn-outline-secondary me-5 position-relative" href="{{ path('app_cart') }}" title="{% if cart_items_count is defined %}More than {{ cart_items_count }} item{% else %}No items in the cart{% endif %}">
                         <i class="bi bi-cart"></i>
                         {% if cart_items_count is defined %}
@@ -64,6 +69,7 @@
                         </span>
                         {% endif %}
                     </a>
+                    {% endif %}
                     <a class="btn btn-outline-primary me-2" href="{{ path('login') }}" title="Log in when you have an account">Login</a>
                     <a class="btn btn-primary me-2" href="{{ path('subscribe_add') }}" title="Register when you have no account">Sign-up</a>
                 </div>

@@ -10,10 +10,6 @@ app_index:
   path: /index
   controller: App\Controller\DefaultController::index
 
-app_features:
-  path: /features
-  controller: App\Controller\DefaultController::features
-
 app_info:
   path: /info
   controller: App\Controller\DefaultController::info
@@ -45,3 +41,7 @@ admin:
 admin_inbox:
   path: /admin/inbox
   controller: App\Controller\Admin\AdminController::inbox
+
+app_features:
+  path: /features
+  controller: App\Controller\TopicController::index

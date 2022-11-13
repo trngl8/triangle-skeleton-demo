@@ -34,7 +34,12 @@ class OfferController extends AbstractController
     {
         $user = $this->getUser();
 
-        $offers = $this->offerService->getOffers($user);
+        if($user) {
+            //TODO get profile offers
+            $offers = $this->offerService->getUserOffers($user);
+        } else {
+            $offers = $this->offerService->getOffers();
+        }
 
         return $this->render('offer/index.html.twig', [
             'offers' => $offers
@@ -44,6 +49,9 @@ class OfferController extends AbstractController
     #[Route('/{id}/order', name: 'order', methods: ['GET', 'POST'])]
     public function order(int $id, Request $request) : Response
     {
+        $this->denyAccessUnlessGranted('ROLE_USER');
+
+        //TODO: check user permission for (on) the offer
         $offer = $this->offerService->getOffer($id);
 
         //TODO: create subscribe event
