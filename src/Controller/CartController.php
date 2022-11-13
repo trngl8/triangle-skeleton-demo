@@ -32,7 +32,6 @@ class CartController extends AbstractController
         //TODO: transform cart into stored orders
         $orders = $this->offerService->getCartOrders($cart);
 
-
         return $this->render('order/index.html.twig', [
             'orders' => $orders
         ]);
