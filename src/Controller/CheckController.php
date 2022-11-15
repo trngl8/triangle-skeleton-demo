@@ -36,16 +36,13 @@ class CheckController extends AbstractController
     #[Route('/check', name: 'check_index')]
     public function index(): Response
     {
-        $app_navbar = false;
+        $categories = ['php', 'python', 'java', 'javascript', 'go'];
 
         $topics = $this->repository->findBy([]);
 
-        $button = new LinkToRoute('check_add', 'button.add');
-
         return $this->render('check/index.html.twig', [
             'items' => $topics,
-            'button' => $button,
-            'app_navbar' => $app_navbar
+            'categories' => $categories,
         ]);
     }
 

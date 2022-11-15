@@ -3,6 +3,9 @@
 namespace App\Model;
 use Symfony\Component\Validator\Constraints as Assert;
 
+/**
+ * A registration DTO
+ */
 class Subscribe
 {
     CONST DEFAULT_TYPE = 'email'; //direct

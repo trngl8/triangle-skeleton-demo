@@ -50,7 +50,6 @@ class ProfileController extends AbstractController
     #[Route('/profile/invites', name: 'app_profile_invites')]
     public function invites(): Response
     {
-        $app_navbar = false;
         $this->denyAccessUnlessGranted('ROLE_USER');
 
         $user = $this->getUser();
@@ -62,7 +61,6 @@ class ProfileController extends AbstractController
 
         return $this->render('profile/invites.html.twig', [
             'profile' => $profile,
-            'app_navbar' => $app_navbar
         ]);
     }
 

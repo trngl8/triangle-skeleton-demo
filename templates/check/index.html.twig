@@ -2,22 +2,48 @@
 
 {% block title %}{{ 'text.must_be_replaced'|trans }}{% endblock %}
 
+{% block breadcrumbs %}
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ path('app_index') }}">{{ 'brcmbs.home'|trans }}</a></li>
+            <li class="breadcrumb-item" aria-current="page">{{ 'title.checks'|trans }}</li>
+        </ol>
+    </nav>
+{% endblock %}
+
 {% block main %}
     <h1 class="mb-4">{{ 'title.checks'|trans }}</h1>
-    {% if items is defined and items|length > 0 %}
-        <div class="list-group">
-            {% for item in items %}
-            <a href="{{ path('check_show', { id: item.id })}}" class="list-group-item list-group-item-action" aria-current="true">
-                {{ item.title }}
-            </a>
+    <div class="container">
+        <div class="row row-cols-3">
+            {% for category in categories %}
+                <div class="col">
+                    <div class="card mt-4">
+                        <div class="card-body">
+
+                            <h1><i class="devicon-{{ category }}-plain"></i></h1>
+
+                            <h5 class="card-title">{{ category }}</h5>
+                            <h6 class="card-subtitle mb-2 text-muted">{{ category|title }}</h6>
+                            <p class="card-text">primitives, variables, types, object, lists, arrays, test, queues, tuples, sets joins</p>
+                            <a href="#" class="card-link btn btn-outline-secondary">{{ 'test.action' }}</a>
+                            <a href="#" class="card-link">{{ 'test.rules' }}</a>
+                        </div>
+                    </div>
+                </div>
             {% endfor %}
         </div>
-    {% else %}
-        <p>{{ 'message.no_items'|trans}}</p>
-    {% endif %}
+    </div>
 
-{#    {% if button is defined %}#}
-{#        <a href="{{ path('check_add') }}" class="btn btn-outline-primary">{{ 'button.add'|trans }}</a>#}
+{#    {% if items is defined and items|length > 0 %}#}
+{#        <div class="list-group">#}
+{#            {% for item in items %}#}
+{#            <a href="{{ path('check_show', { id: item.id })}}" class="list-group-item list-group-item-action" aria-current="true">#}
+{#                {{ item.title }}#}
+{#            </a>#}
+{#            {% endfor %}#}
+{#        </div>#}
+{#    {% else %}#}
+{#        <p>{{ 'message.no_items'|trans}}</p>#}
 {#    {% endif %}#}
 
 {% endblock %}

@@ -26,6 +26,13 @@ class SubscribeController extends AbstractController
     #[Route('/add', name: 'add')]
     public function add(Request $request) : Response
     {
+        $user = $this->getUser();
+
+        if($user) {
+            $this->addFlash('warning', 'flash.warning.already_logged_in');
+            return $this->redirectToRoute('app_profile', ['ref' => sha1($user->getUserIdentifier())]); //default profile
+        }
+
         $form = $this->createForm(SubscribeType::class,  new Subscribe());
 
         $form->handleRequest($request);
@@ -48,6 +55,14 @@ class SubscribeController extends AbstractController
     #[Route('/verify', name: 'verify')]
     public function verify(Request $request) : Response
     {
+        $user = $this->getUser();
+
+        if(!$user) {
+            //TODO: check message
+            $this->addFlash('warning', 'flash.warning.not_logged_in');
+            return $this->redirectToRoute('login');
+        }
+
         $verify = new Verify('test');
         $form = $this->createForm(VerifyType::class, $verify);
 

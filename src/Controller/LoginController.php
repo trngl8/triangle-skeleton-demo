@@ -16,6 +16,7 @@ class LoginController extends AbstractController
         $user = $this->getUser();
 
         if($user) {
+            $this->addFlash('warning', 'flash.warning.already_logged_in');
             return $this->redirectToRoute('app_profile', ['ref' => sha1($user->getUserIdentifier())]); //default profile
         }
 
