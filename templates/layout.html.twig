@@ -12,11 +12,16 @@
                 <img src="{{ asset('favicons/favicon.svg') }}" width="32" height="32" alt="{{ app_name }}">
             </a>
             <ul class="nav nav-col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-                <li><a href="{{ path('app_index') }}" class="nav-link px-2 {% if app.request.pathinfo == '/index' %}text-secondary{% endif %}">{{ 'menu.home'|trans }}</a></li>
-                <li><a href="{{ path('app_product_index') }}" class="nav-link px-2 {% if app.request.pathinfo == '/product' %}text-secondary{% endif %}">{{ 'menu.products'|trans }}</a></li>
-                <li><a href="{{ path('app_project_index') }}" class="nav-link px-2 {% if app.request.pathinfo == '/project' %}text-secondary{% endif %}">{{ 'menu.projects'|trans }}</a></li>
-                <li><a href="{{ path('app_offer_index') }}" class="nav-link px-2 {% if app.request.pathinfo == '/offer' or  app.request.pathinfo == '/app' %}text-secondary{% endif %}">{{ 'menu.offers'|trans }}</a></li>
-                <li><a href="{{ path('app_features') }}" class="nav-link px-2 {% if app.request.pathinfo == '/features' %}text-secondary{% endif %}">{{ 'menu.features'|trans }}</a></li>
+                <li><a href="{{ path('app_index') }}" class="nav-link px-2 {% if app.request.pathinfo == '/index' %}text-secondary{% endif %} position-relative">{{ 'menu.home'|trans }}</a></li>
+                <li><a href="{{ path('app_product_index') }}" class="nav-link px-2 {% if app.request.pathinfo == '/product' %}text-secondary{% endif %} position-relative">{{ 'menu.products'|trans }}</a></li>
+                <li><a href="{{ path('app_project_index') }}" class="nav-link px-2 {% if app.request.pathinfo == '/project' %}text-secondary{% endif %} position-relative">{{ 'menu.projects'|trans }}</a></li>
+                <li><a href="{{ path('app_offer_index') }}" class="nav-link px-2 {% if app.request.pathinfo == '/offer' or  app.request.pathinfo == '/app' %}text-secondary{% endif %} position-relative">{{ 'menu.offers'|trans }}
+                        {% if cart_items_count is defined %}
+                        <small><span class="badge text-bg-warning" title="new items">1</span></small>
+                        {% endif %}
+                    </a>
+                </li>
+                <li><a href="{{ path('app_features') }}" class="nav-link px-2 {% if app.request.pathinfo == '/features' %}text-secondary{% endif %} position-relative">{{ 'menu.features'|trans }}</a></li>
 {#                <li><a href="{{ path('app_info') }}" class="nav-link px-2 {% if app.request.pathinfo == '/info' %}text-secondary{% endif %}">{{ 'menu.about'|trans }}</a></li>#}
             </ul>
 

@@ -18,7 +18,82 @@
                 </div>
             </div>
         </div>
+
+{#        <div class="container px-4 py-5" id="icon-grid">#}
+{#            <h2 class="pb-2 border-bottom">Courses</h2>#}
+{#            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4 py-5">#}
+{#                <div class="col d-flex align-items-start">#}
+{#                    <h1><i class="devicon-javascript-plain me-3"></i></h1>#}
+{#                    <div>#}
+{#                        <h3 class="fw-bold mb-0 fs-4">JavaScript</h3>#}
+{#                        <p>primitives, objects, prototypes, Vue, React</p>#}
+{#                        <p>#}
+{#                            <span class="badge text-bg-secondary">Secondary</span>#}
+{#                            <span class="badge text-bg-success">Success</span>#}
+{#                            <span class="badge text-bg-warning">Warning</span>#}
+{#                        </p>#}
+{#                        <a href="#" class="btn btn-sm btn-outline-secondary" title="details instructions">Details</a>#}
+{#                    </div>#}
+{#                </div>#}
+{#                <div class="col d-flex align-items-start">#}
+{#                    <h1><i class="devicon-python-plain me-3"></i></h1>#}
+{#                    <div>#}
+{#                        <h3 class="fw-bold mb-0 fs-4">Python</h3>#}
+{#                        <p>list, dict, tuple, set, Django</p>#}
+{#                        <p>#}
+{#                            <span class="badge text-bg-info">Info</span>#}
+{#                            <span class="badge text-bg-light">Light</span>#}
+{#                            <span class="badge text-bg-dark">Dark</span>#}
+{#                        </p>#}
+{#                        <a href="#" class="btn btn-sm btn-outline-primary" title="details instructions">Join course</a>#}
+{#                    </div>#}
+{#                </div>#}
+{#                <div class="col d-flex align-items-start">#}
+{#                    <h1><i class="devicon-java-plain me-3"></i></h1>#}
+{#                    <div>#}
+{#                        <h3 class="fw-bold mb-0 fs-4">Java</h3>#}
+{#                        <p>OOP, Objects, Maps, Patterns</p>#}
+{#                        <p>#}
+{#                            <span class="badge text-bg-primary">Primary</span>#}
+{#                            <span class="badge text-bg-secondary">Secondary</span>#}
+{#                            <span class="badge text-bg-success">Success</span>#}
+{#                        </p>#}
+{#                        <a href="#" class="btn btn-sm btn-outline-secondary" title="details instructions">Not started yet</a>#}
+{#                    </div>#}
+{#                </div>#}
+{#                <div class="col d-flex align-items-start">#}
+{#                    <h1><i class="devicon-go-plain me-3"></i></h1>#}
+{#                    <div>#}
+{#                        <h3 class="fw-bold mb-0 fs-4">Go</h3>#}
+{#                        <p>modules, generics, REST</p>#}
+{#                        <p>#}
+{#                            <span class="badge text-bg-danger">Hard</span>#}
+{#                            <span class="badge text-bg-dark">Dark</span>#}
+{#                        </p>#}
+{#                        <a href="#" class="btn btn-sm btn-outline-primary" title="details instructions">Join course</a>#}
+{#                    </div>#}
+{#                </div>#}
+{#            </div>#}
+{#        </div>#}
     </div>
+
+    {% if products is defined %}
+    <div class="container px-4 py-5" id="featured-3">
+        <h2 class="pb-2 border-bottom">Active courses</h2>
+        <div class="row g-4 py-5 row-cols-1 row-cols-lg-3">
+            {% for item in products %}
+            <div class="feature col">
+                <div class="feature-icon d-inline-flex align-items-center justify-content-center fs-2 mb-3">
+                    {{ item.imageTag|raw }}
+                </div>
+                <h3 class="fs-2">{{ item.title }}</h3>
+                <p>{{ item.description }}</p>
+                <a href="{{ path('app_product_show', { alias : item.id}) }}" class="btn btn-sm btn-outline-dark" title="details instructions">Join course</a>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
 {% endblock hero %}
 
 {% block main %}
