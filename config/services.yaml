@@ -28,5 +28,8 @@ services:
             - '../src/Kernel.php'
             - '../src/Tests/'
 
+    App\EventSubscriber\LocaleControllerSubscriber:
+        arguments: ['%kernel.default_locale%']
+
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
