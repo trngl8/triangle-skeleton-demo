@@ -13,6 +13,10 @@
     <h1 class="mb-4">
         {{ 'title.offers'|trans }}
     </h1>
+    <div class="mb-5 mt-5">
+        <p>During current <b>configuration</b> you are only able to have one active order.</p>
+    </div>
+
     <div class="row">
         <div class="col-md-12">
             {% block offer_list %}
@@ -53,7 +57,7 @@
                         {% endfor %}
                     </div>
 
-                    <a href="{{ path('subscribe_add') }}">Sign up for free</a>
+                    <a href="{{ path('subscribe_add') }}" class="btn btn-outline-secondary">Sign up free offer</a>
 
                     <h2 class="display-6 text-center mb-4">Compare plans</h2>
 

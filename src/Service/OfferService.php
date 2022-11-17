@@ -4,6 +4,7 @@ namespace App\Service;
 
 use App\Entity\Offer;
 use App\Entity\Order;
+use App\Entity\Product;
 use App\Model\OrderRequest;
 use App\Model\PaymentResult;
 use App\Model\User;
@@ -47,10 +48,10 @@ class OfferService
         return $this->offers->findBy(['active' => true]);
     }
 
-    public function getOffers() : array
+    public function getOffers(Product $product = null) : array
     {
         $criteria = ['active' => true];
-        return $this->offers->findBy($criteria);
+        return $this->offers->findBy($criteria, ['amount' => 'ASC'], 3);
     }
 
     public function getOrders(string $key, string $identifiers) : array

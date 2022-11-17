@@ -47,6 +47,14 @@ class Offer
         $this->orders = new ArrayCollection();
     }
 
+    public function getOfferProperties(Product $product) : array
+    {
+        return [
+            'level' => $product->getLevel(),
+            'properties' => $product->getAbilities(),
+        ];
+    }
+
     public function __toString(): string
     {
         return $this->title;

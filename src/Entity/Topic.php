@@ -48,7 +48,7 @@ class Topic
     #[ORM\ManyToOne(inversedBy: 'topics')]
     private ?Project $project = null;
 
-    #[ORM\ManyToOne(inversedBy: 'topics')]
+    #[ORM\ManyToOne]
     private ?Product $product = null;
 
     public function __construct()
