@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\Button\LinkToRoute;
-use App\Repository\OfferRepository;
 use App\Repository\ProductRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;

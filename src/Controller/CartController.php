@@ -23,19 +23,10 @@ class CartController extends AbstractController
 
     public function cart(Request $request) : Response
     {
-        $cookie = $request->cookies->get('cart');
-        $cart = $cookie ? json_decode($cookie, true) : [];
+        //TODO: describe cart action and template
 
-        //TODO: get cart products
-        $orders = $this->offerService->getCartOrders($cart);
-
-        $response = $this->render('order/index.html.twig', [
-            'orders' => $orders
+        return $this->forward('App\Controller\OrderController::index', [
+            'request' => $request
         ]);
-
-        $response->headers->setCookie(new Cookie('cart', json_encode([$order->getUuid()]), strtotime('-1 day'), '/',
-            'localhost', true, true));
-
-        return $response;
     }
 }

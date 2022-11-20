@@ -30,17 +30,17 @@ class SubscribeController extends AbstractController
 
         if($user) {
             $this->addFlash('warning', 'flash.warning.already_logged_in');
-            return $this->redirectToRoute('app_profile', ['ref' => sha1($user->getUserIdentifier())]); //default profile
         }
 
-        $form = $this->createForm(SubscribeType::class,  new Subscribe());
+        $subscription = new Subscribe();
+        $form = $this->createForm(SubscribeType::class,  $subscription);
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
 
             //TODO: generate event
-            $this->subscribeService->initSubscribe($form->getData());
+            $this->subscribeService->initSubscribe($subscription);
 
             $this->addFlash('success', 'flash.success.subscribe_created');
 
@@ -60,7 +60,6 @@ class SubscribeController extends AbstractController
         if(!$user) {
             //TODO: check message
             $this->addFlash('warning', 'flash.warning.not_logged_in');
-            return $this->redirectToRoute('login');
         }
 
         $verify = new Verify('test');

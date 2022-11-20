@@ -38,5 +38,6 @@ class DefaultControllerTest extends WebTestCase
         yield ['restricted'];
         yield ['product'];
         yield ['cart'];
+        yield ['order'];
     }
 }

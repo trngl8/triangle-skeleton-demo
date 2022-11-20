@@ -32,8 +32,7 @@ class OrderController extends AbstractController
     #[Route('', name: 'index', methods: ['GET'])]
     public function index(Request $request) : Response
     {
-        $cookie = $request->cookies->get('cart');
-        $cart = $cookie ? json_decode($cookie, true) : [];
+        $cart = $request->getSession()->get('cart', []);
 
         $orders = $this->offerService->getCartOrders($cart);
 
@@ -66,9 +65,13 @@ class OrderController extends AbstractController
     {
         $order = $this->offerService->getOrder($uuid);
 
-        //TODO: add status recheck
+        if ($order->getStatus() === 'new') {
+            // TODO: check payment status
+            // TODO: add flash message
+            return $this->redirectToRoute('app_order_payment', ['uuid' => $uuid]);
+        }
 
-        return $this->render('order/result.html.twig', [
+        return $this->render('order/status.html.twig', [
             'order' => $order,
         ]);
     }
@@ -79,7 +82,6 @@ class OrderController extends AbstractController
         //TODO: secure this route
         $order = $this->offerService->getOrder($uuid);
 
-        //
         $res = $this->offerService->paymentApi($order);
 
         $payment = new PaymentResult($order, $res);
@@ -91,6 +93,8 @@ class OrderController extends AbstractController
         }
 
         if($payment->getStatus() === 'success' ) {
+            $request->getSession()->set('cart', null);
+
             $order->setStatus('paid');
 
             $this->doctrine->getManager()->flush();

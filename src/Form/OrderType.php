@@ -8,6 +8,7 @@ use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
@@ -26,22 +27,30 @@ class OrderType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $builder
-            ->add('title', HiddenType::class)
-            ->add('currency', HiddenType::class)
-            ->add('amount', HiddenType::class)
-            ->add('description', TextareaType::class)
-        ;
-
         $user = $this->security->getUser();
 
         $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) use ($user){
             if(!$user) {
-                $event->getForm()->add('deliveryEmail', null, [
-                    'label' => 'label.email'
+                $event->getForm()->add('description', TextType::class, [
+                    'label' => 'form.label.contact_email',
+                ]);
+            }
+
+            if($user) {
+                $event->getForm()->add('description', TextareaType::class, [
+                    'label' => 'form.label.description'
                 ]);
             }
         });
+
+        $builder
+            ->add('title', HiddenType::class)
+            ->add('currency', HiddenType::class)
+            ->add('amount', HiddenType::class)
+            //->add('description', TextareaType::class)
+        ;
+
+
 
         $builder
             ->add('agree', CheckboxType::class, [
@@ -51,9 +60,7 @@ class OrderType extends AbstractType
                         'message' => 'You should agree to our terms.',
                     ]),
                 ],
-            ])
-            ->add('submit', SubmitType::class, [
-                'label' => 'button.order'
+                'label' => 'form.label.agree'
             ])
         ;
     }

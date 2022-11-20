@@ -27,7 +27,7 @@ class ProjectController extends AbstractController
     #[Route('', name: 'index')]
     public function index(): Response
     {
-        $projects = $this->projects->findAll();
+        $projects = $this->projects->findBy([], ['startAt' => 'DESC'], 5);
 
         return $this->render('project/index.html.twig', [
             'items' => $projects,
@@ -44,7 +44,7 @@ class ProjectController extends AbstractController
             throw $this->createNotFoundException();
         }
 
-        $offers = $this->offers->findAll(['project' => $project]);
+        $offers = $this->offers->findHumanSupport();
 
         return $this->render('project/join.html.twig', [
             'item' => $project,

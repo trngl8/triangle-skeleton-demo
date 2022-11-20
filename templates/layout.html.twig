@@ -8,7 +8,7 @@
 <header class="p-3 border-bottom">
     <div class="container">
         <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-            <a href="{{ path('app_index') }}" class="d-flex align-items-center mb-2 mb-lg-0 text-decoration-none">
+            <a href="{{ path('app_index') }}" class="d-flex align-items-center mb-2 me-4 mb-lg-0 text-decoration-none">
                 <img src="{{ asset('favicons/favicon.svg') }}" width="32" height="32" alt="{{ app_name }}">
             </a>
             <ul class="nav nav-col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
@@ -49,13 +49,13 @@
                             <i class="bi bi-person"></i>
                         </a>
 
-                        <ul class="dropdown-menu">
+                        <ul class="dropdown-menu dropdown-menu-end">
                             <li><a class="dropdown-item" href="{{ path('app_profile') }}">{{ 'app.profile'|trans }}</a></li>
                             {% if is_granted('IS_AUTHENTICATED_FULLY') %}
                                 <li><a class="dropdown-item" href="{{ path('app_inbox') }}">{{ 'app.inbox'|trans }} {% if incoming_unread_count is defined %}<span class="badge text-bg-secondary">{{ incoming_unread_count }}</span>{% endif %}</a></li>
                             {% endif %}
                             <li><a class="dropdown-item" href="{{ path('app_profile_invites') }}">{{ 'app.invites'|trans }}</a></li>
-                            <li><a class="dropdown-item" href="{{ path('app_order_index') }}">{{ 'app.orders'|trans }} {% if cart_items_count is defined %}<span class="badge text-bg-secondary">{{ cart_items_count }}{% endif %}</a></li>
+                            <li><a class="dropdown-item" href="{{ path('app_order_index') }}">{{ 'app.orders'|trans }} {% if cart_items_count is defined %}<span class="badge text-bg-secondary">{{ cart_items_count }}{% endif %} </span></a></li>
                             <li><a class="dropdown-item" href="{{ path('logout') }}">{{ 'app.logout'|trans }}</a></li>
                         </ul>
                     </div>
@@ -75,7 +75,14 @@
                         {% endif %}
                     </a>
                     {% endif %}
-                    <a class="btn btn-outline-primary me-2" href="{{ path('login') }}" title="Log in when you have an account">Login</a>
+                    <a class="btn btn-outline-primary me-2 position-relative" href="{{ path('login') }}" title="Log in when you have an account">
+                        {{ 'button.login'|trans }}
+{#                        {% if app.session.get('cart') %}#}
+                        <span class="position-absolute top-0 start-100 translate-middle p-2 bg-warning border border-light rounded-circle">
+                            <span class="visually-hidden">New alerts</span>
+                        </span>
+{#                        {% endif %}#}
+                    </a>
                     <a class="btn btn-primary me-2" href="{{ path('subscribe_add') }}" title="Register when you have no account">Sign-up</a>
                 </div>
             {% endif %}
@@ -157,19 +164,19 @@
 
             {% for message in app.flashes('success') %}
                 <div class="alert alert-secondary" role="alert">
-                    {{ message }}
+                    {{ message|trans }}
                 </div>
             {% endfor %}
 
             {% for message in app.flashes('error') %}
                 <div class="alert alert-danger" role="alert">
-                    {{ message }}
+                    {{ message|trans }}
                 </div>
             {% endfor %}
 
             {% for message in app.flashes('warning') %}
                 <div class="alert alert-warning" role="alert">
-                    {{ message }}
+                    {{ message|trans }}
                 </div>
             {% endfor %}
 

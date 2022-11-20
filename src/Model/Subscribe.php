@@ -28,4 +28,9 @@ class Subscribe
 
     #[Assert\NotBlank]
     public $know;
+
+    public function getType() : string
+    {
+        return $this->type;
+    }
 }

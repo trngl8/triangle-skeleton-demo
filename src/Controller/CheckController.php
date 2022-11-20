@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use App\Button\LinkToRoute;
 use App\Entity\Check;
 use App\Entity\Option;
 use App\Form\OptionType;

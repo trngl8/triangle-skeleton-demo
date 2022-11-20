@@ -6,11 +6,8 @@ use App\Entity\Offer;
 use App\Entity\Order;
 use App\Entity\Product;
 use App\Model\OrderRequest;
-use App\Model\PaymentResult;
-use App\Model\User;
 use App\Repository\OfferRepository;
 use App\Repository\OrderRepository;
-use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Uid\Uuid;
 
 class OfferService
@@ -37,17 +34,6 @@ class OfferService
         return $this->orders->findOneBy(['uuid' => $id]);
     }
 
-    public function getCurrentOrders(): array
-    {
-        return $this->orders->findBy(['status' => 'new']);
-    }
-
-    public function getUserOffers(UserInterface $user) : array
-    {
-        $user->getUserIdentifier(); //TODO: find offer by profile or role
-        return $this->offers->findBy(['active' => true]);
-    }
-
     public function getOffers(Product $product = null) : array
     {
         $criteria = ['active' => true];
@@ -61,17 +47,7 @@ class OfferService
 
     public function getCartOrders(array $cart) : array
     {
-        return $this->orders->findBy(['uuid' => array_keys($cart), 'status' => 'new']);
-    }
-
-    public function createOrder(Offer $offer, User $user) : Order
-    {
-        return new Order($offer, $user->getEmail(), 'description');
-    }
-
-    public function createPayment(Order $order, array $res) : PaymentResult
-    {
-        return new PaymentResult($order, $res);
+        return $this->orders->findBy(['uuid' => array_values($cart), 'status' => 'new']);
     }
 
     public function createOrderRequest(Offer $offer) : OrderRequest
@@ -96,7 +72,7 @@ class OfferService
         ]);
     }
 
-    public function paymentApi(Order $order)
+    public function paymentApi(Order $order) : array
     {
         //TODO: check request signature
         return $this->paymentService->apiCall("request", [

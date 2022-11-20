@@ -34,12 +34,8 @@ class OfferController extends AbstractController
     {
         $user = $this->getUser();
 
-        if($user) {
-            //TODO get profile offers
-            $offers = $this->offerService->getUserOffers($user);
-        } else {
-            $offers = $this->offerService->getOffers();
-        }
+        //TODO: get current profile
+        $offers = $this->offerService->getOffers();
 
         return $this->render('offer/index.html.twig', [
             'offers' => $offers
@@ -49,9 +45,9 @@ class OfferController extends AbstractController
     #[Route('/{id}/order', name: 'order', methods: ['GET', 'POST'])]
     public function order(int $id, Request $request) : Response
     {
-        $this->denyAccessUnlessGranted('ROLE_USER');
+        $session = $request->getSession();
+        $cart = $session->get('cart', []);
 
-        //TODO: check user permission for (on) the offer
         $offer = $this->offerService->getOffer($id);
 
         //TODO: create subscribe event
@@ -65,17 +61,19 @@ class OfferController extends AbstractController
             $user = $this->getUser();
 
             if($user) {
-                $orderRequest->deliveryEmail = $user->getUserIdentifier();
-            } else {
-                $orderRequest->deliveryEmail = 'test@test.com';
+                //TODO recheck
+                $orderRequest->description = $user->getUserIdentifier();
             }
 
-            $order = new Order($offer, $orderRequest->deliveryEmail, $orderRequest->description);
+            $order = new Order($offer, $orderRequest->description, $orderRequest->description);
 
+            $session->set('cart', []);
             $this->doctrine->getManager()->persist($order);
             $this->doctrine->getManager()->flush();
 
             $this->logger->info('Order created', ['order' => $order]);
+
+            $cart[] = $order->getUuid();
 
             $this->addFlash('success', 'flash.success.order_created');
 
@@ -84,16 +82,22 @@ class OfferController extends AbstractController
                     'uuid' => $order->getUuid()
                 ]);
                 //TODO: use session storage
-                $response->headers->setCookie(new Cookie('cart', json_encode([$order->getUuid() => $orderRequest->deliveryEmail]), strtotime('tomorrow'), '/',
+                $response->headers->setCookie(new Cookie('cart', json_encode([$order->getUuid() => $order->getUuid()]), strtotime('tomorrow'), '/',
                     'localhost', true, true));
+
+                $session->set('cart', $cart);
 
                 return $response;
             }
+
+            $session->set('cart', $cart);
 
             return $this->redirectToRoute('app_order_result', [
                 'uuid' => $order->getUuid()
             ]);
         }
+
+        $session->set('cart', $cart);
 
         return $this->render('offer/order.html.twig', [
             'order' => $orderRequest,

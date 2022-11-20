@@ -4,7 +4,7 @@
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ path('app_index') }}">{{ 'brcmbs.home'|trans }}</a></li>
-            {% block parent_breadcrumb %}<li class="breadcrumb-item" aria-current="page">{{ 'title.project.items'|trans }}</li>{% endblock %}
+            {% block parent_breadcrumb %}<li class="breadcrumb-item" aria-current="page">{{ 'title.projects'|trans }}</li>{% endblock %}
             {% block current_breadcrumb %}{% endblock %}
         </ol>
     </nav>
@@ -12,7 +12,7 @@
 
 {% block main %}
     <h1 class="mb-4">
-        {{ 'title.project.items'|trans }}
+        {{ 'title.projects'|trans }}
     </h1>
     <div class="row">
         <div class="col-md-12">
@@ -32,10 +32,9 @@
                                 <div class="d-flex gap-2 w-100 justify-content-between">
                                     <div>
                                         <h6 class="mb-0">{{ item.id }} {{ item.title }}</h6>
-                                        <p class="mb-0 opacity-75">{{ item.type }}</p>
                                         <p class="mb-0 opacity-75">{{ item.description }}</p>
 
-                                        {% if item.active %}<span class="badge bg-success">Best</span>{% endif %}
+                                        {% if item.active %}<span class="badge bg-success">{{ item.type }}</span>{% endif %}
                                     </div>
                                     <small class="opacity-50 text-nowrap">{{ item.createdAt|date("Y-m-d") }}</small>
                                 </div>

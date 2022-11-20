@@ -37,6 +37,10 @@ messages:
 error:
   text_return_homepage: "Return to homepage"
 
+flash:
+  warning:
+    already_logged_in: You are already logged in
+
 form:
   label:
     remember_me: Remember me
@@ -88,8 +92,7 @@ title:
   remove: Remove
   projects: Projects
   project_remove: Project remove
-  project:
-    items: Project items
+  project: Project
   profiles: Profiles
   profile_remove: Profile remove
   profile:

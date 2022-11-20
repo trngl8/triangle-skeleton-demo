@@ -38,4 +38,16 @@ class OfferRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
+
+    public function findHumanSupport(): array
+    {
+        return $this->createQueryBuilder('offer')
+            ->andWhere('offer.amount > :amount')
+            ->setParameter('amount', 0)
+            ->orderBy('offer.amount', 'ASC')
+            ->setMaxResults(2)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 }

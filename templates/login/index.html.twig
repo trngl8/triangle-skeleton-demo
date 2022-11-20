@@ -15,6 +15,12 @@
             {{ error.messageKey|trans(error.messageData, 'security') }}
         </div>
     {% endif %}
+    {% if app.session.get('cart') %}
+        <div class="alert alert-success" role="alert">
+            <i class="bi bi-cart"></i>
+              <a href="{{ path('app_cart') }}">{{ 'text.yoy_have_items_in_the_cart'|trans }}</a>
+        </div>
+    {% endif %}
 {% endblock %}
 
 {% block main %}

@@ -19,13 +19,11 @@ class OrderRequest
     #[Assert\NotBlank]
     public string $description;
 
-    public ?string $deliveryEmail;
-
-    public function __construct(Offer $offer)
+    public function __construct(Offer $offer, $description = null)
     {
         $this->title = $offer->getTitle();
         $this->currency = $offer->getCurrency();
         $this->amount = $offer->getAmount();
-        $this->deliveryEmail = null;
+        $this->description = $offer->getTitle();
     }
 }

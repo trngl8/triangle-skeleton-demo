@@ -30,6 +30,9 @@ class Product
     #[ORM\Column(nullable: true)]
     private ?int $level = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $targetUrl = null;
+
     public function __construct()
     {
     }
@@ -100,6 +103,18 @@ class Product
     public function setLevel(?int $level): self
     {
         $this->level = $level;
+
+        return $this;
+    }
+
+    public function getTargetUrl(): ?string
+    {
+        return $this->targetUrl;
+    }
+
+    public function setTargetUrl(?string $targetUrl): self
+    {
+        $this->targetUrl = $targetUrl;
 
         return $this;
     }
