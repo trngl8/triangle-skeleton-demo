@@ -93,7 +93,7 @@ class OrderController extends AbstractController
         }
 
         if($payment->getStatus() === 'success' ) {
-            $request->getSession()->set('cart', null);
+            $request->getSession()->set('cart', []);
 
             $order->setStatus('paid');
 
