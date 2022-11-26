@@ -91,6 +91,7 @@
     "require-dev": {
         "ext-sqlite3": "*",
         "dama/doctrine-test-bundle": "^7.1",
+        "deployer/deployer": "^7.0",
         "doctrine/doctrine-fixtures-bundle": "^3.4",
         "liip/test-fixtures-bundle": "^2.4",
         "phpunit/phpunit": "^9.5",
