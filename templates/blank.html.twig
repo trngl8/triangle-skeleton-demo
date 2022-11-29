@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en" class="h-100">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <title>{% block title %}{% endblock %}</title>
+    {% block stylesheets %}
+        {{ encore_entry_link_tags('app') }}
+    {% endblock stylesheets %}
+</head>
+<body class="d-flex flex-column h-100">
+
+<main class="flex-shrink-0">
+    <div class="container">
+        <h1 class="mt-5 mb-4">{{ status_code }} {{ status_text  }}</h1>
+
+        <p class="lead mb-4">Something is broken. Try to refresh your browser. </p>
+
+        {% if is_granted('ROLE_ADMIN') %}
+            <p><b>TODO:</b> Use choice and button or <a href="{{ path('app_home') }}">return to the homepage</a> if need be, too.</p>
+        {% endif %}
+    </div>
+</main>
+
+<footer class="footer mt-auto py-3 bg-light">
+    <div class="container">
+        <span class="text-muted">&copy; {{ app_name }} {{ app_version }}</span>
+    </div>
+</footer>
+
+
+
+</body>
+</html>
