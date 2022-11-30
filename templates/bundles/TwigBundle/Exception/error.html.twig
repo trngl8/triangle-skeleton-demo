@@ -1,6 +1,6 @@
 {% extends 'blank.html.twig' %}
 
-{% block title %}{{ status_text }}{% endblock %}
+{% block title %}{{ status_code }} {{ status_text }}{% endblock %}
 
 {% block main %}
     <div class="container">
@@ -11,7 +11,7 @@
         <p class="lead mb-4">Something is broken. Try to refresh your browser or <a href="#" title="Contact link should be present">contact administrator</a>.</p>
 
         {% if is_granted('ROLE_ADMIN') %}
-            <p><b>TODO:</b> Use choice and button or <a href="{{ path('app_home') }}">return to the homepage</a> if need be, too.</p>
+            <p><b>TODO:</b> Use choice and button or <a href="{{ path('app_home') }}">return to the homepage</a> if need.</p>
         {% endif %}
 
         {% endblock %}
