@@ -12,22 +12,24 @@
 {% block main %}
     <h1 class="mb-4 pb-2">{{ 'title.products'|trans }}</h1>
 
-    <h5>
-        There are different courses available in our school. We are teaching in programming languages, managing software
-        and different IT practices, such as Agile, Scrum, Kanban, etc.
-    </h5>
-    <p>
-        We are also teaching in different programming languages, such as Java, C#, C++, Python, JavaScript, etc.
-    </p>
-    <p>
-        Few examples of our popular courses are:
-    </p>
     <div class="row g-4 py-5 row-cols-1 row-cols-lg-3">
         {% if products is not defined %}
 
         {% elseif products|length == 0 %}
 
         {% else %}
+
+            <h5>
+                There are different courses available in our school. We are teaching in programming languages, managing software
+                and different IT practices, such as Agile, Scrum, Kanban, etc.
+            </h5>
+            <p>
+                We are also teaching in different programming languages, such as Java, C#, C++, Python, JavaScript, etc.
+            </p>
+            <p>
+                Few examples of our popular courses are:
+            </p>
+
             {% for item in products %}
             <div class="col d-flex align-items-start">
                 <div class="text-dark flex-shrink-0 me-3">
