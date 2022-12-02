@@ -4,15 +4,15 @@ app_home:
 
 app_restricted:
   path: /restricted
-  controller: App\Controller\DefaultController::home # splash screen
+  controller: App\Controller\HomeController::home # splash screen
+
+app_info:
+  path: /info
+  controller: App\Controller\HomeController::info
 
 app_index:
   path: /index
   controller: App\Controller\DefaultController::index
-
-app_info:
-  path: /info
-  controller: App\Controller\DefaultController::info
 
 default_module:
   path: /app

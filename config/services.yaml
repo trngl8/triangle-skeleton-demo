@@ -15,6 +15,7 @@ services:
             # pass this value to any $adminEmail argument for any service
             # that's defined in this file (including controller arguments)
             $adminEmail: '%env(resolve:APP_DEFAULT_EMAIL)%'
+            $appTheme: '%env(resolve:APP_THEME)%'
             $paymentPrivateKey: '%env(resolve:APP_LIQPAY_PRIVATE_KEY)%'
             $paymentPublicKey: '%env(resolve:APP_LIQPAY_PUBLIC_KEY)%'
 
@@ -31,5 +32,5 @@ services:
     App\EventSubscriber\LocaleControllerSubscriber:
         arguments: ['%kernel.default_locale%']
 
-    # add more service definitions when explicit configuration is needed
-    # please note that last definitions always *replace* previous ones
+    App\Controller\DefaultController:
+        tags: ['controller.service_arguments']

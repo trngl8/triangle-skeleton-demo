@@ -40,7 +40,7 @@ class TwigEventSubscriber implements EventSubscriberInterface
             $cartItems = $this->offerService->getCartOrders($cart);
 
             if(count($cartItems) > 0) {
-                $this->twig->addGlobal('cart_items_count', count($cartItems));
+                //$this->twig->addGlobal('cart_items_count', count($cartItems));
             }
         }
 
