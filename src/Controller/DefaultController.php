@@ -7,6 +7,7 @@ use App\Repository\ProductRepository;
 use App\Repository\TopicRepository;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Twig\Environment;
 use Twig\Error\LoaderError;
 
@@ -45,7 +46,7 @@ class DefaultController
             $template = $this->twig->load($templateName);
         } catch (LoaderError $e) {
             //TODO: log error
-            return new RedirectResponse('/404.html');
+            throw new NotFoundHttpException("Default template not found");
         }
 
         $content = $template->render([

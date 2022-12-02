@@ -77,11 +77,11 @@
                     {% endif %}
                     <a class="btn btn-outline-primary me-2 position-relative" href="{{ path('login') }}" title="Log in when you have an account">
                         {{ 'button.login'|trans }}
-{#                        {% if app.session.get('cart') %}#}
+                        {% if app.session.get('alerts') %}
                         <span class="position-absolute top-0 start-100 translate-middle p-2 bg-warning border border-light rounded-circle">
                             <span class="visually-hidden">New alerts</span>
                         </span>
-{#                        {% endif %}#}
+                        {% endif %}
                     </a>
                     <a class="btn btn-primary me-2" href="{{ path('subscribe_add') }}" title="Register when you have no account">Sign-up</a>
                 </div>
