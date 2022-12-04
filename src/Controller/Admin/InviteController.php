@@ -17,12 +17,10 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/admin/invite', name: 'admin_invite_')]
 class InviteController extends AbstractController
 {
-    //TODO: explain constants
     CONST PAGINATOR_COUNT = 2;
     CONST START_PAGE = 1;
     CONST MIN_COUNT = 0;
 
-    //TODo: maybe doctrine is writer
     private $doctrine;
 
     private $inviteService;
@@ -48,15 +46,12 @@ class InviteController extends AbstractController
         if($filters->isSubmitted() && $filters->isValid()) {
             $filterData = $filters->getData();
 
-            //TODO: maybe strategy pattern instead if statements
-
             if($filters->get('clear')->isClicked()) {
                 $this->addFlash('warning', 'flash.warning.filter_cleared');
                 return $this->redirectToRoute('admin_invite_index');
             }
 
             if($filters->get('save')->isClicked()) {
-                //TODO implement filter storage
                 $this->addFlash('success', sprintf('flash.success.filter_save %d items', $c));
                 return $this->redirectToRoute('admin_invite_index');
             }

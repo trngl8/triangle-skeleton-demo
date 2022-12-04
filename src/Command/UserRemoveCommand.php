@@ -49,7 +49,6 @@ HELP
 
         $user = $this->userManager->findOneBy(['username' => $username]);
 
-        //TODO: check user exists
         $this->userManager->remove($user);
 
         $io->success(sprintf('User %s successfully removed!', $username));

@@ -34,7 +34,6 @@ class OfferController extends AbstractController
     {
         $user = $this->getUser();
 
-        //TODO: get current profile
         $offers = $this->offerService->getOffers();
 
         return $this->render('offer/index.html.twig', [
@@ -50,7 +49,6 @@ class OfferController extends AbstractController
 
         $offer = $this->offerService->getOffer($id);
 
-        //TODO: create subscribe event
         $orderRequest = $this->offerService->createOrderRequest($offer);
         $form = $this->createForm(OrderType::class, $orderRequest);
 
@@ -61,7 +59,6 @@ class OfferController extends AbstractController
             $user = $this->getUser();
 
             if($user) {
-                //TODO recheck
                 $orderRequest->description = $user->getUserIdentifier();
             }
 
@@ -81,7 +78,7 @@ class OfferController extends AbstractController
                 $response = $this->redirectToRoute('app_order_payment', [
                     'uuid' => $order->getUuid()
                 ]);
-                //TODO: use session storage
+
                 $response->headers->setCookie(new Cookie('cart', json_encode([$order->getUuid() => $order->getUuid()]), strtotime('tomorrow'), '/',
                     'localhost', true, true));
 

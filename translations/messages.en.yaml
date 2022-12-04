@@ -53,7 +53,7 @@ form:
     know: Know
     submit: Submit
 
-#TODO: button should have a context (e.g. button: {save: Save, cancel: Cancel})
+# button should have a context (e.g. button: {save: Save, cancel: Cancel})
 button:
   submit_and_add: Submit and add
   submit: Submit

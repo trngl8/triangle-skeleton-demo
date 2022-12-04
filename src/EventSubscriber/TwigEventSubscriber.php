@@ -29,8 +29,6 @@ class TwigEventSubscriber implements EventSubscriberInterface
 
     public function onControllerEvent(ControllerEvent $event): void
     {
-        //TODO: check cart in session
-
         // Check cart in cookies
         $request = $event->getRequest();
         $cookie = $request->cookies->get('cart');

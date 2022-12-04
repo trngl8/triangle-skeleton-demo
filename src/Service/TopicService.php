@@ -23,7 +23,6 @@ class TopicService
     public function addCriteria($data) : self
     {
         if(is_array($data)) {
-            //TODO: add other custom filters
             foreach ($data as $key => $value) {
                 if($key === 'type') {
                     $this->baseDql .= sprintf(" WHERE t.type='%s'", $value);
@@ -61,7 +60,6 @@ class TopicService
 
     public function close(Topic $topic) : bool
     {
-        //TODO: check ability or permissions
         $topic->setClosedAt(new \DateTime());
         if(null === $topic->getStartedAt()) {
             $topic->setStartedAt($topic->getClosedAt());
@@ -73,19 +71,14 @@ class TopicService
 
     public function run(Topic $topic) : bool
     {
-        //TODO: check ability or permissions
         $topic->setStartedAt(new \DateTime());
         $this->doctrine->getManager()->flush();
-
-        //TODO: connect profile
-        //TODO: make tests
 
         return true;
     }
 
     public function updateWeight(Topic $topic, int $weight) : self
     {
-        //TODO: create event
         $topic->setPriority($weight);
         $this->doctrine->getManager()->flush();
 

@@ -39,7 +39,6 @@ class SubscribeController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            //TODO: generate event
             $this->subscribeService->initSubscribe($subscription);
 
             $this->addFlash('success', 'flash.success.subscribe_created');
@@ -58,7 +57,6 @@ class SubscribeController extends AbstractController
         $user = $this->getUser();
 
         if(!$user) {
-            //TODO: check message
             $this->addFlash('warning', 'flash.warning.not_logged_in');
         }
 

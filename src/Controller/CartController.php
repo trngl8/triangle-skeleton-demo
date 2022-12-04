@@ -23,8 +23,6 @@ class CartController extends AbstractController
 
     public function cart(Request $request) : Response
     {
-        //TODO: describe cart action and template
-
         return $this->forward('App\Controller\OrderController::index', [
             'request' => $request
         ]);

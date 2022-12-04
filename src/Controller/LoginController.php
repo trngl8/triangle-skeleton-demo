@@ -25,11 +25,9 @@ class LoginController extends AbstractController
         $lastUsername = $authenticationUtils->getLastUsername();
 
         if($error) {
-            //TODO: forgot password link
             $this->addFlash('error', 'Error!');
         }
 
-        // TODO: another base template for login
         return $this->render('login/index.html.twig', [
             'error' => $error,
             'last_username' => $lastUsername,

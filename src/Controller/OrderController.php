@@ -66,8 +66,6 @@ class OrderController extends AbstractController
         $order = $this->offerService->getOrder($uuid);
 
         if ($order->getStatus() === 'new') {
-            // TODO: check payment status
-            // TODO: add flash message
             return $this->redirectToRoute('app_order_payment', ['uuid' => $uuid]);
         }
 
@@ -79,7 +77,6 @@ class OrderController extends AbstractController
     #[Route('/{uuid}/result', name: 'result', methods: ['POST'])]
     public function result(Uuid $uuid, Request $request) : Response
     {
-        //TODO: secure this route
         $order = $this->offerService->getOrder($uuid);
 
         $res = $this->offerService->paymentApi($order);
@@ -102,8 +99,6 @@ class OrderController extends AbstractController
 
             $this->addFlash('success', 'flash.success.order_success');
         }
-
-        //TODO: check order and payment result
 
         return $this->redirectToRoute('app_order_status', ['uuid' => $order->getUuid()]);
     }

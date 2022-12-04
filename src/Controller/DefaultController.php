@@ -45,7 +45,6 @@ class DefaultController
         try {
             $template = $this->twig->load($templateName);
         } catch (LoaderError $e) {
-            //TODO: log error
             throw new NotFoundHttpException("Default template not found");
         }
 

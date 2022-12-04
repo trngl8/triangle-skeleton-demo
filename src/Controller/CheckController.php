@@ -62,7 +62,6 @@ class CheckController extends AbstractController
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()) {
-            //TODO: move to some service or to event listener
             $position = $this->repository->getMaxOptionPosition($check);
             $option->setPosition(++$position);
             $option->setType($check->getType());
@@ -104,8 +103,8 @@ class CheckController extends AbstractController
 
         $builder->add('features', ChoiceType::class, [
             'label' => $check->getDescription(),
-            'choices' => $choices, //TODO: separate keys and values
-            'multiple' => $check->getType() === 'multiply', //TODO: set common type
+            'choices' => $choices,
+            'multiple' => $check->getType() === 'multiply',
             'expanded' => true,
             'constraints' => [
                 new Assert\NotBlank(),
@@ -122,7 +121,6 @@ class CheckController extends AbstractController
             $entityManager = $this->doctrine->getManager();
             $user = $this->getUser();
 
-            //TODO: write different strategies
             if(is_array($data['features'])) {
                 foreach ($data['features'] as $feature) {
                     $option =  $this->checkSevice->getOption($feature);

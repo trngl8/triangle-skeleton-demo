@@ -15,7 +15,7 @@ class OfferService
     private $offers;
     private $orders;
 
-    private $paymentService; // TODO: add interface
+    private $paymentService;
 
     public function __construct(OfferRepository $offers, OrderRepository $orders, LiqpayService $paymentService)
     {
@@ -74,7 +74,6 @@ class OfferService
 
     public function paymentApi(Order $order) : array
     {
-        //TODO: check request signature
         return $this->paymentService->apiCall("request", [
             'action'        => 'status',
             'version'       => '3',

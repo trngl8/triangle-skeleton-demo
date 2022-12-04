@@ -32,7 +32,6 @@ class ProfileController extends AbstractController
 
         $user = $this->getUser();
 
-        //TODO: show different profiles in view
         $profiles = $this->repository->findBy(['email' => $user->getUserIdentifier()]);
 
         $profile = $this->repository->findOneBy(['email' => $user->getUserIdentifier()]);

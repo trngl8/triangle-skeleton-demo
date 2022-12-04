@@ -12,7 +12,7 @@ class ProfileControllerTest extends WebTestCase
         $client = static::createClient();
 
         $userRepository = static::getContainer()->get(UserRepository::class);
-        $testUser = $userRepository->findOneByUsername('admin@test.com'); //TODO: get from data provider
+        $testUser = $userRepository->findOneByUsername('admin@test.com');
 
         $client->loginUser($testUser);
 

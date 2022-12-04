@@ -20,7 +20,6 @@ final class Version20220619195249 extends AbstractMigration
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
-        //TODO: maybe created can be null or custom timestamp
         $this->addSql('ALTER TABLE app_invites ADD created_at TIMESTAMP(0) WITHOUT TIME ZONE DEFAULT NULL');
         $this->addSql('ALTER TABLE app_invites ADD started_at TIMESTAMP(0) WITHOUT TIME ZONE DEFAULT NULL');
         $this->addSql('ALTER TABLE app_invites ADD closed_at TIMESTAMP(0) WITHOUT TIME ZONE DEFAULT NULL');
