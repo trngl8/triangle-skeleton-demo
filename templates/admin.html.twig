@@ -30,8 +30,8 @@
     <!-- Navbar Search-->
     <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
         <div class="input-group">
-            <input class="form-control" type="text" placeholder="{{ 'search.placeholder'|trans }}" aria-label="{{ 'search.aria_label'|trans }}" aria-describedby="btnNavbarSearch" />
-            <button class="btn btn-primary" id="btnNavbarSearch" type="button"><i class="bi bi-search"></i></button>
+{#            <input class="form-control" type="text" placeholder="{{ 'search.placeholder'|trans }}" aria-label="{{ 'search.aria_label'|trans }}" aria-describedby="btnNavbarSearch" />#}
+{#            <button class="btn btn-primary" id="btnNavbarSearch" type="button"><i class="bi bi-search"></i></button>#}
         </div>
     </form>
     <!-- Navbar-->
@@ -39,8 +39,8 @@
         <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i>{{ app.user.username }}</a>
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                <li><a class="dropdown-item" href="#!">{{ 'navbar.settings'|trans }}</a></li>
-                <li><a class="dropdown-item" href="#!">{{ 'navbar.activity'|trans  }}</a></li>
+{#                <li><a class="dropdown-item" href="{{ path('settings') }}">{{ 'navbar.settings'|trans }}</a></li>#}
+                <li><a class="dropdown-item" href="{{ path('admin_inbox') }}">{{ 'navbar.activity'|trans  }}</a></li>
                 <li><hr class="dropdown-divider" /></li>
                 <li><a class="dropdown-item" href="{{ path('logout')}}">{{ 'navbar.logout'|trans  }}</a></li>
             </ul>
@@ -56,7 +56,9 @@
                         <a class="nav-link {% if app.request.pathInfo == '/admin' %}active{% endif %}" aria-current="page" href="{{ path('admin')}}">
                             <i class="bi bi-speedometer"></i>
                             {{ 'menu.dashboard'|trans }}
-                            {% if topics|length %}<span class="badge bg-secondary">+{{ topics|length }}</span>{% endif %}
+                            {% if incoming_unread_count is defined %}
+                                <span class="badge bg-secondary">+{{ incoming_unread_count }}</span>
+                            {% endif %}
                         </a>
                     </li>
 
@@ -91,7 +93,12 @@
                             {{ 'menu.invites'|trans }}
                         </a>
                     </li>
-
+                    <li class="nav-item">
+                        <a class="nav-link {% if app.request.pathInfo starts with '/admin/offer' %}active{% endif %}" href="{{ path('admin_offer_index')}}">
+                            <i class="bi bi-clipboard2"></i>
+                            {{ 'menu.offer'|trans }}
+                        </a>
+                    </li>
 
 {#                    <li class="nav-item">#}
 {#                        <a class="nav-link" href="{{ path('admin')}}">#}
@@ -132,11 +139,7 @@
             {% endblock %}
 
             {% block main %}
-                <ul class="list-group">
-                {% for topic in topics %}
-                    <li class="list-group-item"><a href="{{ path('admin_topic_show', {id: topic.id}) }}">{{ topic.title }}</a></li>
-                {% endfor %}
-                </ul>
+
             {% endblock %}
 
             {% block paginator %}

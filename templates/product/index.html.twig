@@ -1,0 +1,46 @@
+{% extends 'layout.html.twig' %}
+
+{% block breadcrumbs %}
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ path('app_index') }}">{{ 'brcmbs.home'|trans }}</a></li>
+            <li class="breadcrumb-item" aria-current="page">{{ 'title.products'|trans }}</li>
+        </ol>
+    </nav>
+{% endblock %}
+
+{% block main %}
+    <h1 class="mb-4 pb-2">{{ 'title.products'|trans }}</h1>
+
+        {% if products is not defined %}
+            <h4>No products defined</h4>
+        {% elseif products|length == 0 %}
+            <p><b>Products list is empty</b></p>
+        {% else %}
+
+            <h5>
+                There are different courses available in our school. We are teaching in programming languages, managing software
+                and different IT practices, such as Agile, Scrum, Kanban, etc.
+            </h5>
+            <p>
+                We are also teaching in different programming languages, such as Java, C#, C++, Python, JavaScript, etc.
+            </p>
+
+            <div class="row g-4 py-5 row-cols-1 row-cols-lg-3">
+                {% for item in products %}
+                <div class="col d-flex align-items-start">
+                    <div class="text-dark flex-shrink-0 me-3">
+                        {{ item.imageTag|raw }}
+                    </div>
+                    <div>
+                        <h2>{{ item.title }}</h2>
+                        <p>{{ item.description }}</p>
+                        <a href="{{ path('app_product_show', { alias : item.id }) }}" class="btn btn-outline-secondary">
+                            Go learning
+                        </a>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+{% endblock %}

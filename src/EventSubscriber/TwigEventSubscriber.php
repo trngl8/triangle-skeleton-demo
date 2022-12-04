@@ -2,8 +2,8 @@
 
 namespace App\EventSubscriber;
 
-use App\Repository\ProfileRepository;
-use App\Repository\TopicRepository;
+use App\Service\MessageService;
+use App\Service\OfferService;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\ControllerEvent;
 use Symfony\Component\Security\Core\Security;
@@ -13,29 +13,45 @@ class TwigEventSubscriber implements EventSubscriberInterface
 {
     private $twig;
 
-    private $topicRepository;
-    private $profileRepository;
-
     private $security;
 
-    public function __construct(Environment $twig, TopicRepository $topicRepository, ProfileRepository $profileRepository, Security $security)
+    private $messageService;
+
+    private $offerService;
+
+    public function __construct(Environment $twig, Security $security, MessageService $messageService, OfferService $offerService)
     {
         $this->twig = $twig;
-        $this->topicRepository = $topicRepository;
-        $this->profileRepository = $profileRepository;
         $this->security = $security;
+        $this->messageService = $messageService;
+        $this->offerService = $offerService;
     }
 
     public function onControllerEvent(ControllerEvent $event): void
     {
+        // Check cart in cookies
+        $request = $event->getRequest();
+        $cookie = $request->cookies->get('cart');
+        $cart = $cookie ? json_decode($cookie, true) : [];
+
+        if($cart) {
+            $cartItems = $this->offerService->getCartOrders($cart);
+
+            if(count($cartItems) > 0) {
+                //$this->twig->addGlobal('cart_items_count', count($cartItems));
+            }
+        }
+
+        // Check user messages
         $user = $this->security->getUser();
         if(!$user)  {
             return;
         }
 
-        $profile = $this->profileRepository->findOneBy(['email' => $user->getUserIdentifier()]);
-        if($profile) {
-            $this->twig->addGlobal('topics', $this->topicRepository->findBy(['profile' => $profile]));
+        $countMessages = $this->messageService->findIncomingCount($user->getUserIdentifier());
+
+        if($countMessages > 0) {
+            $this->twig->addGlobal('incoming_unread_count', $countMessages);
         }
     }
 

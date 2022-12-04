@@ -1,7 +1,38 @@
 {% extends 'layout.html.twig' %}
 
+{% block breadcrumbs %}
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ path('app_index') }}">{{ 'brcmbs.home'|trans }}</a></li>
+            <li class="breadcrumb-item" aria-current="page">{{ 'title.subscribe'|trans }}</li>
+        </ol>
+    </nav>
+{% endblock %}
+
 {% block main %}
 <h1 class="mb-4">{{ 'title.subscribe'|trans }}</h1>
+
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">README</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>You have no choice. <br/>
+                    Please red our Lead Message.</p>
+
+                    <p>It is already happened many times.<br/>
+                    We use cycles to explain some patterns.</p>
+                </div>
+                <div class="modal-footer">
+{#                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>#}
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Ok, I am agree</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
 <div class="row">
     <div class="col-md-6">
@@ -12,6 +43,7 @@
             {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
                 {{ form_widget(form) }}
             {{ form_end(form) }}
+            <p>... I hope you have been read <a data-bs-toggle="modal" data-bs-target="#exampleModal" href="">this agreement</a></p>
         {% endblock %}
     </div>
 </div>

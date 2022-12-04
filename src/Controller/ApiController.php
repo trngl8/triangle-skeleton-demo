@@ -39,7 +39,6 @@ class ApiController extends AbstractController
     #[Route('', name: 'add', methods: ['POST'])]
     public function post(Request $request): Response
     {
-        //TODO: write $request and check $result
         $result = ['result' => 'ok'];
         $json = $this->serializer->serialize($result, self::API_FORMAT);
 
@@ -49,7 +48,6 @@ class ApiController extends AbstractController
     #[Route('/{id}', name: 'get', methods: ['GET', 'HEAD'])]
     public function get(int $id, ManagerRegistry $doctrine, SerializerInterface $serializer): Response
     {
-        //TODO: check 404
         $result = $doctrine->getRepository(Topic::class)->find($id);
         $json = $this->serializer->serialize($result, self::API_FORMAT, self::$apiContext);
 

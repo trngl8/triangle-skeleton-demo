@@ -1,0 +1,170 @@
+action:
+  yes: Yes
+  no: No
+app:
+  inbox: Inbox
+  profile: Profile
+  orders: Orders
+  logout: Logout
+  invites: Invites
+menu:
+  topics: Topics
+  projects: Projects
+  project: Project
+  profiles: Profiles
+  products: Products
+  offers: Offers
+  offer: Offer
+  invites: Invites
+  index: Index
+  home: Home
+  features: Features
+  dashboard: Dashboard
+  checks: Checks
+hero:
+  caption: "Welcome to the Old School" #"The best way to manage your projects"
+  text: "Old school is the famous school in the California South East. Our history was started at 1999 from garage startup. I was looking for duck on my playground."
+
+messages:
+  login_fail: "Login failed"
+  security_not_implement: "Security not implemented"
+  run_agree: "Run agree"
+  removing_agree: "Removing agree"
+  no_items: "No items"
+  closing_agree: "Closing agree"
+  change_agree: "Change agree"
+  blank: "This page is blank"
+
+error:
+  text_return_homepage: "Return to homepage"
+
+flash:
+  warning:
+    already_logged_in: You are already logged in
+
+form:
+  label:
+    remember_me: Remember me
+    password: Password
+    email: Email
+    name: Name
+    locale: Locale
+    agree: Agree
+    know: Know
+    submit: Submit
+
+# button should have a context (e.g. button: {save: Save, cancel: Cancel})
+button:
+  submit_and_add: Submit and add
+  submit: Submit
+  show: Show
+  run: Run
+  remove: Remove
+  red: Red
+  ok: OK
+  login: Login
+  export: Export
+  edit: Edit
+  close: Close
+  change: Change
+  add_option: Add option
+  more: More
+  subscribe: Subscribe
+  light: Light
+  add: Add
+
+type: Type
+total: Total
+title:
+  verify: Verify
+  topics: Topics
+  topic_run: Topic run
+  topic_remove: Topic remove
+  topic_close: Topic close
+  topic:
+    show: Topic show
+    run: Topic run
+    add:  Topic add
+  subscribes: Subscribes
+  subscribe: Subscribe
+  show_topic: Show topic
+  show_invite: Show invite
+  show_: Show
+  remove: Remove
+  projects: Projects
+  project_remove: Project remove
+  project: Project
+  profiles: Profiles
+  profile_remove: Profile remove
+  profile:
+    edit: Profile edit
+  products: Products
+  orders: Orders
+  order:
+    result: Order result
+    payment: Order payment
+  offers: Offers
+  offer: Offer
+  login: Login
+  invites: Invites
+  invite_remove: Invite remove
+  invite_close: Invite close
+  info: Info
+  features: Features
+  edit_topic: Edit topic
+  edit_project: Edit project
+  edit_profile: Edit profile
+  edit_invite: Edit invite
+  edit_check: Edit check
+  contact: Contact
+  checks: Checks
+  check_run: Check run
+  check_remove: Check remove
+  change_agree: Change agree
+  add_topic: Add topic
+  add_project: Add project
+  add_invite: Add invite
+  add_check: Add check
+  accept_invite: Accept invite
+  timezone: Timezone
+  text:
+    subscription created: Subscription created
+    must_be_replaced: Must be replaced
+    info: Info
+    default_content: Default content
+
+progress: Progress
+profile:
+  invites: Invites
+priority:
+navbar:
+    logout: Logout
+    activity: Activity
+name: Name
+
+logout: Logout
+login: Login
+locale: Locale
+label:
+  close:
+items: Items
+email: Email
+description: Description
+createdAt: Created at
+closedAt: Closed at
+closeAt: Close at
+
+contacts:
+  phone: Phone
+  info: Info
+  box: Box
+  adress: Adress
+
+brcmbs:
+  topics: Topics
+  topic: Topic
+  home: Home
+
+branch: Branch
+active: Active
+actions: Actions

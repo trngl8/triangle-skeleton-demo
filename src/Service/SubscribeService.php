@@ -9,6 +9,10 @@ use App\Model\Subscribe;
 use App\Repository\ProfileRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
+/**
+ * Subscribe Service is a default module.
+ * Should be implemented as interface (ModuleInterface) in a next release
+ */
 class SubscribeService
 {
     private $doctrine;

@@ -4,7 +4,7 @@ namespace App\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-class DefaultControllerPhpTest extends WebTestCase
+class DefaultControllerTest extends WebTestCase
 {
     public function testHomeSuccess(): void
     {
@@ -12,7 +12,6 @@ class DefaultControllerPhpTest extends WebTestCase
         $crawler = $client->request('GET', '/');
 
         $this->assertResponseIsSuccessful();
-        $this->assertSelectorTextContains('h1', 'Test Software');
     }
 
     /**
@@ -31,5 +30,14 @@ class DefaultControllerPhpTest extends WebTestCase
         yield ['index'];
         yield ['project'];
         yield ['info'];
+        yield ['features'];
+        yield ['offer'];
+        yield ['contact'];
+        yield ['register'];
+        yield ['app'];
+        yield ['restricted'];
+        yield ['product'];
+        yield ['cart'];
+        yield ['order'];
     }
 }

@@ -1,0 +1,40 @@
+{% extends 'order/order.html.twig' %}
+
+{% block breadcrumbs %}
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ path('app_index') }}">{{ 'brcmbs.home'|trans }}</a></li>
+            <li class="breadcrumb-item"><a href="{{ path('app_order_index') }}">{{ 'title.orders'|trans }}</a></li>
+            <li class="breadcrumb-item" aria-current="page">{{ 'title.order'|trans }}</li>
+        </ol>
+    </nav>
+{% endblock %}
+
+{% block main %}
+    <h1 class="mb-4">
+        {{ 'title.order.result'|trans }}
+    </h1>
+    <div class="row">
+        <div class="col-md-6">
+            <dl class="row">
+                <dt class="col-sm-3">ID</dt>
+                <dd class="col-sm-9">{{ order.uuid }}</dd>
+
+                <dt class="col-sm-3">Amount</dt>
+                <dd class="col-sm-9">
+                    <p>{{ order.amount }}</p>
+                </dd>
+
+                <dt class="col-sm-3">Currency</dt>
+                <dd class="col-sm-9">{{ order.currency }}</dd>
+
+                <dt class="col-sm-3 text-truncate">Description</dt>
+                <dd class="col-sm-9">{{ order.description }}</dd>
+
+                <dt class="col-sm-3">Status</dt>
+                <dd class="col-sm-9">{{ order.status }}</dd>
+            </dl>
+        </div>
+        <a href=""></a>
+    </div>
+{% endblock %}

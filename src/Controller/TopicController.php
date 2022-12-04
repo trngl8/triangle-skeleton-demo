@@ -17,13 +17,16 @@ class TopicController extends AbstractController
     #[Route('/topic', name: 'topic_index')]
     public function index(ManagerRegistry $doctrine): Response
     {
-        $topics = $doctrine->getRepository(Topic::class)->findBy([]);
+        //use some options
 
-        $button = new LinkToRoute('topic_add', 'button.add');
+        //TODO: set common features
+        //TODO: set features for each module
+        //TODO: set features for current user
+
+        $topics = $doctrine->getRepository(Topic::class)->findBy([], ['createdAt' => 'DESC'], 20);
 
         return $this->render('topic/index.html.twig', [
             'topics' => $topics,
-            'button' => $button
         ]);
     }
 

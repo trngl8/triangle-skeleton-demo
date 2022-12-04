@@ -3,12 +3,11 @@
 namespace App\Entity;
 
 use App\Repository\ProductRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ProductRepository::class)]
-#[ORM\Table(name: 'app_product')]
+#[ORM\Table(name: 'app_products')]
 class Product
 {
     #[ORM\Id]
@@ -19,12 +18,23 @@ class Product
     #[ORM\Column(length: 255)]
     private ?string $title = null;
 
-    #[ORM\OneToMany(mappedBy: 'product', targetEntity: Topic::class)]
-    private Collection $topics;
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $imageTag = null;
+
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $description = null;
+
+    #[ORM\Column(type: Types::JSON, nullable: true)]
+    private ?array $abilities = [];
+
+    #[ORM\Column(nullable: true)]
+    private ?int $level = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $targetUrl = null;
 
     public function __construct()
     {
-        $this->topics = new ArrayCollection();
     }
 
     public function __toString()
@@ -49,32 +59,62 @@ class Product
         return $this;
     }
 
-    /**
-     * @return Collection<int, Topic>
-     */
-    public function getTopics(): Collection
+    public function getImageTag(): ?string
     {
-        return $this->topics;
+        return $this->imageTag;
     }
 
-    public function addTopic(Topic $topic): self
+    public function setImageTag(?string $imageTag): self
     {
-        if (!$this->topics->contains($topic)) {
-            $this->topics->add($topic);
-            $topic->setProduct($this);
-        }
+        $this->imageTag = $imageTag;
 
         return $this;
     }
 
-    public function removeTopic(Topic $topic): self
+    public function getDescription(): ?string
     {
-        if ($this->topics->removeElement($topic)) {
-            // set the owning side to null (unless already changed)
-            if ($topic->getProduct() === $this) {
-                $topic->setProduct(null);
-            }
-        }
+        return $this->description;
+    }
+
+    public function setDescription(?string $description): self
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    public function getAbilities(): array
+    {
+        return $this->abilities;
+    }
+
+    public function setAbilities(?array $abilities): self
+    {
+        $this->abilities = $abilities;
+
+        return $this;
+    }
+
+    public function getLevel(): ?int
+    {
+        return $this->level;
+    }
+
+    public function setLevel(?int $level): self
+    {
+        $this->level = $level;
+
+        return $this;
+    }
+
+    public function getTargetUrl(): ?string
+    {
+        return $this->targetUrl;
+    }
+
+    public function setTargetUrl(?string $targetUrl): self
+    {
+        $this->targetUrl = $targetUrl;
 
         return $this;
     }

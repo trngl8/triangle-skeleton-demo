@@ -17,39 +17,29 @@ class SubscribeController extends AbstractController
 {
     private $subscribeService;
 
-    private $adminEmail;
-
-    public function __construct(SubscribeService $subscribeService, string $adminEmail)
+    public function __construct(SubscribeService $subscribeService)
     {
         $this->subscribeService = $subscribeService;
-        $this->adminEmail = $adminEmail;
     }
 
-    #[Route('/list', name: 'list')]
-    public function list() : Response
-    {
-        $items = [
-            new Subscribe('test', $this->adminEmail, 'uk', 'name', ),
-            new Subscribe('test2', $this->adminEmail, 'uk','name', ),
-            new Subscribe('test MAX', $this->adminEmail, 'uk', 'testmax')
-        ];
-
-        return $this->render('subscribe/list.html.twig', [
-            'items' => $items,
-            'activeName' => 'name',
-        ]);
-    }
 
     #[Route('/add', name: 'add')]
     public function add(Request $request) : Response
     {
-        $form = $this->createForm(SubscribeType::class,  new Subscribe());
+        $user = $this->getUser();
+
+        if($user) {
+            $this->addFlash('warning', 'flash.warning.already_logged_in');
+        }
+
+        $subscription = new Subscribe();
+        $form = $this->createForm(SubscribeType::class,  $subscription);
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            $this->subscribeService->initSubscribe($form->getData());
+            $this->subscribeService->initSubscribe($subscription);
 
             $this->addFlash('success', 'flash.success.subscribe_created');
 
@@ -64,6 +54,12 @@ class SubscribeController extends AbstractController
     #[Route('/verify', name: 'verify')]
     public function verify(Request $request) : Response
     {
+        $user = $this->getUser();
+
+        if(!$user) {
+            $this->addFlash('warning', 'flash.warning.not_logged_in');
+        }
+
         $verify = new Verify('test');
         $form = $this->createForm(VerifyType::class, $verify);
 
@@ -71,7 +67,7 @@ class SubscribeController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->addFlash('success', 'flash.success.verify');
-            return $this->redirectToRoute('subscribe_list');
+            return $this->redirectToRoute('app_profile');
         }
 
         return $this->render('subscribe/verify.html.twig', [

@@ -1,0 +1,92 @@
+{% extends 'product/index.html.twig' %}
+
+{% block breadcrumbs %}
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ path('app_index') }}">{{ 'brcmbs.home'|trans }}</a></li>
+            <li class="breadcrumb-item"><a href="{{ path('app_product_index') }}">{{ 'title.products'|trans }}</a></li>
+            <li class="breadcrumb-item" aria-current="page">{{ item.title }}</li>
+        </ol>
+    </nav>
+{% endblock %}
+
+{% block main %}
+    {{ item.imageTag|raw }}
+    <h1 class="mb-4">{{ item.title }}</h1>
+    <p>{{ item.description }}</p>
+
+    <div class="row row-cols-1 row-cols-md-3 mb-3 text-center">
+        {% for offer in offers %}
+            <div class="col">
+                <div class="card mb-4 rounded-3 shadow-sm border-{{ offer.border }}">
+                    <div class="card-header py-3  text-bg-{{ offer.border }} border-{{ offer.border }}">
+                        <h4 class="my-0 fw-normal">{{ offer.title }}</h4>
+                    </div>
+                    <div class="card-body">
+                        <h1 class="card-title pricing-card-title">{{ offer.amount }}{{ offer.currency }}<small class="text-muted fw-light">/mo</small></h1>
+                        <ul class="list-unstyled mt-3 mb-4">
+                            <li>120 minutes video</li>
+                            <li>30 examples</li>
+                            <li>10 home tasks</li>
+                            <li>ai support</li>
+                        </ul>
+                        {% if offer.active %}
+                            {% if offer.border %}
+                                <a href="{{ path('app_offer_order', {"id": offer.id}) }}" class="w-100 btn btn-lg btn-{{ offer.border }}">Join</a>
+                            {% else %}
+                                <a href="{{ path('app_offer_order', {"id": offer.id}) }}" class="w-100 btn btn-lg btn-outline-primary">Join</a>
+                            {% endif %}
+                        {% elseif offer.private %}
+                            <a href="{{ path('app_contact') }}" class="w-100 btn btn-lg btn-dark">Contact us</a>
+                        {% else %}
+                            <a href="{{ path('app_contact') }}" class="w-100 btn btn-lg btn-outline-secondary}">Contact us</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+{#    <div class="mb-5 mt-5">#}
+{#        <a href="" class="btn btn-outline-success btn-lg"><i class="bi bi-app"></i> Order course</a>#}
+{#    </div>#}
+
+    <div class="accordion" id="accordionExample">
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="headingOne">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                    Lesson 0
+                </button>
+            </h2>
+            <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                    {{ item.description }}
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="headingTwo">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                    Lesson 1
+                </button>
+            </h2>
+            <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                    {{ item.description }}
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="headingThree">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                    Lesson 2
+                </button>
+            </h2>
+            <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                    {{ item.description }}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

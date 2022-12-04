@@ -1,12 +1,24 @@
-{% extends 'layout.html.twig' %}
+{% extends 'profile/index.html.twig' %}
 
 {% block title %}{{ 'title.profile.edit'|trans }}{% endblock %}
+
+{% block breadcrumbs %}
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ path('app_index') }}">{{ 'brcmbs.home'|trans }}</a></li>
+            <li class="breadcrumb-item"><a href="{{ path('app_profile') }}">{{ 'app.profile'|trans }}</a></li>
+            <li class="breadcrumb-item" aria-current="page">{{ 'title.profile.edit'|trans }}</li>
+        </ol>
+    </nav>
+{% endblock %}
 
 {% block main %}
     <h1 class="mb-4">{{ 'title.profile.edit'|trans }}</h1>
 
     <div class="row">
         <div class="col-md-6">
+            {% form_theme form 'bootstrap_5_horizontal_layout.html.twig' %}
+
             {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
                 {{ form_widget(form) }}
                 <button type="submit" class="btn-primary btn">{{ 'button.submit'|trans }}</button>

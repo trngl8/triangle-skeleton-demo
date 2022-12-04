@@ -51,7 +51,12 @@ class SubscribeServiceTest extends KernelTestCase
 
         //TODO: send and check confirm email link
         //TODO: choose confirmations levels
-        $result = $subscribeService->initSubscribe(new Subscribe('email', 'movchan@gmail.com', 'uk', 'name'));
+        $subscription = new Subscribe();
+        $subscription->email = 'test@test.com';
+        $subscription->name = 'Test';
+        $subscription->locale = 'uk';
+
+        $result = $subscribeService->initSubscribe($subscription);
 
         $this->assertInstanceOf( Invite::class, $result);
         $this->assertNotNull($result->getLifetime());

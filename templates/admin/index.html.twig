@@ -1,0 +1,9 @@
+{% extends 'admin.html.twig' %}
+
+{% block main %}
+    <ul class="list-group">
+        {% for topic in topics %}
+            <li class="list-group-item"><a href="{{ path('admin_topic_show', {id: topic.id}) }}">{{ topic.title }}</a></li>
+        {% endfor %}
+    </ul>
+{% endblock %}

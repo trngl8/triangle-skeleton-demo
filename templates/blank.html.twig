@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="{{ app.request.locale }}" class="h-100">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <title>{% block title %}{% endblock %}</title>
+    {% block stylesheets %}
+        {{ encore_entry_link_tags('app') }}
+    {% endblock stylesheets %}
+</head>
+<body class="d-flex flex-column h-100">
+
+<main class="flex-shrink-0">
+    {% block main %}
+        <p>{{ 'messages.blank'|trans }}</p>
+    {% endblock %}
+</main>
+
+<footer class="footer mt-auto py-3 bg-light">
+    <div class="container">
+        <span class="text-muted">&copy; {{ app_name }} {{ app_version }}</span>
+    </div>
+</footer>
+
+</body>
+</html>

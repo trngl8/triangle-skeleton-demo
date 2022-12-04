@@ -1,9 +1,24 @@
 {% extends 'layout.html.twig' %}
 
+{% block breadcrumbs %}
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ path('app_index') }}">{{ 'brcmbs.home'|trans }}</a></li>
+            <li class="breadcrumb-item" aria-current="page">{{ 'title.login'|trans }}</li>
+        </ol>
+    </nav>
+{% endblock %}
+
 {% block add_flashes %}
     {% if error %}
         <div class="alert alert-warning" role="alert">
             {{ error.messageKey|trans(error.messageData, 'security') }}
+        </div>
+    {% endif %}
+    {% if app.session.get('cart') %}
+        <div class="alert alert-success" role="alert">
+            <i class="bi bi-cart"></i>
+              <a href="{{ path('app_cart') }}">{{ 'text.yoy_have_items_in_the_cart'|trans }}</a>
         </div>
     {% endif %}
 {% endblock %}
@@ -17,8 +32,7 @@
             <form action="{{ path('login') }}" method="post">
                 <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
-                {# If you want to control the URL the user is redirected to on success
-                <input type="hidden" name="_target_path" value="/account"/> #}
+{#                <input type="hidden" name="_target_path" value="{{ target_path }}"/>#}
 
                 <div id="login">
                     <div class="mb-3">
@@ -41,15 +55,12 @@
                 </div>
             </form>
 
-            <div class="col-md-6 mt-5">
-                <p>Or you can login with social network:</p>
-                <a href="{{ path('hwi_oauth_service_redirect', {'service': 'google' }) }}"  class="btn-outline-secondary btn">
-                    <span>Login with Google</span>
-                </a>
-            </div>
+{#            <div class="col-md-6 mt-5">#}
+{#                <p>Or you can login with social network:</p>#}
+{#                <a href="{{ path('hwi_oauth_service_redirect', {'service': 'google' }) }}"  class="btn-outline-secondary btn">#}
+{#                    <span>Login with Google</span>#}
+{#                </a>#}
+{#            </div>#}
         </div>
-        </div>
-
-
     </div>
 {% endblock %}

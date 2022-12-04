@@ -33,11 +33,6 @@ class InviteController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            //TODO: complete request
-            //TODO: create subscription event
-
-            //TODO: set timezone
-            //TODO: set locale
             $profile = (new Profile())
                 ->setName($accept->name)
                 ->setEmail($accept->email)
@@ -54,7 +49,6 @@ class InviteController extends AbstractController
             $this->addFlash('success', 'flash.success.subscribe_created');
         }
 
-        //TODO: validate code
         return $this->render('invite/accept.html.twig', [
             'code' => $code,
             'app_navbar' => $app_navbar,

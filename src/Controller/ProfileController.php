@@ -31,6 +31,9 @@ class ProfileController extends AbstractController
         $this->denyAccessUnlessGranted('ROLE_USER');
 
         $user = $this->getUser();
+
+        $profiles = $this->repository->findBy(['email' => $user->getUserIdentifier()]);
+
         $profile = $this->repository->findOneBy(['email' => $user->getUserIdentifier()]);
 
         if(!$profile) {
@@ -39,13 +42,13 @@ class ProfileController extends AbstractController
 
         return $this->render('profile/index.html.twig', [
             'profile' => $profile,
+            'profiles' => $profiles,
         ]);
     }
 
     #[Route('/profile/invites', name: 'app_profile_invites')]
     public function invites(): Response
     {
-        $app_navbar = false;
         $this->denyAccessUnlessGranted('ROLE_USER');
 
         $user = $this->getUser();
@@ -57,7 +60,6 @@ class ProfileController extends AbstractController
 
         return $this->render('profile/invites.html.twig', [
             'profile' => $profile,
-            'app_navbar' => $app_navbar
         ]);
     }
 
@@ -91,6 +93,7 @@ class ProfileController extends AbstractController
 
         return $this->render('profile/edit.html.twig', [
             'form' => $form->createView(),
+            'profile' => $profile,
         ]);
     }
 }

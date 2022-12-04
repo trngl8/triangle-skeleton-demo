@@ -1,0 +1,11 @@
+{% extends 'offer/index.html.twig' %}
+
+{% block breadcrumbs %}
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ path('app_index') }}">{{ 'brcmbs.home'|trans }}</a></li>
+            <li class="breadcrumb-item"><a href="{{ path('app_offer_index') }}">{{ 'title.offer'|trans }}</a></li>
+            <li class="breadcrumb-item active" aria-current="page">{{ offer.title }}</li>
+        </ol>
+    </nav>
+{% endblock %}

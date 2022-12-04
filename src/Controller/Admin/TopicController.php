@@ -18,7 +18,6 @@ use Doctrine\Persistence\ManagerRegistry;
 #[Route('/admin/topic', name: 'admin_topic_')]
 class TopicController extends AbstractController
 {
-    //TODO: explain constants
     CONST PAGINATOR_COUNT = 20;
     CONST START_PAGE = 1;
     CONST MIN_COUNT = 0;
@@ -36,15 +35,12 @@ class TopicController extends AbstractController
     #[Route('', name: 'index')]
     public function index(Request $request) : Response
     {
-        //TODO: filters on separate flow
         $filterData = $request->get('filters') ?? [];
         $filtersExpanded = (bool)$filterData;
         $topicsFilter = new TopicFilter($filterData);
 
         $page = $request->get('page') ?? self::START_PAGE;
         $sort = $request->get('sort', ['id' => 'desc']);
-
-        //TODO: validate $sort
 
         $paginator = $this->topicService->addCriteria($filterData)->addOrder($sort)->getPaginator($page, self::PAGINATOR_COUNT);
         $c = count($paginator);
@@ -56,15 +52,12 @@ class TopicController extends AbstractController
         if($filters->isSubmitted() && $filters->isValid()) {
             $filterData = $filters->getData();
 
-            //TODO: maybe strategy pattern instead if statements
-
             if($filters->get('clear')->isClicked()) {
                 $this->addFlash('warning', 'flash.warning.filter_cleared');
                 return $this->redirectToRoute('admin_topic_index');
             }
 
             if($filters->get('save')->isClicked()) {
-                //TODO implement filter storage
                 $this->addFlash('success', sprintf('flash.success.filter_save %d items', $c));
                 return $this->redirectToRoute('admin_topic_index');
             }
@@ -140,8 +133,6 @@ class TopicController extends AbstractController
 
             $this->addFlash('success', 'flash.success.topic_updated');
 
-            //TODO: choose next action dynamically
-
             $nextAction = 'admin_topic_index';
 
             return $this->redirectToRoute($nextAction);
@@ -216,7 +207,6 @@ class TopicController extends AbstractController
 
         }
 
-        //TODO: maybe run should be without confirm
         return $this->render('topic/admin/run.html.twig', [
             'item' => $topic,
         ]);
@@ -241,7 +231,6 @@ class TopicController extends AbstractController
 
             $this->addFlash('success', 'flash.success.changed');
 
-            //TODO: set dynamic weight property
             $this->topicService->updateWeight($topic, $topic->getPriority() + 1);
 
             return $this->redirectToRoute('admin_topic_show', ['id' => $topic->getId()]);

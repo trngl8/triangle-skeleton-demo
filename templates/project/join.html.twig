@@ -1,0 +1,61 @@
+{% extends 'project/index.html.twig' %}
+
+{% block parent_breadcrumb %}<li class="breadcrumb-item"><a href="{{ path('app_project_index') }}">{{ 'title.projects'|trans }}</a></li>{% endblock %}
+{% block current_breadcrumb %}<li class="breadcrumb-item" aria-current="page">{{ 'title.project'|trans }} {{ item.id }}</li>{% endblock %}
+
+{% block main %}
+    <h1 class="mb-4">
+        {{ 'title.project'|trans }} {{ item.id }}
+    </h1>
+    <div class="row">
+        <div class="col-md-12">
+            {% block item %}
+
+                <div class="list-group w-auto mb-5">
+                    <a href="{% if target_path is defined %}{{ path(target_path, {'id': item.id}) }}{% else %}#{% endif %}" class="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">
+                        <div class="d-flex gap-2 w-100 justify-content-between">
+                            <div>
+                                <h6 class="mb-0">{{ item.id }} {{ item.title }}</h6>
+                                <p class="mb-0 opacity-75">{{ item.type }}</p>
+                                <p class="mb-0 opacity-75">{{ item.description }}</p>
+
+                                {% if item.active %}<span class="badge bg-success">Best</span>{% endif %}
+                            </div>
+                            <small class="opacity-50 text-nowrap">{{ item.createdAt|date("Y-m-d") }}</small>
+                        </div>
+                    </a>
+                </div>
+
+            {% endblock %}
+            {% block items_list %}
+            {% endblock  %}
+        </div>
+    </div>
+
+    <div class="row row-cols-1 row-cols-md-3 mb-3 text-center">
+        {% for offer in offers %}
+            <div class="col">
+                <div class="card mb-4 rounded-3 shadow-sm border-secondary">
+{#                    <div class="card-header py-3  text-bg-{{ offer.border }} border-{{ offer.border }}">#}
+{#                        <h4 class="my-0 fw-normal">{{ offer.title }}</h4>#}
+{#                    </div>#}
+                    <div class="card-body">
+                        <h1 class="card-title pricing-card-title">{{ offer.amount }}{{ offer.currency }}<small class="text-muted fw-light">/mo</small></h1>
+                        <ul class="list-unstyled mt-3 mb-4">
+                            <li>120 minutes video</li>
+                            <li>30 examples</li>
+                            <li>10 home tasks</li>
+                            <li>ai support</li>
+                        </ul>
+                        {% if offer.active %}
+                            <a href="{{ path('app_contact') }}" class="w-100 btn btn-lg btn-outline-secondary">Join</a>
+                        {% elseif offer.private %}
+                            <a href="{{ path('app_offer_order', {"id": offer.id}) }}" class="w-100 btn btn-lg btn-primary">Contact us</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+{% endblock %}

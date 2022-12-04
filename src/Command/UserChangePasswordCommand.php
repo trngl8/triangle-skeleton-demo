@@ -74,7 +74,6 @@ class UserChangePasswordCommand extends Command
         $username = $input->getArgument('username');
         $plainPassword = $input->getArgument('password');
 
-        //TODO: use validator
         if (!$username || ! $plainPassword) {
             $this->io->error('username and password mus be provided');
             return Command::INVALID;

@@ -1,0 +1,22 @@
+{% extends 'order/index.html.twig' %}
+
+{% block main %}
+    <h1 class="mb-4">
+        {{ 'title.order'|trans }}
+    </h1>
+
+    <div class="row">
+        <div class="col-md-6">
+
+            <div class="card mb-5">
+                <div class="card-body">
+                    {{ order.title }}
+                    {{ order.amount }}
+                    {{ order.currency }}
+                    {{ offer.createdAt|date('Y-m-d') }} {# TODO choose format in the settings #}
+                </div>
+            </div>
+            {{ form(form, {'attr': {'novalidate': 'novalidate'}}) }}
+        </div>
+    </div>
+{% endblock %}

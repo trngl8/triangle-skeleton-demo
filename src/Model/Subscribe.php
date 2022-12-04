@@ -3,14 +3,15 @@
 namespace App\Model;
 use Symfony\Component\Validator\Constraints as Assert;
 
+/**
+ * A registration DTO
+ */
 class Subscribe
 {
     CONST DEFAULT_TYPE = 'email'; //direct
 
-    static $id;
-
     #[Assert\NotBlank]
-    private string $type;
+    private string $type = self::DEFAULT_TYPE;
 
     #[Assert\NotBlank]
     public string $name;
@@ -19,6 +20,7 @@ class Subscribe
     #[Assert\NotBlank]
     public string $email;
 
+    #[Assert\NotBlank]
     public string $locale;
 
     #[Assert\NotBlank]
@@ -27,27 +29,8 @@ class Subscribe
     #[Assert\NotBlank]
     public $know;
 
-    public function __construct(?string $type = null, string $email = null, string $locale = null, ?string $name = null)
-    {
-        $this->type = $type ?? self::DEFAULT_TYPE;
-        $this->locale = $locale ?? 'uk';
-        $this->name = $name ?? 'test';
-        $this->email = $email ?? 'test';
-    }
-
-    public function getId()
-    {
-        return self::$id;
-    }
-
-    public function getType()
+    public function getType() : string
     {
         return $this->type;
     }
-
-    public function getTitle()
-    {
-        return $this->name;
-    }
-
 }

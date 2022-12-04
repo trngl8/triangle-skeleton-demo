@@ -1,0 +1,149 @@
+{% extends 'layout.html.twig' %}
+
+{% block breadcrumbs %}
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ path('app_index') }}">{{ 'brcmbs.home'|trans }}</a></li>
+            <li class="breadcrumb-item" aria-current="page">{{ 'title.offers'|trans }}</li>
+        </ol>
+    </nav>
+{% endblock %}
+
+{% block main %}
+    <h1 class="mb-4">
+        {{ 'title.offers'|trans }}
+    </h1>
+
+    {% if active_order is defined %}
+    <div class="mb-5 mt-5">
+        <p>During current <b>configuration</b> you are only able to have one active order.</p>
+    </div>
+    {% endif %}
+
+    <div class="row">
+        <div class="col-md-12">
+            {% block offer_list %}
+                {% if offers is not defined %}
+                    <h3>No offers</h3>
+                {% elseif offers|length == 0 %}
+                    <p><b>Offers list is empty</b></p>
+                {% else %}
+                    <div class="row row-cols-1 row-cols-md-3 mb-3 text-center">
+                        {% for offer in offers %}
+                            <div class="col">
+                                <div class="card mb-4 rounded-3 shadow-sm border-{{ offer.border }}">
+                                    <div class="card-header py-3  text-bg-{{ offer.border }} border-{{ offer.border }}">
+                                        <h4 class="my-0 fw-normal">{{ offer.title }}</h4>
+                                    </div>
+                                    <div class="card-body">
+                                        <h1 class="card-title pricing-card-title">{{ offer.amount }}{{ offer.currency }}<small class="text-muted fw-light">/mo</small></h1>
+                                        <ul class="list-unstyled mt-3 mb-4">
+                                            <li>120 minutes video</li>
+                                            <li>30 examples</li>
+                                            <li>10 home tasks</li>
+                                            <li>ai support</li>
+                                        </ul>
+                                        {% if offer.active %}
+                                            {% if offer.border %}
+                                                <a href="{{ path('app_offer_order', {"id": offer.id}) }}" class="w-100 btn btn-lg btn-{{ offer.border }}">Join</a>
+                                            {% else %}
+                                                <a href="{{ path('app_offer_order', {"id": offer.id}) }}" class="w-100 btn btn-lg btn-outline-primary">Join</a>
+                                            {% endif %}
+                                        {% elseif offer.private %}
+                                            <a href="{{ path('app_contact') }}" class="w-100 btn btn-lg btn-dark">Contact us</a>
+                                        {% else %}
+                                            <a href="{{ path('app_contact') }}" class="w-100 btn btn-lg btn-outline-secondary}">Contact us</a>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+
+{#                    <a href="{{ path('subscribe_add') }}" class="btn btn-outline-secondary">Sign up free offer</a>#}
+
+                    <h2 class="display-6 text-center mb-4">Compare plans</h2>
+
+                    <div class="table-responsive">
+                        <table class="table text-center">
+                            <thead>
+                            <tr>
+
+                                <th style="width: 34%;"></th>
+                                {% for offer in offers %}
+                                    <th style="width: 22%;">{{ offer.title }}</th>
+                                {% endfor %}
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <th scope="row" class="text-start">Public</th>
+                                {% for offer in offers %}
+                                    {% if offer.public %}
+                                        <td><i class="bi bi-check-circle-fill text-success"></i></td>
+                                    {% else %}
+                                        <td><i class="bi bi-x-circle-fill text-danger"></i></td>
+                                    {% endif %}
+                                {% endfor %}
+                            </tr>
+                            <tr>
+                                <th scope="row" class="text-start">Private</th>
+                                {% for offer in offers %}
+                                    {% if offer.public %}
+                                        <td><i class="bi bi-check-circle-fill text-success"></i></td>
+                                    {% else %}
+                                        <td><i class="bi bi-x-circle-fill text-danger"></i></td>
+                                    {% endif %}
+                                {% endfor %}
+                            </tr>
+                            </tbody>
+
+                            <tbody>
+                            <tr>
+                                <th scope="row" class="text-start">Permissions</th>
+                                {% for offer in offers %}
+                                    {% if offer.private %}
+                                        <td><i class="bi bi-check-circle-fill text-success"></i></td>
+                                    {% else %}
+                                        <td><i class="bi bi-x-circle-fill text-danger"></i></td>
+                                    {% endif %}
+                                {% endfor %}
+                            </tr>
+                            <tr>
+                                <th scope="row" class="text-start">Screen sharing</th>
+                                {% for offer in offers %}
+                                    {% if offer.private %}
+                                        <td><i class="bi bi-check-circle-fill text-success"></i></td>
+                                    {% else %}
+                                        <td><i class="bi bi-x-circle-fill text-danger"></i></td>
+                                    {% endif %}
+                                {% endfor %}
+                            </tr>
+                            <tr>
+                                <th scope="row" class="text-start">Unlimited members</th>
+                                {% for offer in offers %}
+                                    {% if offer.amount > 500 %}
+                                        <td><i class="bi bi-check-circle-fill text-success"></i></td>
+                                    {% else %}
+                                        <td><i class="bi bi-x-circle-fill text-danger"></i></td>
+                                    {% endif %}
+                                {% endfor %}
+                            </tr>
+                            <tr>
+                                <th scope="row" class="text-start">Extra security</th>
+                                {% for offer in offers %}
+                                    {% if offer.amount > 500 %}
+                                        <td><i class="bi bi-check-circle-fill text-success"></i></td>
+                                    {% else %}
+                                        <td><i class="bi bi-x-circle-fill text-danger"></i></td>
+                                    {% endif %}
+                                {% endfor %}
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                {% endif %}
+            {% endblock  %}
+        </div>
+    </div>
+{% endblock %}

@@ -22,9 +22,7 @@ class InviteService
 
     public function addCriteria($data) : self
     {
-        //TODO: get real criteria
         if(is_array($data)) {
-            //TODO: add other custom filters
             foreach ($data as $key => $value) {
                 if($key === 'type') {
                     $this->baseDql .= sprintf(" WHERE i.type='%s'", $value);
@@ -37,7 +35,6 @@ class InviteService
 
     public function getPaginator($page, $max) : Paginator
     {
-        //TODO: check pages limits
         $this->query = $this->doctrine->getManager()->createQuery($this->baseDql)
             ->setFirstResult(($page-1) * $max)
             ->setMaxResults($max);
@@ -47,8 +44,6 @@ class InviteService
 
     public function close(Topic $topic) : bool
     {
-        //TODO: check ability or permissions
-        //TODO: check ability to close
         $topic->setClosedAt(new \DateTime());
         $this->doctrine->getManager()->flush();
 

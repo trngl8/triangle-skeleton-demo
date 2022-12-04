@@ -166,7 +166,6 @@ class CheckController extends AbstractController
                 ->setUsername($this->getUser()->getUserIdentifier())
             ;
 
-            //TODO: multiply options has not processed
             foreach ($data as $option) {
                 $result
                     ->setCheckOption($option)

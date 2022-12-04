@@ -1,0 +1,42 @@
+{% extends 'order/index.html.twig' %}
+
+{% block breadcrumbs %}
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ path('app_index') }}">{{ 'brcmbs.home'|trans }}</a></li>
+            <li class="breadcrumb-item"><a href="{{ path('app_offer_index') }}">{{ 'title.offers'|trans }}</a></li>
+            <li class="breadcrumb-item active" aria-current="page">{{ 'title.offers.order'|trans }} {{ offer.title }}</li>
+        </ol>
+    </nav>
+{% endblock %}
+
+{% block main %}
+    <h1 class="mb-4">
+        {{ 'title.offers.order'|trans }} {{ order.title }}
+    </h1>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card mb-4 rounded-3 shadow-sm border-{{ offer.border }}">
+                <div class="card-header py-3  text-bg-{{ offer.border }} border-{{ offer.border }}">
+                    <h4 class="my-0 fw-normal">{{ offer.title }}</h4>
+                </div>
+                <div class="card-body">
+                    <h1 class="card-title pricing-card-title">{{ offer.amount }}{{ offer.currency }}<small class="text-muted fw-light">/mo</small></h1>
+                    <ul class="list-unstyled mt-3 mb-4">
+                        <li>120 minutes video</li>
+                        <li>30 examples</li>
+                        <li>10 home tasks</li>
+                        <li>ai support</li>
+                        {{ offer.createdAt|date('Y-m-d') }}
+                    </ul>
+                </div>
+            </div>
+
+            {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+            {{ form_widget(form) }}
+            <button type="submit" class="btn-primary btn">{{ 'button.submit'|trans }}</button>
+            {{ form_end(form) }}
+        </div>
+    </div>
+{% endblock %}

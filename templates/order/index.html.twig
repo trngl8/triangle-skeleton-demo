@@ -1,0 +1,50 @@
+{% extends 'layout.html.twig' %}
+
+{% block breadcrumbs %}
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ path('app_index') }}">{{ 'brcmbs.home'|trans }}</a></li>
+            <li class="breadcrumb-item" aria-current="page">{{ 'title.orders'|trans }}</li>
+        </ol>
+    </nav>
+{% endblock %}
+
+{% block main %}
+    <h1 class="mb-4">
+        {{ 'title.orders'|trans }}
+    </h1>
+    <div class="row">
+        <div class="col-md-12">
+            {% block order_list %}
+                {% if orders is not defined %}
+                    <h3>No orders</h3>
+                {% elseif orders|length == 0 %}
+                    <p><b>Orders list is empty</b></p>
+                {% else %}
+                    <div class="list-group w-auto">
+                    {% for i, order in orders %}
+                        <a href="{{ path('app_order_status', {'uuid': order.uuid}) }}" class="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">
+                            <h3><i class="bi bi-dice-{{ order.id % 6 + 1 }}-fill"></i></h3>
+                            <div class="d-flex gap-2 w-100 justify-content-between">
+                                <div>
+                                    <h6 class="mb-0">{{ order }} </h6>
+
+                                    <p class="mb-0 opacity-75">{{ order.deliveryEmail }}</p>
+                                </div>
+                                <div>
+                                    {% if order.status == 'paid' %}
+                                        <span class="badge text-bg-success">{{ order.status }}</span>
+                                    {% else %}
+                                        <span class="badge text-bg-primary">{{ order.status }}</span>
+                                    {% endif %}
+                                </div>
+{#                                <small class="opacity-50 text-nowrap">now</small>#}
+                            </div>
+                        </a>
+                    {% endfor %}
+
+                {% endif %}
+            {% endblock  %}
+        </div>
+    </div>
+{% endblock %}
