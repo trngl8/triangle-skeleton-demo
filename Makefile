@@ -24,3 +24,7 @@ tests:
 trans:
 	#php bin/console translation:extract --force --format=yaml --as-tree=3 --sort=asc --domain=messages en
 .PHONY: trans
+
+restore:
+	symfony run pg_restore -d db_name -f filename.dump
+.PHONY: restore

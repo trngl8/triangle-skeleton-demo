@@ -1,0 +1,36 @@
+{% extends 'project/admin/index.html.twig' %}
+
+{% block title %}{{ 'title.edit_project'|trans }}{% endblock %}
+
+{% block page_title %}
+    <h1 class="mt-4">{{ 'title.edit_project'|trans }}</h1>
+{%endblock%}
+
+{% block breadcrumb %}
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item"><a href="{{ path('admin') }}">{{ 'menu.dashboard'|trans }}</a></li>
+        <li class="breadcrumb-item"><a href="{{ path('admin_project_index') }}">{{ 'menu.project'|trans }}</a></li>
+        <li class="breadcrumb-item active">{{ 'title.add_project'|trans }}</li>
+    </ol>
+{% endblock %}
+
+{% block main %}
+    <div class="row">
+        <div class="col-md-8">
+            {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+            <div class="card">
+                <div class="card-body">
+                    {{ form_row(form.title) }}
+                    {{ form_row(form.description) }}
+                    {{ form_row(form.type) }}
+                    {{ form_row(form.active) }}
+                </div>
+            </div>
+            <div class="mt-4">
+                {{ form_widget(form.save, {label : 'button.submit'|trans, attr: {class : 'btn btn-lg btn-primary' }}) }}
+            </div>
+            {{ form_end(form) }}
+
+        </div>
+    </div>
+{% endblock %}

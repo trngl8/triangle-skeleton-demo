@@ -2,8 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content="" />
     <meta name="author" content="" />
     <link rel="shortcut icon" type="image/svg+xml" href="{{ asset('favicons/favicon.svg') }}">
@@ -61,7 +60,25 @@
                             {% endif %}
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if app.request.pathInfo starts with '/admin/order' %}active{% endif %}" href="{{ path('admin_order_index')}}">
+                            <i class="bi bi-egg-fried"></i>
+                            {{ 'menu.orders'|trans }}
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if app.request.pathInfo starts with '/admin/card' %}active{% endif %}" href="{{ path('admin_card_index')}}">
+                            <i class="bi bi-card-heading"></i>
+                            {{ 'menu.cards'|trans }}
+                        </a>
+                    </li>
 
+                    <li class="nav-item">
+                        <a class="nav-link {% if app.request.pathInfo starts with '/admin/product' %}active{% endif %}" href="{{ path('admin_product_index')}}">
+                            <i class="bi bi-box"></i>
+                            {{ 'menu.products'|trans }}
+                        </a>
+                    </li>
                     <li class="nav-item">
                         <a class="nav-link {% if app.request.pathInfo starts with '/admin/check' %}active{% endif %}" href="{{ path('admin_check_index')}}">
                             <i class="bi bi-clipboard-check"></i>
@@ -139,7 +156,25 @@
             {% endblock %}
 
             {% block main %}
+                <div class="row">
+                    <div class="col-md-2">
+                        <div class="card text-bg-primary border-primary mb-3">
+                            <div class="card-header">{{ 'card.orders'|trans }}</div>
+                            <div class="card-body">
+                                <h1 class="display-6"><i class="bi bi-egg-fried"></i></h1>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="card text-bg-danger mb-3">
+                            <div class="card-header">Exceptions</div>
+                            <div class="card-body">
+                                123
+                            </div>
+                        </div>
+                    </div>
 
+                </div>
             {% endblock %}
 
             {% block paginator %}
