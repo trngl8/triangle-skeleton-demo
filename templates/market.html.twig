@@ -1,12 +1,36 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <meta charset="utf-8">
+    <meta charset="UTF-8">
+    <title>{% block title %}{% endblock %}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Budubud</title>
+    {#        <link rel="icon" href="/favicon.ico">#}
+    <link rel="shortcut icon" type="image/svg+xml" href="{{ asset('favicons/favicon.svg') }}">
+    <link rel="alternate icon" type="image/png" sizes="16x16" href="{{ asset('favicons/favicon16x16.png') }}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('favicons/apple-touch-icon.png') }}" />
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
+    {#        <meta property="og:title" content="A Basic HTML5 Template">#}
+    {#        <meta property="og:type" content="website">#}
+    {#        <meta property="og:url" content="https://localhost/url">#}
+    {#        <meta property="og:description" content="A simple HTML5 Template for new projects.">#}
+    {#        <meta property="og:image" content="image.png">#}
+
+    {% block stylesheets %}
+        {{ encore_entry_link_tags('app') }}
+    {% endblock stylesheets %}
+
+    {#    <link rel="canonical" href="{{ '' }}">#}
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.15.1/devicon.min.css">
+
+    {% block add_stylesheets %}{%endblock%}
+
+    {% block javascripts %}
+        {{ encore_entry_script_tags('app') }}
+    {% endblock javascripts %}
+
 
     <style>
         html,
@@ -26,23 +50,6 @@
             padding: 15px;
         }
 
-        /*.form-signin .form-floating:focus-within {*/
-        /*    z-index: 2;*/
-        /*}*/
-
-        /*.form-signin input[type="email"] {*/
-        /*    margin-bottom: -1px;*/
-        /*    border-bottom-right-radius: 0;*/
-        /*    border-bottom-left-radius: 0;*/
-        /*}*/
-
-        /*.form-signin input[type="password"] {*/
-        /*    margin-bottom: 10px;*/
-        /*    border-top-left-radius: 0;*/
-        /*    border-top-right-radius: 0;*/
-        /*}*/
-
-
         .btn-common {
             --bs-btn-bg: #000000;
             --bs-btn-border-color: #000000;
@@ -53,42 +60,61 @@
             --bs-btn-color: white;
         }
 
+        .icon {
+            align-self: center;
+            display: block;
+            width: 80px;
+            height: 80px;
+            background-repeat: no-repeat;
+            background-image: url("data:image/svg+xml;charset=UTF-8, %3csvg width='80' height='80' viewBox='0 0 80 80' fill='none' xmlns='http://www.w3.org/2000/svg'%3e%3ccircle cx='40' cy='40' r='40' fill='%23EB5D2A'/%3e%3cpath d='M33.3111 55H25.7271V22.984H33.3111V34.6C36.0311 32.04 39.1511 30.76 42.6711 30.76C46.4791 30.76 49.5511 31.928 51.8871 34.264C54.2551 36.568 55.4391 39.592 55.4391 43.336C55.4391 47.016 54.2551 50.04 51.8871 52.408C49.5191 54.712 46.4471 55.864 42.6711 55.864C39.1511 55.864 36.0311 54.584 33.3111 52.024V55ZM40.2231 50.872C42.4631 50.872 44.2231 50.216 45.5031 48.904C46.7831 47.592 47.4231 45.784 47.4231 43.48C47.4231 41.016 46.7831 39.112 45.5031 37.768C44.2551 36.424 42.4791 35.752 40.1751 35.752C37.9671 35.752 36.2231 36.44 34.9431 37.816C33.6631 39.192 33.0231 41.064 33.0231 43.432C33.0231 45.8 33.6471 47.64 34.8951 48.952C36.1751 50.232 37.9511 50.872 40.2231 50.872Z' fill='white'/%3e%3c/svg%3e");
+        }
+
+
     </style>
 
 </head>
 <body>
 
+{% block main %}
 <main class="form-signin w-100 m-auto">
-    <div class="text-center">
-        <img class="mb-4" src="images/logo-sm-b.png" alt="" width="80">
-        <h1 class="h3 mb-5 fw-normal">Member's area</h1>
-    </div>
+    <div class="container">
+        <div class="row">
 
-    <div class="card">
-        <div class="card-body">
+            <div class="text-center d-flex justify-content-center mb-4">
+                <div class="icon"></div>
+            </div>
 
-            <form>
-                <div class="mb-3">
-                    <label for="email" class="form-label">Email address</label>
-                    <input type="email" class="form-control" id="email" aria-describedby="emailHelp">
+            <div class="text-center">
+                <h1 class="h3 mb-5 fw-normal"><i class="bi bi-people-fill"></i> Member's area</h1>
+            </div>
+
+            <div class="card">
+                <div class="card-body">
+                    <form method="post" action="{{ path('login') }}">
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email address</label>
+                            <input type="email" class="form-control" id="email" aria-describedby="emailHelp">
+                        </div>
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Password</label>
+                            <input type="password" class="form-control" id="password">
+                        </div>
+                        <div class="mb-3 form-check">
+                            <input type="checkbox" class="form-check-input" id="remember">
+                            <label class="form-check-label" for="remember">Remember me</label>
+                        </div>
+                        <button class="w-100 btn btn-lg btn-outline-primary btn-common" type="submit">Sign in</button>
+                    </form>
+
                 </div>
-                <div class="mb-3">
-                    <label for="password" class="form-label">Password</label>
-                    <input type="password" class="form-control" id="password">
-                </div>
-                <div class="mb-3 form-check">
-                    <input type="checkbox" class="form-check-input" id="remember">
-                    <label class="form-check-label" for="remember">Remember me</label>
-                </div>
-                <button class="w-100 btn btn-lg btn-common" type="submit">Sign in</button>
-            </form>
+            </div>
+
+            <p class="mt-5 mb-3 text-muted text-center">&copy; 2022-2023</p>
 
         </div>
     </div>
-
-    <p class="mt-5 mb-3 text-muted text-center">&copy; 2022-2023</p>
-
 </main>
+{% endblock main %}
 
 </body>
 </html>
