@@ -1,1 +1,9 @@
 {% extends 'market.html.twig' %}
+
+{% block add_flashes %}
+    {% if error %}
+        <div class="alert alert-warning" role="alert">
+            {{ error.messageKey|trans(error.messageData, 'security') }}
+        </div>
+    {% endif %}
+{% endblock %}

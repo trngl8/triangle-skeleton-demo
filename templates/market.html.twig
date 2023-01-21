@@ -87,7 +87,7 @@
             <div class="text-center">
                 <h1 class="h3 mb-5 fw-normal"><i class="bi bi-people-fill"></i> Member's area</h1>
             </div>
-
+            {% block flashes %}{% endblock %}
             <div class="card">
                 <div class="card-body">
                     <form method="post" action="{{ path('login') }}">
