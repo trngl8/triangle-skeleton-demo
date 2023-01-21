@@ -94,7 +94,7 @@
                         <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
                         <div class="mb-3">
                             <label for="email" class="form-label">{{ 'form.label.email'|trans }}</label>
-                            <input type="email" class="form-control" id="username" name="_username" value="{{ last_username }}" aria-describedby="emailHelp">
+                            <input type="email" class="form-control" id="username" name="_username" value="{% if last_username is defined %}{{ last_username }}{% endif %}" aria-describedby="emailHelp">
                         </div>
                         <div class="mb-3">
                             <label for="password" class="form-label">{{ 'form.label.password'|trans }}</label>
