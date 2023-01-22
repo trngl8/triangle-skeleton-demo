@@ -97,9 +97,9 @@
                         <label for="username" class="form-label">{{ 'form.label.email'|trans }}</label>
                         <input type="email" readonly disabled class="form-control" id="username" name="_username" value="{{ app.user.userIdentifier }}" aria-describedby="emailHelp">
                     </div>
-                    <a class="w-100 btn btn-lg btn-outline-primary" href="{{ path(app_default_module) }}">{{ 'button.confirm_identity'|trans }}</a>
+                    <a class="w-100 btn btn-lg btn-outline-primary btn-common" href="{{ path(app_default_module) }}">{{ 'login'|trans }}</a>
                     <p class="mb-3 mt-3 text-center">or</p>
-                    <a class="w-100 btn btn-lg btn-outline-primary" href="{{ path('logout') }}">{{ 'button.logout'|trans }}</a>
+                    <a class="w-100 btn btn-lg btn-outline-primary" href="{{ path('logout') }}">{{ 'logout'|trans }}</a>
 
                     {% else %}
 
