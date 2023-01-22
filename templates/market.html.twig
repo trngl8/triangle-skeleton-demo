@@ -106,6 +106,8 @@
                                 <input type="password" id="password" name="_password" class="form-control">
                             </div>
                             <button class="w-100 btn btn-lg btn-outline-primary btn-common" type="submit">{{ 'button.confirm_identity'|trans }}</button>
+                            <p class="mb-3 mt-3 text-center">or</p>
+                            <a class="w-100 btn btn-lg btn-outline-primary" href="{{ path('logout') }}">{{ 'button.logout'|trans }}</a>
                         {% else %}
                             <div class="mb-3">
                                 <label for="username" class="form-label">{{ 'form.label.email'|trans }}</label>

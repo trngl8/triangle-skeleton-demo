@@ -15,7 +15,7 @@ class LoginController extends AbstractController
     {
         $user = $this->getUser();
 
-        if($user) {
+        if($user->getUsername() === $authenticationUtils->getLastUsername()) {
             $this->addFlash('warning', 'flash.warning.already_logged_in');
             return $this->redirectToRoute("default_module"); //default profile
         }
