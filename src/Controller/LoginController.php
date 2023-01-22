@@ -11,13 +11,13 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 class LoginController extends AbstractController
 {
     #[Route('/login', name: 'login')]
-    public function index(AuthenticationUtils $authenticationUtils, string $appTheme): Response
+    public function index(AuthenticationUtils $authenticationUtils, string $appTheme, string $defaultModule): Response
     {
         $user = $this->getUser();
 
         if($user->getUsername() === $authenticationUtils->getLastUsername()) {
             $this->addFlash('warning', 'flash.warning.already_logged_in');
-            return $this->redirectToRoute("default_module"); //default profile
+            return $this->redirectToRoute($defaultModule);
         }
 
         $error = $authenticationUtils->getLastAuthenticationError();
