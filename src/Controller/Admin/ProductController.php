@@ -4,6 +4,7 @@ namespace App\Controller\Admin;
 
 use App\Button\LinkToRoute;
 use App\Entity\Product;
+use App\Form\Admin\ProductAdminType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -45,7 +46,7 @@ class ProductController extends AbstractController
     public function add(Request $request): Response
     {
         $project = new Product();
-        $form = $this->createForm(ProductType::class, $project);
+        $form = $this->createForm(ProductAdminType::class, $project);
 
         $form->handleRequest($request);
 

@@ -11,7 +11,7 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 class LoginController extends AbstractController
 {
     #[Route('/login', name: 'login')]
-    public function index(AuthenticationUtils $authenticationUtils, Request $request): Response
+    public function index(AuthenticationUtils $authenticationUtils, string $appTheme): Response
     {
         $user = $this->getUser();
 
@@ -28,7 +28,13 @@ class LoginController extends AbstractController
             $this->addFlash('error', 'Error!');
         }
 
-        return $this->render('login/index.html.twig', [
+        $template = 'login/index.html.twig';
+
+        if($appTheme === 'market') {
+            $template = 'market/index.html.twig';
+        }
+
+        return $this->render($template, [
             'error' => $error,
             'last_username' => $lastUsername,
         ]);

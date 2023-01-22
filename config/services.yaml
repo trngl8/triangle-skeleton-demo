@@ -16,6 +16,7 @@ services:
             # that's defined in this file (including controller arguments)
             $adminEmail: '%env(resolve:APP_DEFAULT_EMAIL)%'
             $appTheme: '%env(resolve:APP_THEME)%'
+            $defaultModule: '%env(resolve:DEFAULT_MODULE)%'
             $paymentPrivateKey: '%env(resolve:APP_LIQPAY_PRIVATE_KEY)%'
             $paymentPublicKey: '%env(resolve:APP_LIQPAY_PUBLIC_KEY)%'
 
