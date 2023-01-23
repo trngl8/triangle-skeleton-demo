@@ -97,7 +97,8 @@
                         <label for="username" class="form-label">{{ 'form.label.email'|trans }}</label>
                         <input type="email" readonly disabled class="form-control" id="username" name="_username" value="{{ app.user.userIdentifier }}" aria-describedby="emailHelp">
                     </div>
-                    <a class="w-100 btn btn-lg btn-outline-primary btn-common" href="{{ path(app_default_module) }}">{{ 'login'|trans }}</a>
+
+                    <a class="w-100 btn btn-lg btn-outline-primary btn-common" href="{{ path(app_default_module) }}">{{ 'app.default.module'|trans }}</a>
                     <p class="mb-3 mt-3 text-center">or</p>
                     <a class="w-100 btn btn-lg btn-outline-primary" href="{{ path('logout') }}">{{ 'logout'|trans }}</a>
 
@@ -105,19 +106,26 @@
 
                     <form method="post" action="{{ path('login') }}">
                         <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
-                            <div class="mb-3">
-                                <label for="username" class="form-label">{{ 'form.label.email'|trans }}</label>
-                                <input type="email" class="form-control" id="username" name="_username" value="{% if last_username is defined %}{{ last_username }}{% endif %}" aria-describedby="emailHelp">
-                            </div>
-                            <div class="mb-3">
-                                <label for="password" class="form-label">{{ 'form.label.password'|trans }}</label>
-                                <input type="password" id="password" name="_password" class="form-control">
-                            </div>
-                            <div class="mb-3 form-check">
-                                <input type="checkbox" class="form-check-input" id="remember" name="_remember_me">
-                                <label class="form-check-label" for="remember">{{ 'form.label.remember_me'|trans }}</label>
-                            </div>
-                            <button class="w-100 btn btn-lg btn-outline-primary btn-common" type="submit">{{ 'button.login'|trans }}</button>
+                        <div class="mb-3">
+                            <label for="username" class="form-label">{{ 'form.label.email'|trans }}</label>
+                            <input type="email" class="form-control" id="username" name="_username" value="{% if last_username is defined %}{{ last_username }}{% endif %}" aria-describedby="emailHelp">
+                        </div>
+                        <div class="mb-3">
+                            <label for="password" class="form-label">{{ 'form.label.password'|trans }}</label>
+                            <input type="password" id="password" name="_password" class="form-control">
+                        </div>
+                        <div class="mb-3 form-check">
+                            <input type="checkbox" class="form-check-input" id="remember" name="_remember_me">
+                            <label class="form-check-label" for="remember">{{ 'form.label.remember_me'|trans }}</label>
+                        </div>
+                        <button class="w-100 btn btn-lg btn-outline-primary btn-common" type="submit">{{ 'button.login'|trans }}</button>
+
+{#                        <div class="col-md-6 mt-5">#}
+{#                            <p>Or you can login with social network:</p>#}
+{#                            <a href="{{ path('hwi_oauth_service_redirect', {'service': 'google' }) }}"  class="btn-outline-secondary btn">#}
+{#                                <span>Login with Google</span>#}
+{#                            </a>#}
+{#                        </div>#}
                     </form>
 
                     {% endif %}
@@ -125,7 +133,7 @@
                 </div>
             </div>
 
-            <p class="mt-5 mb-3 text-muted text-center">&copy; 2022-2023</p>
+            <p class="mt-5 mb-3 text-muted text-center">&copy; 2022-2023 {{ app_name|capitalize }}</p>
 
         </div>
     </div>
