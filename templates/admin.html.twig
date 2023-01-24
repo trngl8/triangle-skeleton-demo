@@ -21,31 +21,52 @@
 
 </head>
 <body class="sb-nav-fixed">
-<nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
-    <!-- Navbar Brand-->
-    <a class="navbar-brand ps-3" href="{{ path('admin') }}">admin {{ app_name }}</a>
-    <!-- Sidebar Toggle-->
-    <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
-    <!-- Navbar Search-->
-    <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
-        <div class="input-group">
-{#            <input class="form-control" type="text" placeholder="{{ 'search.placeholder'|trans }}" aria-label="{{ 'search.aria_label'|trans }}" aria-describedby="btnNavbarSearch" />#}
-{#            <button class="btn btn-primary" id="btnNavbarSearch" type="button"><i class="bi bi-search"></i></button>#}
-        </div>
-    </form>
-    <!-- Navbar-->
-    <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
-        <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i>{{ app.user.username }}</a>
-            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-{#                <li><a class="dropdown-item" href="{{ path('settings') }}">{{ 'navbar.settings'|trans }}</a></li>#}
-                <li><a class="dropdown-item" href="{{ path('admin_inbox') }}">{{ 'navbar.activity'|trans  }}</a></li>
-                <li><hr class="dropdown-divider" /></li>
-                <li><a class="dropdown-item" href="{{ path('logout')}}">{{ 'navbar.logout'|trans  }}</a></li>
+
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark" aria-label="Ninth navbar example">
+    <div class="container-fluid">
+        <button class="navbar-toggler btn-hamburger" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample07XL" aria-controls="navbarsExample07XL" aria-expanded="false" aria-label="Toggle navigation">
+            <span class=""><i class="bi bi-list"></i></span>
+        </button>
+
+{#        <a class="navbar-brand" href="#"><i class="bi bi-bootstrap-fill"></i></a>#}
+
+        <div class="collapse navbar-collapse" id="navbarsExample07XL">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="{{ path('admin') }}">admin {{ app_name }}</a>
+                </li>
+{#                <li class="nav-item">#}
+{#                    <a class="nav-link" href="#">Link</a>#}
+{#                </li>#}
+{#                <li class="nav-item">#}
+{#                    <a class="nav-link disabled">Disabled</a>#}
+{#                </li>#}
+{#                <li class="nav-item dropdown">#}
+{#                    <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">Dropdown</a>#}
+{#                    <ul class="dropdown-menu">#}
+{#                        <li><a class="dropdown-item" href="#">Action</a></li>#}
+{#                        <li><a class="dropdown-item" href="#">Another action</a></li>#}
+{#                        <li><a class="dropdown-item" href="#">Something else here</a></li>#}
+{#                    </ul>#}
+{#                </li>#}
             </ul>
-        </li>
-    </ul>
+        </div>
+
+        <a class="btn btn-outline-secondary dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-person"></i> {{ app.user.username }}</a>
+        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+            <li><a class="dropdown-item" href="{{ path('app_profile') }}">{{ 'app.profile'|trans }}</a></li>
+            <li><a class="dropdown-item" href="{{ path('admin_inbox') }}">{{ 'navbar.activity'|trans  }}</a></li>
+            <li><hr class="dropdown-divider" /></li>
+            <li><a class="dropdown-item" href="{{ path('logout')}}">{{ 'navbar.logout'|trans  }}</a></li>
+        </ul>
+
+
+
+    </div>
 </nav>
+
+
 <div class="container-fluid">
     <div class="row">
         <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
