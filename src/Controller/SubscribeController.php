@@ -46,17 +46,27 @@ class SubscribeController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            //TODO: check if user exists
+            //TODO: check if subscription exists
             //TODO: check an exception
-            $this->subscribeService->initSubscribe($subscription);
+            $invite = $this->subscribeService->initSubscribe($subscription);
 
             $this->addFlash('success', 'flash.success.subscribe_created');
 
-            return $this->redirectToRoute('subscribe_verify');
+            return $this->redirectToRoute('subscribe_success', ['id' => $invite->getId()]); //TODO: redirect ot uuid
         }
 
         return $this->render('subscribe/index.html.twig', [
             'form' => $form->createView(),
+        ]);
+    }
+
+    #[Route('/success/{id}', name: 'success')]
+    public function success(int $id) : Response
+    {
+        $item = $this->inviteRepository->findOneBy(['id' => $id]);
+
+        return $this->render('subscribe/success.html.twig', [
+            'item' => $item,
         ]);
     }
 
@@ -78,7 +88,9 @@ class SubscribeController extends AbstractController
             return $this->redirectToRoute('app_profile');
         }
 
-        $this->addFlash('error', 'flash.error.invalid_token');
+        if(!$invite) {
+            $this->addFlash('error', 'flash.error.invalid_token');
+        }
 
         return $this->redirectToRoute('login');
     }
