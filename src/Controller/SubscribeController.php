@@ -3,10 +3,10 @@
 namespace App\Controller;
 
 use App\Form\Type\SubscribeType;
-use App\Form\VerifyType;
 use App\Model\Subscribe;
-use App\Model\Verify;
+use App\Repository\InviteRepository;
 use App\Service\SubscribeService;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,13 +15,18 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/subscribe', name: 'subscribe_')]
 class SubscribeController extends AbstractController
 {
+    private $doctrine;
+
     private $subscribeService;
 
-    public function __construct(SubscribeService $subscribeService)
-    {
-        $this->subscribeService = $subscribeService;
-    }
+    private $inviteRepository;
 
+    public function __construct(ManagerRegistry $doctrine, SubscribeService $subscribeService, InviteRepository $inviteRepository)
+    {
+        $this->doctrine = $doctrine;
+        $this->subscribeService = $subscribeService;
+        $this->inviteRepository = $inviteRepository;
+    }
 
     #[Route('/add', name: 'add')]
     public function add(Request $request) : Response
@@ -30,6 +35,8 @@ class SubscribeController extends AbstractController
 
         if($user) {
             $this->addFlash('warning', 'flash.warning.already_logged_in');
+
+            return $this->redirectToRoute('app_profile_invites');
         }
 
         $subscription = new Subscribe();
@@ -39,6 +46,8 @@ class SubscribeController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
 
+            //TODO: check if user exists
+            //TODO: check an exception
             $this->subscribeService->initSubscribe($subscription);
 
             $this->addFlash('success', 'flash.success.subscribe_created');
@@ -54,24 +63,23 @@ class SubscribeController extends AbstractController
     #[Route('/verify', name: 'verify')]
     public function verify(Request $request) : Response
     {
-        $user = $this->getUser();
+        $token = $request->query->get('token');
 
-        if(!$user) {
-            $this->addFlash('warning', 'flash.warning.not_logged_in');
-        }
+        $invite = $this->inviteRepository->findOneBy(['description' => $token]);
 
-        $verify = new Verify('test');
-        $form = $this->createForm(VerifyType::class, $verify);
+        if($token && $invite) {
+            //TODO: implement verified flag
+            $invite->setDescription('');
 
-        $form->handleRequest($request);
+            $this->doctrine->getManager()->flush();
 
-        if ($form->isSubmitted() && $form->isValid()) {
             $this->addFlash('success', 'flash.success.verify');
+
             return $this->redirectToRoute('app_profile');
         }
 
-        return $this->render('subscribe/verify.html.twig', [
-            'form' => $form->createView()
-        ]);
+        $this->addFlash('error', 'flash.error.invalid_token');
+
+        return $this->redirectToRoute('login');
     }
 }
