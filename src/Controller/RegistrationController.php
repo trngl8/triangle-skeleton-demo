@@ -56,12 +56,18 @@ class RegistrationController extends AbstractController
                     ->htmlTemplate('registration/confirmation_email.html.twig')
             );
 
-            return $this->redirectToRoute('app_home');
+            return $this->redirectToRoute('app_register_success');
         }
 
         return $this->render('registration/register.html.twig', [
             'registrationForm' => $form->createView(),
         ]);
+    }
+
+    #[Route('/register/check-email', name: 'app_register_success')]
+    public function checkEmail(): Response
+    {
+        return $this->render('registration/check_email.html.twig');
     }
 
     #[Route('/verify/email', name: 'app_verify_email')]
