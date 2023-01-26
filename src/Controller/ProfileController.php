@@ -37,6 +37,8 @@ class ProfileController extends AbstractController
         $profile = $this->repository->findOneBy(['email' => $user->getUserIdentifier()]);
 
         if(!$profile) {
+            $this->addFlash('warning', 'no_active_profile');
+
             return $this->redirectToRoute('app_profile_edit');
         }
 
@@ -73,7 +75,9 @@ class ProfileController extends AbstractController
         $profile = $this->repository->findOneBy(['email' => $user->getUserIdentifier()]);
 
         if(!$profile) {
-            $profile = new Profile();
+            $profile = (new Profile())
+                ->setEmail($user->getUserIdentifier())
+                ->setActive(true);
         }
 
         $form = $this->createForm(ProfileType::class, $profile);

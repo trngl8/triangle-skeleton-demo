@@ -38,6 +38,9 @@ class Invite
     #[ORM\ManyToOne(targetEntity: Profile::class, inversedBy: 'invites')]
     private $profile; //seconds
 
+    // TODO: add mapping
+    private bool $verified = false;
+
     use TimestampTrait;
 
     public function __construct()
@@ -119,6 +122,13 @@ class Invite
     public function setProfile(?Profile $profile): self
     {
         $this->profile = $profile;
+
+        return $this;
+    }
+
+    public function setVerified(bool $verified): self
+    {
+        $this->verified = $verified;
 
         return $this;
     }

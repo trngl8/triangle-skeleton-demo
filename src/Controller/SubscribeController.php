@@ -2,7 +2,10 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
+use App\Form\RegistrationFormType;
 use App\Form\Type\SubscribeType;
+use App\Form\UserPasswordType;
 use App\Model\Subscribe;
 use App\Repository\InviteRepository;
 use App\Service\SubscribeService;
@@ -10,6 +13,7 @@ use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 #[Route('/subscribe', name: 'subscribe_')]
@@ -80,12 +84,13 @@ class SubscribeController extends AbstractController
         if($token && $invite) {
             //TODO: implement verified flag
             $invite->setDescription('');
+            $invite->setVerified(true);
 
             $this->doctrine->getManager()->flush();
 
             $this->addFlash('success', 'flash.success.verify');
 
-            return $this->redirectToRoute('app_profile');
+            return $this->redirectToRoute('subscribe_password', ['id' => $invite->getId()]);
         }
 
         if(!$invite) {
@@ -93,5 +98,45 @@ class SubscribeController extends AbstractController
         }
 
         return $this->redirectToRoute('login');
+    }
+
+    #[Route('/password/{id}', name: 'password')]
+    public function changePassword(int $id, UserPasswordHasherInterface $passwordHasher, Request $request) : Response
+    {
+        $invite = $this->inviteRepository->findOneBy(['id' => $id]);
+
+        if(!$invite) {
+            $this->addFlash('error', 'flash.error.invalid_token');
+
+            return $this->redirectToRoute('login');
+        }
+
+        $user = (new User())
+            ->setUsername($invite->getEmail());
+
+        $form = $this->createForm(UserPasswordType::class,  $user);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $plaintextPassword = $form->get('plainPassword')->getData();
+
+            $hashedPassword = $passwordHasher->hashPassword(
+                $user,
+                $plaintextPassword
+            );
+            $user->setPassword($hashedPassword);
+
+            $this->doctrine->getManager()->persist($user);
+            $this->doctrine->getManager()->flush();
+
+            $this->addFlash('success', 'flash.success.password_changed');
+
+            return $this->redirectToRoute('login');
+        }
+
+        return $this->render('subscribe/change_password.html.twig', [
+            'registrationForm' => $form->createView(),
+        ]);
     }
 }
