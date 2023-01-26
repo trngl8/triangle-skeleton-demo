@@ -37,8 +37,8 @@ class DefaultController
         $button3 = new LinkToRoute('default_action', 'button.light', 'light');
 
         $products = $this->productRepository->findBy([], ['id' => 'ASC'], 3, 0);
-        $topics = $this->topicRepository->findBy([], ['id' => 'ASC'], 10, 0);
-        $featured = $this->topicRepository->findBy([], ['id' => 'DESC'], 3, 0);
+//        $topics = $this->topicRepository->findBy([], ['id' => 'ASC'], 10, 0);
+//        $featured = $this->topicRepository->findBy([], ['id' => 'DESC'], 3, 0);
 
         $templateName = sprintf('%s/index.html.twig', $this->appTheme);
 
@@ -51,8 +51,8 @@ class DefaultController
         $content = $template->render([
             'buttons' => [$button1, $button2, $button3],
             'products' => $products,
-            'topics' => $topics,
-            'featured' => $featured
+//            'topics' => $topics,
+//            'featured' => $featured
         ]);
 
         $response ??= new Response();
