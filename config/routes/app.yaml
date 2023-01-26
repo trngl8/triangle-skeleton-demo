@@ -19,7 +19,7 @@ default_module:
   controller: App\Controller\OfferController::index
 
 default_action:
-  path: /register
+  path: /subscribe/add
   controller: App\Controller\SubscribeController::add
 
 app_contact:

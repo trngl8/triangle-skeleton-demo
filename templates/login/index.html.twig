@@ -15,12 +15,6 @@
             {{ error.messageKey|trans(error.messageData, 'security') }}
         </div>
     {% endif %}
-    {% if app.session.get('cart') %}
-        <div class="alert alert-success" role="alert">
-            <i class="bi bi-cart"></i>
-              <a href="{{ path('app_cart') }}">{{ 'text.yoy_have_items_in_the_cart'|trans }}</a>
-        </div>
-    {% endif %}
 {% endblock %}
 
 {% block main %}
@@ -37,11 +31,11 @@
                 <div id="login">
                     <div class="mb-3">
                         <label for="username" class="form-label required">{{ 'form.label.email'|trans }}</label>
-                        <input type="text" id="username" name="_username" value="{{ last_username }}" class="form-control" />
+                        <input type="text" id="username" name="_username" required value="{{ last_username }}" class="form-control" />
                     </div>
                     <div class="mb-3">
                         <label for="password" class="form-label required">{{ 'form.label.password'|trans }}</label>
-                        <input type="password" id="password" name="_password" class="form-control" />
+                        <input type="password" id="password" name="_password" required class="form-control" />
                     </div>
                     <div class="mb-3">
                         <div class="form-check">
@@ -50,7 +44,10 @@
                         </div>
                     </div>
                     <div class="mb-3">
-                        <button type="submit" id="login" name="login" class="btn-primary btn">{{ 'button.login'|trans }}</button>
+                        <div class="d-flex justify-content-between">
+                            <button type="submit" id="login" name="login" class="btn btn-lg btn-primary">{{ 'button.login'|trans }}</button>
+                            <a href="{{ path('app_forgot_password_request') }}" class="btn btn-link">{{ 'link.forgot_password'|trans }}</a>
+                        </div>
                     </div>
                 </div>
             </form>

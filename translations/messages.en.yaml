@@ -72,10 +72,15 @@ button:
   subscribe: Subscribe
   light: Light
   add: Add
+  register: Register
+
+link:
+  forgot_password: Forgot your password?
 
 type: Type
 total: Total
 title:
+  register: Register
   verify: Verify
   topics: Topics
   topic_run: Topic run
