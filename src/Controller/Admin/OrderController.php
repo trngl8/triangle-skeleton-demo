@@ -93,7 +93,7 @@ class OrderController extends AbstractController
 
             //TODO: choose next action dynamically
 
-            $nextAction = 'admin_offer_index';
+            $nextAction = 'admin_order_index';
 
             return $this->redirectToRoute($nextAction);
         }
@@ -126,7 +126,7 @@ class OrderController extends AbstractController
     }
 
     #[Route('/{id}/show', name: 'show', methods: ['GET', 'HEAD'])]
-    public function show(Order $order, Request $request): Response
+    public function show(Order $order): Response
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
 

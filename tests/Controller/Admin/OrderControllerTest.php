@@ -38,26 +38,32 @@ class OrderControllerTest extends WebTestCase
         $this->assertResponseIsSuccessful();
 
         //TODo: check name (translation)
-//        $crawler = $client->submitForm('form_submit', [
-//            'offer_admin[title]' => 'test',
-//            'offer_admin[currency]' => 'UAH',
-//            'offer_admin[amount]' => 200,
-//        ]);
-//
-//        $this->assertResponseIsSuccessful();
-//
-//        $client->request('GET', '/admin/order/show/1');
-//
-//        $this->assertResponseIsSuccessful();
-//
-//        $client->request('GET', '/admin/order/edit/1');
-//
-//        $client->submitForm('form_submit', [
-//            'offer_admin[title]' => 'test',
-//            'offer_admin[currency]' => 'UAH',
-//            'offer_admin[amount]' => 200,
-//        ]);
-//
-//        $this->assertResponseIsSuccessful();
+        $crawler = $client->submitForm('Submit order', [
+            'order_admin[description]' => 'test',
+            'order_admin[currency]' => 'UAH',
+            'order_admin[deliveryEmail]' => 'test@test.com',
+            'order_admin[deliveryPhone]' => 'test@test.com',
+            'order_admin[amount]' => 200,
+        ]);
+
+        $this->assertResponseIsSuccessful();
+
+        $client->request('GET', '/admin/order/1/show');
+
+        $this->assertResponseIsSuccessful();
+
+        $client->request('GET', '/admin/order/1/edit');
+
+        $this->assertResponseIsSuccessful();
+
+        $client->submitForm('Submit order', [
+            'order_admin[description]' => 'test',
+            'order_admin[currency]' => 'UAH',
+            'order_admin[deliveryEmail]' => 'test@test.com',
+            'order_admin[deliveryPhone]' => 'test@test.com',
+            'order_admin[amount]' => 200,
+        ]);
+
+        $this->assertResponseIsSuccessful();
     }
 }
