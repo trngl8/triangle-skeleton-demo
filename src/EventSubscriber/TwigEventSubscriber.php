@@ -42,6 +42,36 @@ class TwigEventSubscriber implements EventSubscriberInterface
             }
         }
 
+        $topMenu = [
+            'index' => [
+                'title' => 'menu.home',
+                'route' => 'app_index',
+                'url' => '/index',
+            ],
+            'products' => [
+                'title' => 'menu.products',
+                'route' => 'app_product_index',
+                'url' => '/product',
+            ],
+            'projects' => [
+                'title' => 'menu.projects',
+                'route' => 'app_project_index',
+                'url' => '/project',
+            ],
+            'offers' => [
+                'title' => 'menu.offers',
+                'route' => 'app_offer_index',
+                'url' => '/offer',
+            ],
+            'features' => [
+                'title' => 'menu.features',
+                'route' => 'topic_index',
+                'url' => '/topic',
+            ],
+        ];
+
+        $this->twig->addGlobal('top_menu', $topMenu);
+
         // Check user messages
         $user = $this->security->getUser();
         if(!$user)  {

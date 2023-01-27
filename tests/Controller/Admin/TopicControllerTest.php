@@ -18,7 +18,7 @@ class TopicControllerTest extends WebTestCase
 
         $client->request('GET', '/admin/topic');
         $this->assertResponseIsSuccessful();
-        $this->assertSelectorTextContains('h1', 'title.topics');
+        $this->assertSelectorTextContains('h1', 'Topics');
 
         $client->request('GET', '/admin/topic/export');
         $this->assertResponseIsSuccessful();
@@ -39,7 +39,7 @@ class TopicControllerTest extends WebTestCase
 
         $client->request('GET', '/admin/topic/1/edit');
         $this->assertResponseIsSuccessful();
-        $this->assertSelectorTextContains('h1', 'title.edit_topic');
+        $this->assertSelectorTextContains('h1', 'Edit topic');
     }
 
     public function testTopicSubmitSuccess(): void
@@ -53,7 +53,7 @@ class TopicControllerTest extends WebTestCase
         $client->loginUser($testUser);
 
         $client->request('GET', '/admin/topic/1/edit');
-        $crawler = $client->submitForm('button.submit', [
+        $crawler = $client->submitForm('Submit', [
             'topic_admin[description]' => 'changed description',
         ]);
 
