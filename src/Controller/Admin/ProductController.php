@@ -86,11 +86,11 @@ class ProductController extends AbstractController
 
             $this->addFlash('success', 'flash.success.product_updated');
 
-            $nextAction = $form->get('saveAndAdd')->isClicked()
-                ? 'admin_product_add'
-                : 'admin_product_index';
+//            $nextAction = $form->get('saveAndAdd')->isClicked()
+//                ? 'admin_product_add'
+//                : 'admin_product_index';
 
-            return $this->redirectToRoute($nextAction);
+            return $this->redirectToRoute('admin_product_index');
         }
 
         return $this->render('product/admin/edit.html.twig', [
