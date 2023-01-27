@@ -42,16 +42,12 @@ class Order
     #[ORM\Column(length: 255)]
     private ?string $deliveryPhone = null;
 
-    public function __construct(Offer $offer, string $profile, string $description)
+    public function __construct()
     {
         $this->uuid = Uuid::v4();
-        $this->offer = $offer;
         $this->action = 'pay';
-        $this->amount = $offer->getAmount();
-        $this->currency = $offer->getCurrency();
-        $this->description = $description;
-        $this->deliveryEmail = $profile;
     }
+
 
     public function __toString(): string
     {
@@ -126,6 +122,13 @@ class Order
     public function setStatus(string $status): self
     {
         $this->status = $status;
+
+        return $this;
+    }
+
+    public function setDeliveryEmail(string $deliveryEmail): self
+    {
+        $this->deliveryEmail = $deliveryEmail;
 
         return $this;
     }

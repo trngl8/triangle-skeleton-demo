@@ -5,9 +5,7 @@ namespace App\Controller\Admin;
 
 use App\Button\LinkToRoute;
 use App\Entity\Order;
-use App\Form\Admin\OfferAdminType;
-use App\Form\Admin\OfferEditAdminType;
-use App\Model\OfferRequest;
+use App\Form\Admin\OrderAdminType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -50,23 +48,22 @@ class OrderController extends AbstractController
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
 
-        $offerRequest = new OfferRequest();
-        $form = $this->createForm(OfferAdminType::class, $offerRequest);
+        $order = new Order();
+        $form = $this->createForm(OrderAdminType::class, $order);
 
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()) {
 
-            $order = new Offer($offerRequest->title, $offerRequest->currency, $offerRequest->amount);
             $this->doctrine->getManager()->persist($order);
             $this->doctrine->getManager()->flush();
 
-            $this->addFlash('success', 'flash.success.offer_created');
+            $this->addFlash('success', 'flash.success.order_created');
 
-            return $this->redirectToRoute('admin_offer_index');
+            return $this->redirectToRoute('admin_order_index');
         }
 
-        return $this->render('offer/admin/add.html.twig', [
+        return $this->render('order/admin/add.html.twig', [
             'form' => $form->createView()
         ]);
     }
@@ -76,20 +73,20 @@ class OrderController extends AbstractController
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
 
-        $offer = $this->doctrine->getRepository(Offer::class)->find($id);
+        $order = $this->doctrine->getRepository(Order::class)->find($id);
 
-        if(!$offer) {
-            throw new NotFoundHttpException(sprintf("Offer %d not found", $id));
+        if(!$order) {
+            throw new NotFoundHttpException(sprintf("Order %d not found", $id));
         }
 
-        $form = $this->createForm(OfferEditAdminType::class, $offer);
+        $form = $this->createForm(OrderAdminType::class, $order);
 
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->doctrine->getManager();
 
-            $entityManager->persist($offer);
+            $entityManager->persist($order);
             $entityManager->flush();
 
             $this->addFlash('success', 'flash.success.offer_updated');
@@ -101,40 +98,40 @@ class OrderController extends AbstractController
             return $this->redirectToRoute($nextAction);
         }
 
-        return $this->render('offer/admin/add.html.twig', [
-            'item' => $offer,
+        return $this->render('order/admin/add.html.twig', [
+            'item' => $order,
             'form' => $form->createView()
         ]);
     }
 
     #[Route('/{id}/remove', name: 'remove', methods: ['GET', 'POST', 'HEAD'])]
-    public function remove(Offer $offer, Request $request): Response
+    public function remove(Order $order, Request $request): Response
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
 
         $submittedToken = $request->request->get('token');
 
         if ($this->isCsrfTokenValid('remove', $submittedToken)) {
-            $this->doctrine->getManager()->remove($offer);
+            $this->doctrine->getManager()->remove($order);
             $this->doctrine->getManager()->flush();
 
             $this->addFlash('success', 'flash.success.removed');
 
-            return $this->redirectToRoute('admin_offer_index');
+            return $this->redirectToRoute('admin_order_index');
         }
 
-        return $this->render('offer/admin/remove.html.twig', [
-            'item' => $offer,
+        return $this->render('order/admin/remove.html.twig', [
+            'item' => $order,
         ]);
     }
 
     #[Route('/{id}/show', name: 'show', methods: ['GET', 'HEAD'])]
-    public function show(Offer $offer, Request $request): Response
+    public function show(Order $order, Request $request): Response
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
 
-        return $this->render('offer/admin/show.html.twig', [
-            'item' => $offer,
+        return $this->render('order/admin/show.html.twig', [
+            'item' => $order,
         ]);
     }
 }
