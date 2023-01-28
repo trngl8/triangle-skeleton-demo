@@ -40,7 +40,7 @@ class Order
     private string $deliveryEmail;
 
     #[ORM\Column(length: 255)]
-    private ?string $deliveryPhone = null;
+    private ?string $deliveryPhone;
 
     public function __construct()
     {
@@ -129,6 +129,13 @@ class Order
     public function setDeliveryEmail(string $deliveryEmail): self
     {
         $this->deliveryEmail = $deliveryEmail;
+
+        return $this;
+    }
+
+    public function setDeliveryPhone(string $deliveryPhone): self
+    {
+        $this->deliveryPhone = $deliveryPhone;
 
         return $this;
     }

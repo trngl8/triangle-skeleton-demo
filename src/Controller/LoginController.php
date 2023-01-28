@@ -11,20 +11,15 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 class LoginController extends AbstractController
 {
     #[Route('/login', name: 'login')]
-    public function index(AuthenticationUtils $authenticationUtils, Request $request): Response
+    public function index(AuthenticationUtils $authenticationUtils, string $appTheme, string $defaultModule): Response
     {
-        $user = $this->getUser();
-
-        if($user) {
-            $this->addFlash('warning', 'flash.warning.already_logged_in');
-            return $this->redirectToRoute('app_profile', ['ref' => sha1($user->getUserIdentifier())]); //default profile
-        }
-
         $error = $authenticationUtils->getLastAuthenticationError();
 
         $lastUsername = $authenticationUtils->getLastUsername();
 
-        return $this->render('login/index.html.twig', [
+        $template = $appTheme . DIRECTORY_SEPARATOR . 'login.html.twig';
+
+        return $this->render($template, [
             'error' => $error,
             'last_username' => $lastUsername,
         ]);

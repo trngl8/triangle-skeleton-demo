@@ -4,6 +4,7 @@ namespace App\Controller\Admin;
 
 use App\Button\LinkToRoute;
 use App\Entity\Product;
+use App\Form\Admin\ProductAdminType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -29,7 +30,7 @@ class ProductController extends AbstractController
     {
         $items = $this->repository->findBy([]);
 
-        $button = new LinkToRoute('project_add', 'button.add');
+        $button = new LinkToRoute('product_add', 'button.add');
 
         if(sizeof($items) === 0) {
             $this->addFlash('warning', 'flash.warning.no_items');
@@ -44,19 +45,19 @@ class ProductController extends AbstractController
     #[Route('/add', name: 'add')]
     public function add(Request $request): Response
     {
-        $project = new Product();
-        $form = $this->createForm(ProductType::class, $project);
+        $product = new Product();
+        $form = $this->createForm(ProductAdminType::class, $product);
 
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->doctrine->getManager();
-            $entityManager->persist($project);
+            $entityManager->persist($product);
             $entityManager->flush();
 
-            $this->addFlash('success', 'flash.success.project_created');
+            $this->addFlash('success', 'flash.success.product_created');
 
-            return $this->redirectToRoute('admin_project_index');
+            return $this->redirectToRoute('admin_product_index');
         }
 
         return $this->render('product/admin/add.html.twig', [
@@ -73,7 +74,7 @@ class ProductController extends AbstractController
             throw new NotFoundHttpException(sprintf("Product %d not found", $id));
         }
 
-        $form = $this->createForm(ProductType::class, $product);
+        $form = $this->createForm(ProductAdminType::class, $product);
 
         $form->handleRequest($request);
 
@@ -83,13 +84,13 @@ class ProductController extends AbstractController
             $entityManager->persist($product);
             $entityManager->flush();
 
-            $this->addFlash('success', 'flash.success.project_updated');
+            $this->addFlash('success', 'flash.success.product_updated');
 
-            $nextAction = $form->get('saveAndAdd')->isClicked()
-                ? 'admin_project_add'
-                : 'admin_project_index';
+//            $nextAction = $form->get('saveAndAdd')->isClicked()
+//                ? 'admin_product_add'
+//                : 'admin_product_index';
 
-            return $this->redirectToRoute($nextAction);
+            return $this->redirectToRoute('admin_product_index');
         }
 
         return $this->render('product/admin/edit.html.twig', [
@@ -112,7 +113,7 @@ class ProductController extends AbstractController
 
             $this->addFlash('success', 'flash.success.removed');
 
-            return $this->redirectToRoute('admin_project_index');
+            return $this->redirectToRoute('admin_product_index');
         }
 
         return $this->render('product/admin/remove.html.twig', [
