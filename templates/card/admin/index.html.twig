@@ -20,8 +20,7 @@
             <tr>
                 <th scope="col">#</th>
                 <th scope="col">Title</th>
-                <th scope="col">Currency</th>
-                <th scope="col">Amount</th>
+                <th scope="col">{{ 'createdAt'| trans }}</th>
                 <th scope="col" class="col-2">{{ 'actions'| trans }}</th>
             </tr>
             </thead>
@@ -30,6 +29,7 @@
                 <tr>
                     <td>{{ item.id }}</td>
                     <td>{{ item.title }}</td>
+                    <td>{{ item.createdAt|date }}</td>
                     <td>
                         <a href="{{ path('admin_card_edit', {'id': item.id }) }}" class="btn btn-sm btn-outline-primary">{{ 'button.edit'|trans }}</a>
                         <a href="{{ path('admin_card_remove', {'id': item.id }) }}" class="btn btn-sm btn-outline-danger">{{ 'button.remove'|trans }}</a>
