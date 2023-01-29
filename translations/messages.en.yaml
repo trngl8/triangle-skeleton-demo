@@ -43,6 +43,10 @@ error:
   text_return_homepage: "Return to homepage"
 
 flash:
+  success:
+    removed: Removed
+    created: Created
+    updated: Updated
   warning:
     already_logged_in: You are already logged in
 

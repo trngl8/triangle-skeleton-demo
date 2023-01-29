@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Invite;
 use App\Entity\Profile;
 use App\Form\InviteAcceptType;
 use App\Model\InviteAccept;
@@ -20,12 +21,13 @@ class InviteController extends AbstractController
         $this->doctrine = $doctrine;
     }
 
-    #[Route('/i/{code}', name: 'app_invite_accept')]
-    public function index(string $code, Request $request): Response
+    #[Route('/invite/accept/{id}', name: 'app_invite_accept')]
+    public function index(int $id, Request $request): Response
     {
-        $app_navbar = false;
+        $invite = $this->doctrine->getRepository(Invite::class)->find($id);
         $accept = new InviteAccept();
-        $accept->name = $code;
+        $accept->email = $invite->getEmail();
+        $accept->name = $invite->getName();
 
         $form = $this->createForm(InviteAcceptType::class, $accept);
 
@@ -36,22 +38,22 @@ class InviteController extends AbstractController
             $profile = (new Profile())
                 ->setName($accept->name)
                 ->setEmail($accept->email)
-                ->setTimezone( 'default')
+                ->setTimezone( 'Europe/Kyiv')
                 ->setLocale('uk')
                 ->setActive(true)
             ;
 
+            //TODo: create user
             $entityManager = $this->doctrine->getManager();
             $entityManager->persist($profile);
             $entityManager->flush();
 
-            $this->addFlash('profile', 'created');
-            $this->addFlash('success', 'flash.success.subscribe_created');
+            $this->addFlash('success', 'flash.success.created');
+
+            $this->redirectToRoute('login');
         }
 
         return $this->render('invite/accept.html.twig', [
-            'code' => $code,
-            'app_navbar' => $app_navbar,
             'form' => $form->createView()
         ]);
     }

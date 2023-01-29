@@ -179,7 +179,7 @@
             {% for label, messages in app.flashes(['success', 'warning']) %}
                 {% for message in messages %}
                     <div class="alert alert-{{ label }} alert-dismissible fade show" role="alert">
-                        {{ message }}
+                        {{ message|trans }}
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="{{ 'button.close'|trans }}"></button>
                     </div>
                 {% endfor %}

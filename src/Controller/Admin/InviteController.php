@@ -17,7 +17,7 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/admin/invite', name: 'admin_invite_')]
 class InviteController extends AbstractController
 {
-    CONST PAGINATOR_COUNT = 2;
+    CONST PAGINATOR_COUNT = 3;
     CONST START_PAGE = 1;
     CONST MIN_COUNT = 0;
 
@@ -62,10 +62,12 @@ class InviteController extends AbstractController
         }
 
         if($c === self::MIN_COUNT) {
-            $this->addFlash('warning', 'flash.warning.no_items');
+            $pages = $pages ?? [];
         }
 
-        $pages = range(self::START_PAGE, ceil($c / (self::PAGINATOR_COUNT + 1)));
+        if($c > 0) {
+            $pages = range(self::START_PAGE, ceil($c / (self::PAGINATOR_COUNT + 1)));
+        }
 
         return $this->render('invite/admin/index.html.twig', [
             'button' => new LinkToRoute('invite_add', 'button.add'),
@@ -90,7 +92,7 @@ class InviteController extends AbstractController
             $entityManager->persist($invite);
             $entityManager->flush();
 
-            $this->addFlash('success', 'flash.success.invite_created');
+            $this->addFlash('success', 'flash.success.created');
 
             return $this->redirectToRoute('admin_invite_index');
         }
@@ -127,7 +129,7 @@ class InviteController extends AbstractController
             $entityManager->persist($invite);
             $entityManager->flush();
 
-            $this->addFlash('success', 'flash.success.topic_updated');
+            $this->addFlash('success', 'flash.success.updated');
 
             return $this->redirectToRoute('admin_invite_index');
         }
@@ -135,6 +137,28 @@ class InviteController extends AbstractController
         return $this->render('invite/admin/edit.html.twig', [
             'item' => $invite,
             'form' => $form->createView()
+        ]);
+    }
+
+    #[Route('/remove/{id}', name: 'remove', methods: ['GET', 'POST', 'HEAD'] )]
+    public function remove(Invite $item, Request $request) : Response
+    {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+
+        $submittedToken = $request->request->get('token');
+
+        if ($this->isCsrfTokenValid('remove', $submittedToken)) {
+            $entityManager = $this->doctrine->getManager();
+            $entityManager->remove($item);
+            $entityManager->flush();
+
+            $this->addFlash('success', 'flash.success.removed');
+
+            return $this->redirectToRoute('admin_invite_index');
+        }
+
+        return $this->render('invite/admin/remove.html.twig', [
+            'item' => $item,
         ]);
     }
 

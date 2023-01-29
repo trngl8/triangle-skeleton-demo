@@ -19,9 +19,6 @@ class InviteAdminType extends AbstractType
             ->add('description', TextType::class)
             ->add('email', EmailType::class)
             ->add('phone', TextType::class)
-            ->add('save', SubmitType::class, [
-                'label' => 'form_test'
-            ])
         ;
     }
 
