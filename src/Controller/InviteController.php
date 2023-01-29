@@ -27,8 +27,8 @@ class InviteController extends AbstractController
     {
         $invite = $this->doctrine->getRepository(Invite::class)->findOneBy(['email'=>$code]);
 
-        if($invite) {
-            throw new NotFoundHttpException(sprintf('Invite for %s found', $code));
+        if(!$invite) {
+            throw new NotFoundHttpException(sprintf('Invite for %s was not found', $code));
         }
 
         $accept = new InviteAccept();
