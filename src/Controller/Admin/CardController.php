@@ -86,14 +86,16 @@ class CardController extends AbstractController
 
             $this->addFlash('success', 'flash.success.project_updated');
 
-            $nextAction = $form->get('saveAndAdd')->isClicked()
-                ? 'admin_project_add'
-                : 'admin_project_index';
+            $nextAction = 'admin_card_index';
+
+//            $nextAction = $form->get('saveAndAdd')->isClicked()
+//                ? 'admin_project_add'
+//                : 'admin_project_index';
 
             return $this->redirectToRoute($nextAction);
         }
 
-        return $this->render('product/admin/edit.html.twig', [
+        return $this->render('card/admin/add.html.twig', [
             'item' => $card,
             'form' => $form->createView()
         ]);
