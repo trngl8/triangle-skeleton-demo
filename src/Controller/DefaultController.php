@@ -5,7 +5,6 @@ namespace App\Controller;
 use App\Button\LinkToRoute;
 use App\Exception\ThemeLayoutNotFoundException;
 use App\Repository\ProductRepository;
-use App\Repository\TopicRepository;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Response;
 use Twig\Environment;
@@ -21,12 +20,11 @@ class DefaultController
 
     private $security;
 
-    public function __construct(ProductRepository $productRepository, TopicRepository $topicRepository, Environment $twig,
+    public function __construct(ProductRepository $productRepository, Environment $twig,
         Security $security,
         string $appTheme
     ) {
         $this->productRepository = $productRepository;
-        $this->topicRepository = $topicRepository;
         $this->twig = $twig;
         $this->security = $security;
         $this->appTheme = $appTheme;

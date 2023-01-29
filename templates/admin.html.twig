@@ -76,9 +76,9 @@
                         <a class="nav-link {% if app.request.pathInfo == '/admin' %}active{% endif %}" aria-current="page" href="{{ path('admin')}}">
                             <i class="bi bi-speedometer"></i>
                             {{ 'menu.dashboard'|trans }}
-                            {% if incoming_unread_count is defined %}
-                                <span class="badge bg-secondary">+{{ incoming_unread_count }}</span>
-                            {% endif %}
+{#                            {% if incoming_unread_count is defined %}#}
+{#                                <span class="badge bg-secondary">+{{ incoming_unread_count }}</span>#}
+{#                            {% endif %}#}
                         </a>
                     </li>
                     <li class="nav-item">
@@ -180,20 +180,20 @@
                 <div class="row">
                     <div class="col-md-2">
                         <div class="card text-bg-primary border-primary mb-3">
-                            <div class="card-header">{{ 'card.orders'|trans }}</div>
+                            <div class="card-header">{{ 'new.orders'|trans }}</div>
                             <div class="card-body">
                                 <h1 class="display-6"><i class="bi bi-egg-fried"></i></h1>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-2">
-                        <div class="card text-bg-danger mb-3">
-                            <div class="card-header">Exceptions</div>
-                            <div class="card-body">
-                                123
-                            </div>
-                        </div>
-                    </div>
+{#                    <div class="col-md-2">#}
+{#                        <div class="card text-bg-danger mb-3">#}
+{#                            <div class="card-header">Exceptions</div>#}
+{#                            <div class="card-body">#}
+{#                                123#}
+{#                            </div>#}
+{#                        </div>#}
+{#                    </div>#}
 
                 </div>
             {% endblock %}

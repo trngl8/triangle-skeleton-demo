@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\CardRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Uid\Uuid;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: CardRepository::class)]
 #[ORM\Table(name: 'app_cards')]
@@ -22,9 +23,11 @@ class Card
     private $createdAt;
 
     #[ORM\Column(type: 'string', length: 255)]
+    #[Assert\NotBlank]
     private $title;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    #[Assert\NotBlank]
     private $code;
 
     public function __construct()
