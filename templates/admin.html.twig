@@ -106,13 +106,13 @@
                             {{ 'menu.checks'|trans }}
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link {% if app.request.pathInfo starts with '/admin/profile' %}active{% endif %}" href="{{ path('admin_profile_index')}}">
-                            <i class="bi bi-people-fill"></i>
-                            {{ 'menu.profiles'|trans }}
-                            {% if app.flashes('profile')|length %}<span class="badge bg-secondary">+{{ app.flashes('profile')|length }}</span>{% endif %}
-                        </a>
-                    </li>
+{#                    <li class="nav-item">#}
+{#                        <a class="nav-link {% if app.request.pathInfo starts with '/admin/profile' %}active{% endif %}" href="{{ path('admin_profile_index')}}">#}
+{#                            <i class="bi bi-people-fill"></i>#}
+{#                            {{ 'menu.profiles'|trans }}#}
+{#                            {% if app.flashes('profile')|length %}<span class="badge bg-secondary">+{{ app.flashes('profile')|length }}</span>{% endif %}#}
+{#                        </a>#}
+{#                    </li>#}
                     <li class="nav-item">
                         <a class="nav-link {% if app.request.pathInfo starts with '/admin/topic' %}active{% endif %}" href="{{ path('admin_topic_index')}}">
                             <i class="bi bi-list-task"></i>
@@ -135,6 +135,18 @@
                         <a class="nav-link {% if app.request.pathInfo starts with '/admin/offer' %}active{% endif %}" href="{{ path('admin_offer_index')}}">
                             <i class="bi bi-clipboard2"></i>
                             {{ 'menu.offer'|trans }}
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if app.request.pathInfo starts with '/admin/market' %}active{% endif %}" href="{{ path('admin_user_index')}}">
+                            <i class="bi bi-people-fill"></i>
+                            {{ 'menu.users'|trans }}
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if app.request.pathInfo starts with '/admin/market' %}active{% endif %}" href="{{ path('admin_market_default')}}">
+                            <i class="bi bi-cart"></i>
+                            {{ 'menu.market'|trans }}
                         </a>
                     </li>
 

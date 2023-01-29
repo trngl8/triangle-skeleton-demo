@@ -131,36 +131,79 @@
 </head>
 <body>
 
+{#<nav class="navbar navbar-expand-lg navbar-dark bg-dark" aria-label="Ninth navbar example">#}
+{#    <div class="container-xl">#}
+{#        <button class="navbar-toggler btn-hamburger" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample07XL" aria-controls="navbarsExample07XL" aria-expanded="false" aria-label="Toggle navigation">#}
+{#            <span class=""><i class="bi bi-list"></i></span>#}
+{#        </button>#}
+
+{#        <a class="navbar-brand" href="#"><i class="bi bi-bootstrap-fill"></i></a>#}
+
+{#        <div class="collapse navbar-collapse" id="navbarsExample07XL">#}
+{#            <ul class="navbar-nav me-auto mb-2 mb-lg-0">#}
+{#                <li class="nav-item">#}
+{#                    <a class="nav-link active" aria-current="page" href="#">Home</a>#}
+{#                </li>#}
+{#                <li class="nav-item">#}
+{#                    <a class="nav-link" href="#">Link</a>#}
+{#                </li>#}
+{#                <li class="nav-item">#}
+{#                    <a class="nav-link disabled">Disabled</a>#}
+{#                </li>#}
+{#                <li class="nav-item dropdown">#}
+{#                    <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">Dropdown</a>#}
+{#                    <ul class="dropdown-menu">#}
+{#                        <li><a class="dropdown-item" href="#">Action</a></li>#}
+{#                        <li><a class="dropdown-item" href="#">Another action</a></li>#}
+{#                        <li><a class="dropdown-item" href="#">Something else here</a></li>#}
+{#                    </ul>#}
+{#                </li>#}
+{#            </ul>#}
+
+{#        </div>#}
+
+
+{#    </div>#}
+{#</nav>#}
+
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark" aria-label="Ninth navbar example">
-    <div class="container-xl">
+    <div class="container-xxl">
         <button class="navbar-toggler btn-hamburger" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample07XL" aria-controls="navbarsExample07XL" aria-expanded="false" aria-label="Toggle navigation">
             <span class=""><i class="bi bi-list"></i></span>
         </button>
 
-        <a class="navbar-brand" href="#"><i class="bi bi-bootstrap-fill"></i></a>
+        {#        <a class="navbar-brand" href="#"><i class="bi bi-bootstrap-fill"></i></a>#}
 
         <div class="collapse navbar-collapse" id="navbarsExample07XL">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="#">Home</a>
+                    <a class="nav-link active" aria-current="page" href="{{ path('app_home') }}">Home</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Link</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link disabled">Disabled</a>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">Dropdown</a>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">Action</a></li>
-                        <li><a class="dropdown-item" href="#">Another action</a></li>
-                        <li><a class="dropdown-item" href="#">Something else here</a></li>
-                    </ul>
-                </li>
+{#                                <li class="nav-item">#}
+{#                                    <a class="nav-link" href="#">Link</a>#}
+{#                                </li>#}
+{#                                <li class="nav-item">#}
+{#                                    <a class="nav-link disabled">Disabled</a>#}
+{#                                </li>#}
+{#                                <li class="nav-item dropdown">#}
+{#                                    <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">Dropdown</a>#}
+{#                                    <ul class="dropdown-menu">#}
+{#                                        <li><a class="dropdown-item" href="#">Action</a></li>#}
+{#                                        <li><a class="dropdown-item" href="#">Another action</a></li>#}
+{#                                        <li><a class="dropdown-item" href="#">Something else here</a></li>#}
+{#                                    </ul>#}
+{#                                </li>#}
             </ul>
-
         </div>
+
+        <a class="btn btn-outline-secondary dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-person"></i> {{ app.user.username }}</a>
+        <ul class="dropdown-menu dropdown-menu-start" aria-labelledby="navbarDropdown">
+            <li><a class="dropdown-item" href="{{ path('app_profile') }}">{{ 'app.profile'|trans }}</a></li>
+            <li><a class="dropdown-item" href="{{ path('admin_inbox') }}">{{ 'navbar.activity'|trans  }}</a></li>
+            <li><hr class="dropdown-divider" /></li>
+            <li><a class="dropdown-item" href="{{ path('logout')}}">{{ 'navbar.logout'|trans  }}</a></li>
+        </ul>
+
 
 
     </div>
@@ -211,7 +254,9 @@
 </nav>
 
 
+
 <main>
+    {% block top_categories %}
     <div class="container">
         <div class="row mt-4">
             <div class="col-md-3 mb-3">
@@ -250,10 +295,11 @@
                 </div>
             </div>
         </div>
-
     </div>
+    {% endblock %}
 
-    <div class="container">
+    {% block popular %}
+    <div class="container mt-4">
         <p>Популярні запити</p>
         <a href=""><span class="badge bg-secondary">цемент</span></a>
         <a href=""><span class="badge bg-secondary">штукатурка</span></a>
@@ -262,7 +308,7 @@
         <a href=""><span class="badge bg-secondary">шпаклівка</span></a>
         <a href=""><span class="badge bg-secondary">гідроізоляція</span></a>
     </div>
-
+    {% endblock %}
     <!--    <div class="container mt-4">-->
     <!--        <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">-->
     <!--            <div class="carousel-inner">-->
@@ -291,134 +337,46 @@
     <!--    </div>-->
 
     <div class="container mt-4">
-        <h3>Популярні товари</h3>
-        <div class="row mt-4">
-            <div class="col-md-3 mb-3">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="main-img">
-                            <div class="float-end">
-                                <a href="" class="btn btn-outline-secondary"><i class="bi bi-heart"></i></a>
-                            </div>
-                            <a href="#"><img src="images/item1_img.png" alt="" height="240"></a>
-                            <div class="float-start availability-status">
-                                В наявності
-                            </div>
-                        </div>
-                        <br>
-                        <br>
-                        <div class="rating-stars">
-                            <i class="bi bi-star"></i>
-                            <i class="bi bi-star"></i>
-                            <i class="bi bi-star"></i>
-                            <i class="bi bi-star"></i>
-                            <i class="bi bi-star"></i>
-                        </div>
+        {% block content %}
+        {% if cards is defined %}
+            <h3>Популярні товари</h3>
+            <div class="row mt-4">
+                {% for card in cards %}
+                    <div class="col-md-3 mb-3">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="main-img">
+                                    <div class="float-end">
+                                        <a href="" class="btn btn-outline-secondary"><i class="bi bi-heart"></i></a>
+                                    </div>
+{#                                    <a href="#"><img src="images/item1_img.png" alt="" height="240"></a>#}
+                                    <div class="float-start availability-status">
+                                        В наявності
+                                    </div>
+                                </div>
+                                <br>
+                                <br>
+                                <div class="rating-stars">
+                                    <i class="bi bi-star"></i>
+                                    <i class="bi bi-star"></i>
+                                    <i class="bi bi-star"></i>
+                                    <i class="bi bi-star"></i>
+                                    <i class="bi bi-star"></i>
+                                </div>
 
-                        <p>Цемент CEMARK ШВИДКИЙ ПЦ II/АШ-500 25 кг</p>
-                        <p>126.90 ₴/шт. </p>
-                        <div class="d-grid">
-                            <a href="" class="btn btn-outline-primary btn-order"><i class="bi bi-truck"></i> Доставка 1-2 дні</a>
+                                <p>{{ card.title }} {{ card.code }}</p>
+                                <p>126.90 ₴/шт. </p>
+                                <div class="d-grid">
+                                    <a href="{{ path('admin_market_show', { id: card.id}) }}" class="btn btn-outline-primary btn-order"><i class="bi bi-truck"></i> Доставка 1-2 дні</a>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
+                {% endfor %}
             </div>
-
-            <div class="col-md-3 mb-3">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="main-img">
-                            <div class="float-end">
-                                <a href="" class="btn btn-outline-secondary"><i class="bi bi-heart"></i></a>
-                            </div>
-                            <a href="#"><img src="images/item2_img.png" alt="" height="240"></a>
-                            <div class="float-start availability-status">
-                                В наявності
-                            </div>
-                        </div>
-                        <br>
-                        <br>
-                        <div class="rating-stars">
-                            <i class="bi bi-star-fill"></i>
-                            <i class="bi bi-star-fill"></i>
-                            <i class="bi bi-star-fill"></i>
-                            <i class="bi bi-star-fill"></i>
-                            <i class="bi bi-star-fill"></i>
-                        </div>
-
-                        <p>Цемент CEMARK Універсальний ПЦ II/АШ-400 25 кг</p>
-                        <p>126.90 ₴/шт. </p>
-                        <div class="d-grid">
-                            <a href="" class="btn btn-outline-primary btn-order"><i class="bi bi-truck"></i> Доставка 1-2 дні</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-3 mb-3">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="main-img">
-                            <div class="float-end">
-                                <a href="" class="btn btn-outline-secondary"><i class="bi bi-heart"></i></a>
-                            </div>
-                            <a href="#"><img src="images/item1_img.png" alt="" height="240"></a>
-                            <div class="float-start availability-status">
-                                В наявності
-                            </div>
-                        </div>
-                        <br>
-                        <br>
-                        <div class="rating-stars">
-                            <i class="bi bi-star"></i>
-                            <i class="bi bi-star"></i>
-                            <i class="bi bi-star"></i>
-                            <i class="bi bi-star"></i>
-                            <i class="bi bi-star"></i>
-                        </div>
-
-                        <p>Цемент CEMARK ШВИДКИЙ ПЦ II/АШ-500 25 кг</p>
-                        <p>126.90 ₴/шт. </p>
-                        <div class="d-grid">
-                            <a href="" class="btn btn-outline-primary btn-order"><i class="bi bi-truck"></i> Доставка 1-2 дні</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-3 mb-3">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="main-img">
-                            <div class="float-end">
-                                <a href="" class="btn btn-outline-secondary"><i class="bi bi-heart"></i></a>
-                            </div>
-                            <a href="#"><img src="images/item2_img.png" alt="" height="240"></a>
-                            <div class="float-start availability-status">
-                                В наявності
-                            </div>
-                        </div>
-                        <br>
-                        <br>
-                        <div class="rating-stars">
-                            <i class="bi bi-star-fill"></i>
-                            <i class="bi bi-star-fill"></i>
-                            <i class="bi bi-star-fill"></i>
-                            <i class="bi bi-star-fill"></i>
-                            <i class="bi bi-star-fill"></i>
-                        </div>
-
-                        <p>Цемент CEMARK Універсальний ПЦ II/АШ-400 25 кг</p>
-                        <p>126.90 ₴/шт. </p>
-                        <div class="d-grid">
-                            <a href="" class="btn btn-outline-primary btn-order"><i class="bi bi-truck"></i> Доставка 1-2 дні</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
+            {% endif %}
+        {% endblock %}
         </div>
-    </div>
 </main>
 
 <footer class="py-5 bg-dark mt-5">

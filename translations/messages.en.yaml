@@ -24,6 +24,7 @@ menu:
   orders: Orders
   cards: Items
   users: Users
+  market: Market
 hero:
   caption: "Welcome to the Old School" #"The best way to manage your projects"
   text: "Old school is the famous school in the California South East. Our history was started at 1999 from garage startup. I was looking for duck on my playground."
