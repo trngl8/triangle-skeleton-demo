@@ -10,6 +10,7 @@ use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 
 class InviteController extends AbstractController
@@ -21,10 +22,15 @@ class InviteController extends AbstractController
         $this->doctrine = $doctrine;
     }
 
-    #[Route('/invite/accept/{id}', name: 'app_invite_accept')]
-    public function index(int $id, Request $request): Response
+    #[Route('/invite/accept/{code}', name: 'app_invite_accept')]
+    public function index(string $code, Request $request): Response
     {
-        $invite = $this->doctrine->getRepository(Invite::class)->find($id);
+        $invite = $this->doctrine->getRepository(Invite::class)->findOneBy(['email'=>$code]);
+
+        if($invite) {
+            throw new NotFoundHttpException(sprintf('Invite for %s found', $code));
+        }
+
         $accept = new InviteAccept();
         $accept->email = $invite->getEmail();
         $accept->name = $invite->getName();
@@ -43,7 +49,7 @@ class InviteController extends AbstractController
                 ->setActive(true)
             ;
 
-            //TODo: create user
+            //TODO: create a user
             $entityManager = $this->doctrine->getManager();
             $entityManager->persist($profile);
             $entityManager->flush();
