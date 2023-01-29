@@ -65,6 +65,7 @@ button:
   run: Run
   remove: Remove
   red: Red
+  blue: Blue
   ok: OK
   login: Login
   export: Export
