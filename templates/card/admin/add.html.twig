@@ -3,11 +3,17 @@
 {% block main %}
     <div class="row">
         <div class="col-md-8">
+            {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
             <div class="card">
                 <div class="card-body">
-                    {{ form(form,{'attr': {'novalidate': 'novalidate'}}) }}
+                    {{ form_row(form.title) }}
+                    {{ form_row(form.code) }}
                 </div>
             </div>
+            <div class="mt-4 mb-4">
+                <button type="submit" class="btn btn-lg btn-primary ">{{ 'button.submit'|trans }}</button>
+            </div>
+            {{ form_end(form) }}
         </div>
     </div>
 {% endblock %}

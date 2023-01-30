@@ -17,9 +17,6 @@ class CardAdminType extends AbstractType
         $builder
             ->add('title', TextType::class)
             ->add('code', NumberType::class)
-            ->add('save', SubmitType::class, [
-                'label' => 'form_submit'
-            ])
         ;
     }
 
