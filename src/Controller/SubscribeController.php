@@ -40,7 +40,7 @@ class SubscribeController extends AbstractController
         if($user) {
             $this->addFlash('warning', 'flash.warning.already_logged_in');
 
-            return $this->redirectToRoute('app_profile_invites');
+            //return $this->redirectToRoute('app_profile_invites');
         }
 
         $subscription = new Subscribe();
