@@ -10,47 +10,78 @@
 {% endblock %}
 
 {% block main %}
-    <h1 class="mb-4">{{ profile.name }} </h1>
-    <div class="row">
-        <div class="col-12">
-            <ul class="nav nav-tabs mb-3" id="myTab" role="tablist">
-                <li class="nav-item" role="presentation">
-                    <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">Public</button>
-                </li>
-                <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="edit-tab" data-bs-toggle="tab" data-bs-target="#edit-tab-pane" type="button" role="tab" aria-controls="edit-tab-pane" aria-selected="false"><i class="bi bi-pencil-square"></i> Edit</button>
-                </li>
-                <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">Settings</button>
-                </li>
-                <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact-tab-pane" type="button" role="tab" aria-controls="contact-tab-pane" aria-selected="false">Messages</button>
-                </li>
-                <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="disabled-tab" data-bs-toggle="tab" data-bs-target="#disabled-tab-pane" type="button" role="tab" aria-controls="disabled-tab-pane" aria-selected="false" disabled>Disabled <span class="badge text-bg-success">{{ profiles|length }}</span></button>
-                </li>
+    <h1>Get started with {{ profile.name }} </h1>
+    <p class="fs-5 col-md-8">{{ profile.name }}</p>
+
+    <div class="mb-5">
+        <a href="{{ path('app_profile_edit') }}" class="btn btn-primary btn-lg px-4">Edit profile</a>
+    </div>
+
+    <hr class="col-3 col-md-2 mb-5">
+
+    <div class="row g-5">
+        <div class="col-md-6">
+            <h2>What's next?</h2>
+            <p>Ready to beyond the starter template? Check out these open source projects that you can quickly duplicate to a new GitHub repository.</p>
+            <ul class="icon-list ps-0">
+                <li class="d-flex align-items-start mb-1"><a href="#" rel="noopener" target="_blank">Bootstrap npm starter</a></li>
+                <li class="text-muted d-flex align-items-start mb-1">Bootstrap Parcel starter (coming soon!)</li>
             </ul>
-            <div class="tab-content" id="myTabContent">
-                <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
+        </div>
 
-                    <ul>
-                        {% for key, property in profile.publicProperties %}
-                            <li><b>{{ key }}:</b> {{ property }}</li>
-                        {% endfor %}
-                    </ul>
-
-                </div>
-                <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
-                    <p>Settings Form</p>
-                </div>
-                <div class="tab-pane fade" id="contact-tab-pane" role="tabpanel" aria-labelledby="contact-tab" tabindex="0">
-                    <p>Messages list</p>
-                </div>
-                <div class="tab-pane fade" id="disabled-tab-pane" role="tabpanel" aria-labelledby="disabled-tab" tabindex="0">...</div>
-                <div class="tab-pane fade" id="edit-tab-pane" role="tabpanel" aria-labelledby="edit-tab" tabindex="0">
-                    <a href="{{ path('app_profile_edit') }}" class="btn btn-outline-primary">{{ 'button.edit'|trans }}</a>
-                </div>
-            </div>
+        <div class="col-md-6">
+            <h2>Giudelines</h2>
+            <p>Read more detailed instructions and documentation on using or contributing to Bootstrap.</p>
+            <ul class="icon-list ps-0">
+                <li class="d-flex align-items-start mb-1"><a href="#">Bootstrap quick start guide</a></li>
+                <li class="d-flex align-items-start mb-1"><a href="#">Bootstrap Webpack guide</a></li>
+                <li class="d-flex align-items-start mb-1"><a href="#">Bootstrap Parcel guide</a></li>
+                <li class="d-flex align-items-start mb-1"><a href="#">Bootstrap Vite guide</a></li>
+                <li class="d-flex align-items-start mb-1"><a href="#">Contributing to Bootstrap</a></li>
+            </ul>
         </div>
     </div>
+
+{#    <div class="row">#}
+{#        <div class="col-12">#}
+{#            <ul class="nav nav-tabs mb-3" id="myTab" role="tablist">#}
+{#                <li class="nav-item" role="presentation">#}
+{#                    <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">Public</button>#}
+{#                </li>#}
+{#                <li class="nav-item" role="presentation">#}
+{#                    <button class="nav-link" id="edit-tab" data-bs-toggle="tab" data-bs-target="#edit-tab-pane" type="button" role="tab" aria-controls="edit-tab-pane" aria-selected="false"><i class="bi bi-pencil-square"></i> Edit</button>#}
+{#                </li>#}
+{#                <li class="nav-item" role="presentation">#}
+{#                    <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">Settings</button>#}
+{#                </li>#}
+{#                <li class="nav-item" role="presentation">#}
+{#                    <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact-tab-pane" type="button" role="tab" aria-controls="contact-tab-pane" aria-selected="false">Messages</button>#}
+{#                </li>#}
+{#                <li class="nav-item" role="presentation">#}
+{#                    <button class="nav-link" id="disabled-tab" data-bs-toggle="tab" data-bs-target="#disabled-tab-pane" type="button" role="tab" aria-controls="disabled-tab-pane" aria-selected="false" disabled>Disabled <span class="badge text-bg-success">{{ profiles|length }}</span></button>#}
+{#                </li>#}
+{#            </ul>#}
+{#            <div class="tab-content" id="myTabContent">#}
+{#                <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">#}
+
+{#                    <ul>#}
+{#                        {% for key, property in profile.publicProperties %}#}
+{#                            <li><b>{{ key }}:</b> {{ property }}</li>#}
+{#                        {% endfor %}#}
+{#                    </ul>#}
+
+{#                </div>#}
+{#                <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">#}
+{#                    <p>Settings Form</p>#}
+{#                </div>#}
+{#                <div class="tab-pane fade" id="contact-tab-pane" role="tabpanel" aria-labelledby="contact-tab" tabindex="0">#}
+{#                    <p>Messages list</p>#}
+{#                </div>#}
+{#                <div class="tab-pane fade" id="disabled-tab-pane" role="tabpanel" aria-labelledby="disabled-tab" tabindex="0">...</div>#}
+{#                <div class="tab-pane fade" id="edit-tab-pane" role="tabpanel" aria-labelledby="edit-tab" tabindex="0">#}
+{#                    <a href="{{ path('app_profile_edit') }}" class="btn btn-outline-primary">{{ 'button.edit'|trans }}</a>#}
+{#                </div>#}
+{#            </div>#}
+{#        </div>#}
+{#    </div>#}
 {% endblock %}

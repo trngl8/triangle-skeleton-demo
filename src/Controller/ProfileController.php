@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use App\Entity\Profile;
 use App\Form\ProfileType;
-use App\Repository\ProfileRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -20,8 +19,6 @@ class ProfileController extends AbstractController
     public function __construct(ManagerRegistry $doctrine)
     {
         $this->doctrine = $doctrine;
-
-        /** @var ProfileRepository repository */
         $this->repository = $this->doctrine->getRepository(Profile::class);
     }
 
@@ -32,11 +29,11 @@ class ProfileController extends AbstractController
 
         $user = $this->getUser();
 
-        $profiles = $this->repository->findBy(['email' => $user->getUserIdentifier()]);
-
         $profile = $this->repository->findOneBy(['email' => $user->getUserIdentifier()]);
 
         if(!$profile) {
+            //TODO: or 404 ?
+
             $this->addFlash('warning', 'no_active_profile');
 
             return $this->redirectToRoute('app_profile_edit');
@@ -44,7 +41,6 @@ class ProfileController extends AbstractController
 
         return $this->render('profile/index.html.twig', [
             'profile' => $profile,
-            'profiles' => $profiles,
         ]);
     }
 

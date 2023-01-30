@@ -88,9 +88,10 @@ class ProjectController extends AbstractController
 
             $this->addFlash('success', 'flash.success.project_updated');
 
-            $nextAction = $form->get('saveAndAdd')->isClicked()
-                ? 'admin_project_add'
-                : 'admin_project_index';
+            $nextAction = 'admin_project_index';
+//            $nextAction = $form->get('saveAndAdd')->isClicked()
+//                ? 'admin_project_add'
+//                : 'admin_project_index';
 
             return $this->redirectToRoute($nextAction);
         }
