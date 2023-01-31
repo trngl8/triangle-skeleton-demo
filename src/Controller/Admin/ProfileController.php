@@ -2,7 +2,11 @@
 
 namespace App\Controller\Admin;
 
+use App\Button\LinkToRoute;
+use App\Entity\Invite;
 use App\Entity\Profile;
+use App\Form\Admin\InviteAdminType;
+use App\Form\Admin\ProfileAdminType;
 use App\Form\ProfileType;
 use App\Repository\ProfileRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -32,7 +36,31 @@ class ProfileController extends AbstractController
         $topics = $this->repository->findBy([]);
 
         return $this->render('profile/admin/index.html.twig', [
+            'button' => new LinkToRoute('admin_profile_add', 'button.add'),
             'items' => $topics,
+        ]);
+    }
+
+    #[Route('/add', name: 'add')]
+    public function add(Request $request): Response
+    {
+        $profile = new Profile();
+        $form = $this->createForm(ProfileAdminType::class, $profile);
+
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()) {
+            $entityManager = $this->doctrine->getManager();
+            $entityManager->persist($profile);
+            $entityManager->flush();
+
+            $this->addFlash('success', 'flash.success.created');
+
+            return $this->redirectToRoute('admin_profile_index');
+        }
+
+        return $this->render('profile/admin/add.html.twig', [
+            'form' => $form->createView()
         ]);
     }
 
@@ -42,7 +70,7 @@ class ProfileController extends AbstractController
         $profile = $this->doctrine->getRepository(Profile::class)->find($id);
 
         if(!$profile) {
-            throw new NotFoundHttpException(sprintf("Check %d not found", $id));
+            throw new NotFoundHttpException(sprintf("Profile %d not found", $id));
         }
 
         $form = $this->createForm(ProfileType::class, $profile);
@@ -54,7 +82,7 @@ class ProfileController extends AbstractController
             $entityManager->persist($profile);
             $entityManager->flush();
 
-            $this->addFlash('success', 'flash.success.check_updated');
+            $this->addFlash('success', 'flash.success.updated');
 
             return $this->redirectToRoute('admin_profile_index');
         }

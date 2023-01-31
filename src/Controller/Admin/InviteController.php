@@ -162,4 +162,66 @@ class InviteController extends AbstractController
         ]);
     }
 
+    #[Route('/export', name: 'export', methods: ['GET', 'POST', 'HEAD'] )]
+    public function export() : Response
+    {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+
+        $invites = $this->inviteService->addCriteria([])->getPaginator(1, 1000);
+        $rows = array_map(function ($item) {
+            return [
+                $item->getId(),
+                $item->getName(),
+                $item->getDescription(),
+                $item->getEmail(),
+                $item->getPhone(),
+                $item->getCreatedAt()->format('Y-m-d H:i:s'),
+                $item->getClosedAt() ? $item->getClosedAt()->format('Y-m-d H:i:s') : null
+            ];
+        }, $invites->getIterator()->getArrayCopy());
+
+        //TODO: generate columns dynamically
+        $columns = ['#', 'Name', 'Description', 'Email', 'Phone', 'Created At', 'Closed At'];
+        $list =[
+            $columns,
+            ...$rows
+        ];
+
+        $fp = fopen('php://output', 'w');
+
+        foreach ($list as $fields) {
+            fputcsv($fp, $fields);
+        }
+
+        $response = new Response();
+        $response->headers->set('Content-Type', 'text/csv');
+        $response->headers->set('Content-Disposition', sprintf('attachment; filename="invites-export-%s.csv"', date('Y-m-d')));
+
+        return $response;
+    }
+
+    #[Route('/import', name: 'import', methods: ['GET', 'POST', 'HEAD'] )]
+    public function import(Request $request) : Response
+    {
+        $form = $this->createForm(ImportType::class, $import);
+
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()) {
+            $entityManager = $this->doctrine->getManager();
+
+            $entityManager->persist($import);
+            $entityManager->flush();
+
+            $this->addFlash('success', 'flash.success.updated');
+
+            return $this->redirectToRoute('admin_import_index');
+        }
+
+        return $this->render('import/admin/edit.html.twig', [
+            'item' => $import,
+            'form' => $form->createView()
+        ]);
+    }
+
 }

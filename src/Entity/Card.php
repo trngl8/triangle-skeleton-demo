@@ -30,6 +30,18 @@ class Card
     #[Assert\NotBlank]
     private $code;
 
+    #[ORM\Column(nullable: true)]
+    private ?float $price = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?float $price_sale = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?int $quantity = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?bool $available = null;
+
     public function __construct()
     {
         $this->createdAt = new \DateTimeImmutable();
@@ -71,6 +83,54 @@ class Card
     public function setCode(?string $code): self
     {
         $this->code = $code;
+
+        return $this;
+    }
+
+    public function getPrice(): ?float
+    {
+        return $this->price;
+    }
+
+    public function setPrice(?float $price): self
+    {
+        $this->price = $price;
+
+        return $this;
+    }
+
+    public function getPriceSale(): ?float
+    {
+        return $this->price_sale;
+    }
+
+    public function setPriceSale(?float $price_sale): self
+    {
+        $this->price_sale = $price_sale;
+
+        return $this;
+    }
+
+    public function getQuantity(): ?int
+    {
+        return $this->quantity;
+    }
+
+    public function setQuantity(?int $quantity): self
+    {
+        $this->quantity = $quantity;
+
+        return $this;
+    }
+
+    public function isAvailable(): ?bool
+    {
+        return $this->available;
+    }
+
+    public function setAvailable(?bool $available): self
+    {
+        $this->available = $available;
 
         return $this;
     }
