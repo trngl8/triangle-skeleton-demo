@@ -28,7 +28,7 @@ class InviteCreatedListener
         $email = (new TemplatedEmail())
             ->from(new Address($this->adminEmail, $this->adminEmail))
             ->to($invite->getEmail())
-            ->subject('Somebody you to join the site')
+            ->subject('Somebody invited you to join the site') //TODO: write inviter and site in subject
             ->htmlTemplate('invite/email_new.html.twig')
             ->context([
                 'invite' => $invite,

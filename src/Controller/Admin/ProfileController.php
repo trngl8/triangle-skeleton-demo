@@ -3,9 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Button\LinkToRoute;
-use App\Entity\Invite;
 use App\Entity\Profile;
-use App\Form\Admin\InviteAdminType;
 use App\Form\Admin\ProfileAdminType;
 use App\Form\ProfileType;
 use App\Repository\ProfileRepository;
