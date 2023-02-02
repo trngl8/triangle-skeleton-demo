@@ -73,7 +73,7 @@ class TopicController extends AbstractController
         }
 
         if($c === self::MIN_COUNT) {
-            $this->addFlash('warning', 'flash.warning.no_items');
+            $filtersExpanded = false;
         }
 
         $lastPage = intdiv($c,  self::PAGINATOR_COUNT) + 1;
