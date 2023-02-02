@@ -296,6 +296,9 @@ class TopicController extends AbstractController
                     $topic->setBranch($row[4]); //'branch'
                     $topic->setPriority($row[5]); //'priority'
 
+                    if($row[6]) {
+                        $topic->setCreatedAt(new \DateTime($row[6])); //'created_at'
+                    }
                     if($row[7]) {
                         $topic->setStartedAt(new \DateTime($row[7])); //'started_at'
                     }
