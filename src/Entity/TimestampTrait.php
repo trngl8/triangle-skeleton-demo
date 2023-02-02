@@ -17,8 +17,8 @@ trait TimestampTrait
 
     public function setCreatedAt(\DateTimeInterface $date): self
     {
-        if($this->createdAt && $date > $this->createdAt) {
-            throw new \RuntimeException("Impossible to set created date in the future");
+        if($this->createdAt && $this->createdAt < $date) {
+            //throw new \RuntimeException("Impossible to set created date in the future");
         }
 
         $this->createdAt = $date;
