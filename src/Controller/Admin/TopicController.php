@@ -296,11 +296,11 @@ class TopicController extends AbstractController
                     $topic->setBranch($row[4]); //'branch'
                     $topic->setPriority($row[5]); //'priority'
 
-                    if($row[6]) {
-                        $topic->setStartedAt(new \DateTime($row[6])); //'started_at'
-                    }
                     if($row[7]) {
-                        $topic->setClosedAt(new \DateTime($row[7])); //'closed_at'
+                        $topic->setStartedAt(new \DateTime($row[7])); //'started_at'
+                    }
+                    if($row[8]) {
+                        $topic->setClosedAt(new \DateTime($row[8])); //'closed_at'
                     }
 
                     $this->doctrine->getManager()->persist($topic);
