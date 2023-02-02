@@ -6,9 +6,14 @@ use App\Button\LinkToRoute;
 use App\Entity\Topic;
 use App\Form\Filter\TopicAdminFilter;
 use App\Form\Admin\TopicAdminType;
+use App\Form\ImportType;
+use App\Model\Import;
 use App\Model\TopicFilter;
 use App\Service\TopicService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Finder\Finder;
+use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -247,15 +252,17 @@ class TopicController extends AbstractController
         $list = $this->topicService->export();
 
         $fp = fopen('php://temp', 'w');
+        $header = ['id', 'title', 'description', 'type', 'branch', 'priority', 'created_at', 'started_at', 'closed_at'];
+        fputcsv($fp, $header);
 
         foreach ($list as $topic) {
             $topic = array_map(function ($value) {
                 if($value instanceof \DateTimeInterface) {
-                    return $value->format('Y-m-d');
+                    return $value->format('Y-m-d H:i:s');
                 }
                 return $value;
             }, $topic);
-            fputcsv($fp, $topic, ';');
+            fputcsv($fp, $topic);
         }
 
         rewind($fp);
@@ -263,8 +270,70 @@ class TopicController extends AbstractController
         fclose($fp);
 
         $response->headers->set('Content-Type', 'text/csv');
-        $response->headers->set('Content-Disposition', 'attachment; filename="topic.csv"');
+        $response->headers->set('Content-Disposition', sprintf('attachment; filename="topics-export-%s.csv"', date('Y-m-d')));
 
         return $response;
+    }
+
+    #[Route('/import', name: 'import', methods: ['GET', 'POST', 'HEAD'])]
+    public function import(Request $request) : Response
+    {
+        $form = $this->createForm(ImportType::class, new Import());
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            /** @var UploadedFile $file */
+            $file = $form->get('file')->getData();
+
+            if ($file) {
+                $rows = $this->parseCSV($file);
+                foreach($rows as $row) {
+                    $topic = new Topic();
+                    $topic->setTitle($row[1]); //'title'
+                    $topic->setDescription($row[2]); //'description'
+                    $topic->setType($row[3]); //'type'
+                    $topic->setBranch($row[4]); //'branch'
+                    $topic->setPriority($row[5]); //'priority'
+
+                    if($row[6]) {
+                        $topic->setStartedAt(new \DateTime($row[6])); //'started_at'
+                    }
+                    if($row[7]) {
+                        $topic->setClosedAt(new \DateTime($row[7])); //'closed_at'
+                    }
+
+                    $this->doctrine->getManager()->persist($topic);
+                }
+            }
+
+            $this->doctrine->getManager()->flush();
+
+            $this->addFlash('success', 'flash.success.imported'); //TODO: imported items count
+
+             return $this->redirectToRoute('admin_topic_index');
+        }
+
+        return $this->render('topic/admin/import.html.twig', [
+            'form' => $form->createView(),
+        ]);
+    }
+
+    private function parseCSV(File $file) : array
+    {
+        $ignoreFirstLine = true; //TODO: import first line as header
+
+        $rows = [];
+        if (($handle = fopen($file->getRealPath(), "r")) !== false) {
+            $i = 0;
+            while (($data = fgetcsv($handle, null, ',')) !== false) {
+                $i++;
+                 if ($ignoreFirstLine && $i == 1) { continue; }
+                $rows[] = $data;
+            }
+            fclose($handle);
+        }
+
+        return $rows;
     }
 }

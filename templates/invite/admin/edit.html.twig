@@ -26,8 +26,8 @@
     <div class="row">
         <div class="col-md-8">
             {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
-            <div class="card border-primary mb-3">
-                <div class="card-header">
+            <div class="card border-secondary mb-3">
+                <div class="card-header border-secondary bg-secondary text-white">
                     {% block form_box_caption %}Edit invite{% endblock %}
                 </div>
                 <div class="card-body p-4">
@@ -47,7 +47,7 @@
             <div class="accordion" id="accordionExample">
                 <div class="accordion-item">
                     <h2 class="accordion-header" id="headingOne">
-                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
                             Invite description
                         </button>
                     </h2>

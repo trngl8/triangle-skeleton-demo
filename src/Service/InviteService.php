@@ -49,4 +49,9 @@ class InviteService
 
         return true;
     }
+
+    public function export() : array
+    {
+        return $this->query->getArrayResult();
+    }
 }

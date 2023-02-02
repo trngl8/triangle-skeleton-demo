@@ -19,8 +19,6 @@ class Topic
     #[Groups(['show_topics_api'])]
     private $id;
 
-    use TimestampTrait;
-
     #[ORM\Column(type: 'string', length: 255)]
     #[Groups(['show_topics_api'])]
     #[Assert\NotBlank]
@@ -50,6 +48,8 @@ class Topic
 
     #[ORM\ManyToOne]
     private ?Product $product = null;
+
+    use TimestampTrait;
 
     public function __construct()
     {

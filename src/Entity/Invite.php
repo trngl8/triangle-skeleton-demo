@@ -29,7 +29,6 @@ class Invite
     private $email;
 
     #[ORM\Column(type: 'string', length: 15, nullable: true)]
-    #[Assert\NotBlank]
     private $phone;
 
     #[ORM\Column(type: 'integer', nullable: true)]
