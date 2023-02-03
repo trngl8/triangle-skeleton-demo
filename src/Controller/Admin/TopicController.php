@@ -9,6 +9,7 @@ use App\Form\Admin\TopicAdminType;
 use App\Form\ImportType;
 use App\Model\Import;
 use App\Model\TopicFilter;
+use App\Repository\ProfileRepository;
 use App\Service\TopicService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Finder\Finder;
@@ -35,6 +36,7 @@ class TopicController extends AbstractController
     {
         $this->doctrine = $doctrine;
         $this->topicService = $topicService;
+
     }
 
     #[Route('', name: 'index')]
@@ -279,7 +281,7 @@ class TopicController extends AbstractController
     }
 
     #[Route('/import', name: 'import', methods: ['GET', 'POST', 'HEAD'])]
-    public function import(Request $request) : Response
+    public function import(Request $request, ProfileRepository $profiles) : Response
     {
         $form = $this->createForm(ImportType::class, new Import());
 
@@ -307,6 +309,13 @@ class TopicController extends AbstractController
                     }
                     if($row[8]) {
                         $topic->setClosedAt(new \DateTime($row[8])); //'closed_at'
+                    }
+
+                    if($row[9]) {
+                        $profile = $profiles->findOneBy([
+                            'id' => $row[9]
+                        ]);
+                        $topic->setProfile($profile);
                     }
 
                     $this->doctrine->getManager()->persist($topic);
