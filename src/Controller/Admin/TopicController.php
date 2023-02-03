@@ -252,13 +252,16 @@ class TopicController extends AbstractController
         $list = $this->topicService->export();
 
         $fp = fopen('php://temp', 'w');
-        $header = ['id', 'title', 'description', 'type', 'branch', 'priority', 'created_at', 'started_at', 'closed_at'];
+        $header = ['id', 'title', 'description', 'type', 'branch', 'priority', 'created_at', 'started_at', 'closed_at', 'profile_id'];
         fputcsv($fp, $header);
 
         foreach ($list as $topic) {
             $topic = array_map(function ($value) {
                 if($value instanceof \DateTimeInterface) {
                     return $value->format('Y-m-d H:i:s');
+                }
+                if(is_array($value) && array_key_exists('id', $value)) {
+                    return $value['id'];
                 }
                 return $value;
             }, $topic);
