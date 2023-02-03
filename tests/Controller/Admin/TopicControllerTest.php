@@ -23,7 +23,7 @@ class TopicControllerTest extends WebTestCase
         $client->request('GET', '/admin/topic/export');
         $this->assertResponseIsSuccessful();
         $this->assertResponseHeaderSame('content-type', 'text/csv; charset=UTF-8');
-        $this->assertResponseHeaderSame('content-disposition', 'attachment; filename="topic.csv"');
+        $this->assertResponseHeaderSame('content-disposition', sprintf('attachment; filename="topics-export-%s.csv"', date('Y-m-d')));
 
         //TODO: check file content
     }

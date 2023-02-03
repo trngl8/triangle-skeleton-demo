@@ -28,3 +28,8 @@ trans:
 restore:
 	symfony run pg_restore -d db_name -f filename.dump
 .PHONY: restore
+
+backup:
+	sqlite3 var/data.db .schema > var/backup_data_schema.sql
+	sqlite3 var/data.db .dump > var/backup_data_dump.sql
+.PHONY: restore
