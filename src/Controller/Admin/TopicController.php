@@ -311,13 +311,6 @@ class TopicController extends AbstractController
                         $topic->setClosedAt(new \DateTime($row[8])); //'closed_at'
                     }
 
-                    if($row[9]) {
-                        $profile = $profiles->findOneBy([
-                            'id' => $row[9]
-                        ]);
-                        $topic->setProfile($profile);
-                    }
-
                     $this->doctrine->getManager()->persist($topic);
                 }
             }
