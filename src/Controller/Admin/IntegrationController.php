@@ -43,12 +43,10 @@ class IntegrationController extends AbstractController
 
         if(!$webhook['url']) {
             //TODO: check url valid
-
-
         }
 
         $updates = $this->telegramClient->responseToArray($this->telegramClient->getUpdates());
-dump($updates);
+
         return $this->render('admin/integration/show.html.twig', [
             'result' => $result,
             'updates' => $updates
