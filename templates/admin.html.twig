@@ -149,6 +149,13 @@
                             {{ 'menu.market'|trans }}
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if app.request.pathInfo starts with '/admin/integration' %}active{% endif %}" href="{{ path('admin_integration_index')}}">
+                            <i class="bi bi-app"></i>
+                            {{ 'menu.integrations'|trans }}
+                        </a>
+                    </li>
+
 
 {#                    <li class="nav-item">#}
 {#                        <a class="nav-link" href="{{ path('admin')}}">#}

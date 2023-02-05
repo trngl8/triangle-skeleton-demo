@@ -18,6 +18,8 @@ services:
             $adminEmail: '%env(resolve:APP_DEFAULT_EMAIL)%'
             $appTheme: '%env(resolve:APP_THEME)%'
             $defaultModule: '%env(resolve:DEFAULT_MODULE)%'
+            $telegramBotId: '%env(resolve:TELEGRAM_BOT_ID)%'
+            $telegramBotToken: '%env(resolve:TELEGRAM_BOT_TOKEN)%'
             $paymentPrivateKey: '%env(resolve:APP_LIQPAY_PRIVATE_KEY)%'
             $paymentPublicKey: '%env(resolve:APP_LIQPAY_PUBLIC_KEY)%'
 
