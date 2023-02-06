@@ -19,6 +19,7 @@ class LoginController extends AbstractController
         return $this->render(sprintf('%s/login.html.twig', $appTheme), [
             'error' => $error,
             'last_username' => $lastUsername,
+            'extended_template' => 'default.html.twig'
         ]);
     }
 

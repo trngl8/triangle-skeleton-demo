@@ -1,6 +1,20 @@
+#deprecated
 app_home:
   path: /
   controller: App\Controller\DefaultController::default
+
+#deprecated
+app_index:
+  path: /index
+  controller: App\Controller\DefaultController::index
+
+default:
+  path: /
+  controller: App\Controller\DefaultController::default
+
+default_index:
+  path: /index
+  controller: App\Controller\DefaultController::index
 
 app_restricted:
   path: /restricted
@@ -9,18 +23,6 @@ app_restricted:
 app_info:
   path: /info
   controller: App\Controller\HomeController::info
-
-app_index:
-  path: /index
-  controller: App\Controller\DefaultController::index
-
-default_module:
-  path: /app
-  controller: App\Controller\OfferController::index
-
-default_action:
-  path: /subscribe/add
-  controller: App\Controller\SubscribeController::add
 
 app_contact:
   path: /contact

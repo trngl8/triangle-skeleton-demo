@@ -35,7 +35,6 @@ class DefaultControllerTest extends WebTestCase
         yield ['offer'];
         yield ['contact'];
         yield ['register'];
-        yield ['app'];
         yield ['restricted'];
         yield ['product'];
         yield ['cart'];

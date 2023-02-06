@@ -45,7 +45,7 @@ class TwigEventSubscriber implements EventSubscriberInterface
         $topMenu = [
             'index' => [
                 'title' => 'menu.home',
-                'route' => 'app_index',
+                'route' => 'default_index',
                 'url' => '/index',
             ],
             'products' => [

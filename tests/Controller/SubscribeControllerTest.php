@@ -17,7 +17,6 @@ class SubscribeControllerTest extends WebTestCase
             'subscribe[name]' => 'test',
             'subscribe[email]' => 'test@example.com',
             'subscribe[agree]' => true,
-            'subscribe[know]' => true,
         ]);
 
         $this->assertResponseIsSuccessful();

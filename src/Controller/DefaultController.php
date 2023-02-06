@@ -6,6 +6,7 @@ use App\Button\LinkToRoute;
 use App\Exception\ThemeLayoutNotFoundException;
 use App\Repository\ProductRepository;
 use Symfony\Bundle\SecurityBundle\Security;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Twig\Environment;
 use Twig\Error\LoaderError;
@@ -17,36 +18,24 @@ class DefaultController
     private $twig;
 
     private $appTheme;
+    private $defaultModule;
 
     private $security;
 
     public function __construct(ProductRepository $productRepository, Environment $twig,
         Security $security,
-        string $appTheme
+        string $appTheme,
+        string $defaultModule,
     ) {
         $this->productRepository = $productRepository;
         $this->twig = $twig;
         $this->security = $security;
         $this->appTheme = $appTheme;
+        $this->defaultModule = $defaultModule;
     }
 
     public function default() : Response
     {
-        $user = $this->security->getUser();
-
-        if ($user) {
-            //TODo: redirect to the default module
-            //return new RedirectResponse('/login');
-        }
-
-        //TODO: check cookie and forward to the index
-
-        $button1 = new LinkToRoute('default_module', 'button.more', 'primary', 'bi bi-1-circle');
-        $button2 = new LinkToRoute('default_action', 'button.subscribe', 'outline-primary', 'bi bi-2-square');
-        $button3 = new LinkToRoute('default_action', 'button.light', 'light');
-
-        $products = $this->productRepository->findBy([], ['id' => 'ASC'], 3, 0);
-
         $templateName = sprintf('%s/%s.html.twig', $this->appTheme, 'default');
 
         try {
@@ -55,8 +44,21 @@ class DefaultController
             throw new ThemeLayoutNotFoundException("Default template not found");
         }
 
+        $user = $this->security->getUser();
+
+        if ($user) {
+            //TODO: get from the routing service
+            return new RedirectResponse('/index');
+        }
+
+        //TODO: check routes exists
+        $button1 = new LinkToRoute('login', 'button.more', 'primary', 'bi bi-1-circle');
+        $button2 = new LinkToRoute('default', 'button.subscribe', 'outline-primary', 'bi bi-2-square');
+
+        $products = $this->productRepository->findBy([], ['id' => 'ASC'], 3, 0);
+
         $content = $template->render([
-            'buttons' => [$button1, $button2, $button3],
+            'buttons' => [$button1, $button2],
             'products' => $products,
         ]);
 
@@ -78,9 +80,11 @@ class DefaultController
         }
 
         $products = $this->productRepository->findBy([], ['id' => 'ASC'], 3, 0);
-        $button1 = new LinkToRoute('default_module', 'button.more', 'primary', 'bi bi-1-circle');
-        $button2 = new LinkToRoute('default_action', 'button.subscribe', 'outline-primary', 'bi bi-2-square');
-        $button3 = new LinkToRoute('default_action', 'button.light', 'light');
+
+        //TODO: check routes exists
+        $button1 = new LinkToRoute('default', 'button.more', 'primary', 'bi bi-1-circle');
+        $button2 = new LinkToRoute('default_index', 'button.subscribe', 'outline-primary', 'bi bi-2-square');
+        $button3 = new LinkToRoute('default_index', 'button.light', 'light');
 
         $content = $template->render([
             'buttons' => [$button1, $button2, $button3],

@@ -1,4 +1,4 @@
-SHELL := /bin/bash
+git add SHELL := /bin/bash
 
 cc:
 	php bin/console cache:clear
@@ -19,6 +19,10 @@ tests:
 	php bin/console doctrine:schema:create --env=test
 	php bin/console doctrine:fixtures:load --env=test --no-interaction
 	php bin/phpunit --configuration phpunit.xml.dist tests
+.PHONY: tests
+
+coverage:
+	XDEBUG_MODE=coverage php bin/phpunit --configuration phpunit.xml.dist tests --coverage-html var/unit/coverage
 .PHONY: tests
 
 trans:
