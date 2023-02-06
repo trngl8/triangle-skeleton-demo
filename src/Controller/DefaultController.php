@@ -53,7 +53,7 @@ class DefaultController
 
         //TODO: check routes exists
         $button1 = new LinkToRoute('login', 'button.more', 'primary', 'bi bi-1-circle');
-        $button2 = new LinkToRoute('default', 'button.subscribe', 'outline-primary', 'bi bi-2-square');
+        $button2 = new LinkToRoute('default_index', 'button.subscribe', 'outline-primary', 'bi bi-2-square');
 
         $products = $this->productRepository->findBy([], ['id' => 'ASC'], 3, 0);
 
