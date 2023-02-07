@@ -2,8 +2,11 @@
 
 namespace App\Controller\Admin;
 
+use App\Form\ChatMessageType;
+use App\Model\ChatMessage;
 use App\Service\Http\TelegramHttpClient;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -50,6 +53,40 @@ class IntegrationController extends AbstractController
         return $this->render('admin/integration/show.html.twig', [
             'result' => $result,
             'updates' => $updates
+        ]);
+    }
+
+    #[Route('/telegram/{id}/chat', name: 'telegram_chat')]
+    public function chat(int $id, Request $request) : Response
+    {
+        $updates = $this->telegramClient->responseToArray($this->telegramClient->getUpdates());
+
+        //TODO: looks like filter here
+        $result = [];
+        foreach ($updates as $item) {
+            if($item['message']['chat']['id'] === $id) {
+                $result[] = $item;
+            }
+        }
+
+        $message = new ChatMessage($id);
+        $form = $this->createForm(ChatMessageType::class, $message);
+
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()) {
+
+            $result = $this->telegramClient->responseToArray($this->telegramClient->sendMessage($message->chatId, $message->text));
+
+            //TODO: save result into message storage
+            $this->addFlash('success', 'flash.success.sent');
+
+            return $this->redirectToRoute('admin_integration_telegram_chat', ['id' => $id]);
+        }
+
+        return $this->render('admin/integration/chat.html.twig', [
+            'updates' => $result,
+            'form' => $form->createView()
         ]);
     }
 }

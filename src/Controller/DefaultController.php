@@ -36,7 +36,7 @@ class DefaultController
 
     public function default() : Response
     {
-        $templateName = sprintf('%s/%s.html.twig', $this->appTheme, 'default');
+        $templateName = sprintf('%s/default.html.twig', $this->appTheme);
 
         try {
             $template = $this->twig->load($templateName);
@@ -48,12 +48,16 @@ class DefaultController
 
         if ($user) {
             //TODO: get from the routing service
+            if(in_array('ROLE_ADMIN', $user->getRoles())) {
+                return new RedirectResponse('/admin');
+            }
+
             return new RedirectResponse('/index');
         }
 
         //TODO: check routes exists
         $button1 = new LinkToRoute('login', 'button.more', 'primary', 'bi bi-1-circle');
-        $button2 = new LinkToRoute('default_index', 'button.subscribe', 'outline-primary', 'bi bi-2-square');
+        $button2 = new LinkToRoute($this->defaultModule, 'button.subscribe', 'outline-primary', 'bi bi-2-square');
 
         $products = $this->productRepository->findBy([], ['id' => 'ASC'], 3, 0);
 
@@ -66,12 +70,11 @@ class DefaultController
         $response->setContent($content);
 
         return $response;
-
     }
 
     public function index() : Response
     {
-        $templateName = sprintf('%s/%s.html.twig', $this->appTheme, 'index');
+        $templateName = sprintf('%s/index.html.twig', $this->appTheme);
 
         try {
             $template = $this->twig->load($templateName);
@@ -83,8 +86,8 @@ class DefaultController
 
         //TODO: check routes exists
         $button1 = new LinkToRoute('default', 'button.more', 'primary', 'bi bi-1-circle');
-        $button2 = new LinkToRoute('default_index', 'button.subscribe', 'outline-primary', 'bi bi-2-square');
-        $button3 = new LinkToRoute('default_index', 'button.light', 'light');
+        $button2 = new LinkToRoute($this->defaultModule, 'button.subscribe', 'outline-primary', 'bi bi-2-square');
+        $button3 = new LinkToRoute($this->defaultModule, 'button.light', 'light');
 
         $content = $template->render([
             'buttons' => [$button1, $button2, $button3],
