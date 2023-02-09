@@ -15,6 +15,9 @@ trait TimestampTrait
     #[ORM\Column(type: 'datetime', nullable: true)]
     private $closedAt;
 
+    #[ORM\Column(type: 'datetime', nullable: true)]
+    private $publishedAt;
+
     public function setCreatedAt(\DateTimeInterface $date): self
     {
         if($this->createdAt && $this->createdAt < $date) {
@@ -51,6 +54,18 @@ trait TimestampTrait
     public function setClosedAt(?\DateTime $closedAt): self
     {
         $this->closedAt = $closedAt;
+
+        return $this;
+    }
+
+    public function getPublishedAt(): ?\DateTime
+    {
+        return $this->publishedAt;
+    }
+
+    public function setPublishedAt(?\DateTime $publishedAt): self
+    {
+        $this->publishedAt = $publishedAt;
 
         return $this;
     }

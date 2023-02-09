@@ -102,7 +102,8 @@ class TelegramHttpClient
             'body' => [
                 'chat_id' => $chatId,
                 'text' => $text
-            ]
+            ],
+            'extra' => ['trace_content' => true]
         ]);
 
         if(Response::HTTP_OK !== $response->getStatusCode()) {

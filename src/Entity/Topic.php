@@ -68,8 +68,6 @@ class Topic
         return $this->id;
     }
 
-    use TimestampTrait;
-
     public function getTitle(): ?string
     {
         return $this->title;
