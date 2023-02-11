@@ -17,14 +17,6 @@
     {% block javascripts %}
         {{ encore_entry_script_tags('app') }}
     {% endblock javascripts %}
-    <script>
-        $(document).ready(function() {
-            // you may need to change this code if you are not using Bootstrap Datepicker
-            $('.js-datepicker').datepicker({
-                format: 'yyyy-mm-dd'
-            });
-        });
-    </script>
 
 </head>
 <body class="sb-nav-fixed">
@@ -145,7 +137,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {% if app.request.pathInfo starts with '/admin/market' %}active{% endif %}" href="{{ path('admin_user_index')}}">
+                        <a class="nav-link {% if app.request.pathInfo starts with '/admin/user' %}active{% endif %}" href="{{ path('admin_user_index')}}">
                             <i class="bi bi-people-fill"></i>
                             {{ 'menu.users'|trans }}
                         </a>
@@ -183,7 +175,11 @@
             {% block breadcrumb %}
                 <ol class="breadcrumb mb-4">
                     <li class="breadcrumb-item"><a href="{{ path('admin') }}">index</a></li>
-                    <li class="breadcrumb-item active">{{ app_name }}{{ app_version }}</li>
+                    {% block add_breadscrumb %}{% endblock %}
+                    {% block current_breadscrumb %}
+                    <li class="breadcrumb-item active">/</li>
+                    {% endblock %}
+                    {% block next_breadscrumb %}{% endblock %}
                 </ol>
             {% endblock %}
 

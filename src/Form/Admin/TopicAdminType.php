@@ -40,8 +40,6 @@ class TopicAdminType extends AbstractType
             ->add('profile')
             ->add('closedAt', DateType::class, [
                 'widget' => 'single_text',
-                'html5' => false,
-                'attr' => ['class' => 'js-datepicker'],
             ])
         ;
     }
