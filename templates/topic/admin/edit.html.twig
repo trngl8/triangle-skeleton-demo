@@ -29,15 +29,15 @@
             {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
             <div class="card">
                 <div class="card-body">
-                    {{ form_row(form.closedAt) }}
-                    {{ form_row(form.product) }}
                     {{ form_row(form.project) }}
-                    {{ form_row(form.type) }}
+{#                    {{ form_row(form.product) }}#}
+{#                    {{ form_row(form.type) }}#}
                     {{ form_row(form.title) }}
                     {{ form_row(form.description) }}
                     {{ form_row(form.branch) }}
+                    {{ form_row(form.priority) }}
                     {{ form_row(form.profile) }}
-
+                    {{ form_row(form.publishedAt) }}
                 </div>
             </div>
             {{ form_rest(form) }}

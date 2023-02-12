@@ -109,7 +109,7 @@ class TopicController extends AbstractController
             $entityManager->persist($topic);
             $entityManager->flush();
 
-            $this->addFlash('success', 'flash.success.topic_created');
+            $this->addFlash('success', 'flash.success.created');
 
             return $this->redirectToRoute('admin_topic_index');
         }
@@ -138,7 +138,7 @@ class TopicController extends AbstractController
             $entityManager->persist($topic);
             $entityManager->flush();
 
-            $this->addFlash('success', 'flash.success.topic_updated');
+            $this->addFlash('success', 'flash.success.updated');
 
             $nextAction = 'admin_topic_index';
 

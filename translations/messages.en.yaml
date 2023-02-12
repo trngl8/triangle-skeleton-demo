@@ -101,6 +101,7 @@ title:
     run: Topic run
     add:  Topic add
   subscribes: Subscribes
+  filters: Filters
   subscribe: Subscribe
   show_topic: Show topic
   show_invite: Show invite

@@ -18,7 +18,7 @@
         {% if button is defined %}
             <a href="{{ path('admin_topic_add') }}" class="btn  btn-outline-primary"><i class="bi bi-plus-circle"></i> {{ 'button.add'|trans }}</a>
             <a href="{{ path('admin_topic_export') }}" class="btn btn-outline-secondary"><i class="bi bi-download"></i> {{ 'button.export'|trans }}</a>
-            <a href="{{ path('admin_topic_import') }}" class="btn btn-outline-secondary"><i class="bi bi-download"></i> {{ 'button.import'|trans }}</a>
+{#            <a href="{{ path('admin_topic_import') }}" class="btn btn-outline-secondary"><i class="bi bi-download"></i> {{ 'button.import'|trans }}</a>#}
         {% endif %}
     </div>
 {% endblock %}
@@ -29,7 +29,7 @@
         <div class="accordion-item">
             <h2 class="accordion-header" id="headingOne">
                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="{{ filters_expanded }}" aria-controls="collapseOne">
-                    <i class="bi bi-filter"></i> {{ 'caption.filters' }}
+                    <i class="bi bi-filter"></i> {{ 'title.filters'|trans }}
                 </button>
             </h2>
             <div id="collapseOne" class="accordion-collapse {% if filters_expanded %}show{% else %}collapse{% endif %}" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
