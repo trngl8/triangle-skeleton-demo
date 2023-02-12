@@ -3,8 +3,8 @@
 namespace App\Form\Admin;
 
 use App\Entity\Product;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -16,10 +16,11 @@ class ProductAdminType extends AbstractType
     {
         $builder
             ->add('title', TextType::class)
-            ->add('description', TextareaType::class)
-            ->add('save', SubmitType::class, [
-                'label' => 'form_test'
+            ->add('parent', EntityType::class, [
+                'class' => Product::class,
+                'required' => false
             ])
+            ->add('description', TextareaType::class)
         ;
     }
 

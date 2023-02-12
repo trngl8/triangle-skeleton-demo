@@ -9,8 +9,8 @@
 {% block breadcrumb %}
     <ol class="breadcrumb mb-4">
         <li class="breadcrumb-item"><a href="{{ path('admin') }}">{{ 'menu.dashboard'|trans }}</a></li>
-        <li class="breadcrumb-item"><a href="{{ path('admin_product_index') }}">{{ 'menu.project'|trans }}</a></li>
-        <li class="breadcrumb-item active">{{ 'title.add_product'|trans }}</li>
+        <li class="breadcrumb-item"><a href="{{ path('admin_product_index') }}">{{ 'menu.products'|trans }}</a></li>
+        <li class="breadcrumb-item active">{{ 'title.edit_product'|trans }}</li>
     </ol>
 {% endblock %}
 
@@ -21,11 +21,12 @@
             <div class="card">
                 <div class="card-body">
                     {{ form_row(form.title) }}
+                    {{ form_row(form.parent) }}
                     {{ form_row(form.description) }}
                 </div>
             </div>
             <div class="mt-4">
-                {{ form_widget(form.save, {label : 'button.submit'|trans, attr: {class : 'btn btn-lg btn-primary' }}) }}
+                <button type="submit" class="btn btn-lg btn-primary ">{{ 'button.submit'|trans }}</button>
             </div>
             {{ form_end(form) }}
 

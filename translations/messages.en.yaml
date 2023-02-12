@@ -131,6 +131,7 @@ title:
   features: Features
   edit_topic: Edit topic
   edit_project: Edit project
+  edit_product: Edit product
   edit_profile: Edit profile
   edit_invite: Edit invite
   edit_check: Edit check
@@ -141,6 +142,7 @@ title:
   change_agree: Change agree
   add_topic: Add topic
   add_project: Add project
+  add_product: Add product
   add_invite: Add invite
   add_check: Add check
   accept_invite: Accept invite
