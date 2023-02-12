@@ -21,10 +21,8 @@ class TopicAdminType extends AbstractType
     {
         $builder
             ->add('project')
-//            ->add('product')
-//            ->add('type', ChoiceType::class, ['choices' => [
-//                '' => null,
-//                'filter.task' => 'task',
+            ->add('type', ChoiceType::class, ['choices' => [
+                'task' => 'task',
 //                'filter.filters' => 'filters',
 //                'filter.external' => 'external',
 //                'filter.controller' => 'controller',
@@ -34,7 +32,9 @@ class TopicAdminType extends AbstractType
 //                'filter.admin' => 'admin',
 //                'filter.logger' => 'logger',
 //                'filter.migration' => 'migration',
-//            ]])
+            ]])
+//            ->add('product')
+
             ->add('title')
             ->add('description', TextareaType::class)
             ->add('branch', TextType::class)
