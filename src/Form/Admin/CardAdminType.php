@@ -3,6 +3,8 @@
 namespace App\Form\Admin;
 
 use App\Entity\Card;
+use App\Entity\Product;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
@@ -15,6 +17,10 @@ class CardAdminType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
+            ->add('product', EntityType::class, [
+                'class' => Product::class,
+                'required' => false
+            ])
             ->add('title', TextType::class)
             ->add('code', NumberType::class)
             ->add('price', NumberType::class)

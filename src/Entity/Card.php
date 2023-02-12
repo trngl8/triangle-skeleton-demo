@@ -42,6 +42,9 @@ class Card
     #[ORM\Column(nullable: true)]
     private ?bool $available = null;
 
+    #[ORM\ManyToOne]
+    private ?Product $product = null;
+
     public function __construct()
     {
         $this->createdAt = new \DateTimeImmutable();
@@ -131,6 +134,18 @@ class Card
     public function setAvailable(?bool $available): self
     {
         $this->available = $available;
+
+        return $this;
+    }
+
+    public function getProduct(): ?Product
+    {
+        return $this->product;
+    }
+
+    public function setProduct(?Product $product): self
+    {
+        $this->product = $product;
 
         return $this;
     }

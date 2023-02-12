@@ -55,7 +55,7 @@ class CardController extends AbstractController
             $entityManager->persist($project);
             $entityManager->flush();
 
-            $this->addFlash('success', 'flash.success.project_created');
+            $this->addFlash('success', 'flash.success.created');
 
             return $this->redirectToRoute('admin_card_index');
         }
@@ -84,7 +84,7 @@ class CardController extends AbstractController
             $entityManager->persist($card);
             $entityManager->flush();
 
-            $this->addFlash('success', 'flash.success.project_updated');
+            $this->addFlash('success', 'flash.success.updated');
 
             $nextAction = 'admin_card_index';
 
