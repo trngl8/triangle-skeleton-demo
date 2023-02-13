@@ -45,6 +45,9 @@ class Card
     #[ORM\ManyToOne]
     private ?Product $product = null;
 
+    #[ORM\Column(type: 'string', nullable: true)]
+    private ?string $filename;
+
     public function __construct()
     {
         $this->createdAt = new \DateTimeImmutable();
@@ -146,6 +149,18 @@ class Card
     public function setProduct(?Product $product): self
     {
         $this->product = $product;
+
+        return $this;
+    }
+
+    public function getFilename()
+    {
+        return $this->filename;
+    }
+
+    public function setFilename($filename)
+    {
+        $this->filename = $filename;
 
         return $this;
     }

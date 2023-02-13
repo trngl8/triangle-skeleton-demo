@@ -5,7 +5,9 @@ namespace App\Controller\Admin;
 use App\Button\LinkToRoute;
 use App\Entity\Card;
 use App\Form\Admin\CardAdminType;
+use Deployer\Component\PharUpdate\Exception\FileException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -45,15 +47,35 @@ class CardController extends AbstractController
     #[Route('/add', name: 'add')]
     public function add(Request $request): Response
     {
-        $project = new Card();
-        $form = $this->createForm(CardAdminType::class, $project);
+        $card = new Card();
+        $form = $this->createForm(CardAdminType::class, $card);
 
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->doctrine->getManager();
-            $entityManager->persist($project);
-            $entityManager->flush();
+
+            $this->doctrine->getManager()->persist($card);
+
+            /** @var UploadedFile $imageFile */
+            $imageFile = $form->get('image')->getData();
+
+            if ($imageFile) {
+                $originalFilename = pathinfo($imageFile->getClientOriginalName(), PATHINFO_FILENAME);
+                $newFilename = $originalFilename.'-'.uniqid().'.'.$imageFile->guessExtension();
+
+                try {
+                    $imageFile->move(
+                        sprintf("%s/%s/%s", $this->getParameter('upload_directory'), 'cards', $card->getId()),
+                        $newFilename
+                    );
+                } catch (FileException $e) {
+
+                }
+
+                $card->setFilename($newFilename);
+            }
+
+            $this->doctrine->getManager()->flush();
 
             $this->addFlash('success', 'flash.success.created');
 
@@ -79,10 +101,26 @@ class CardController extends AbstractController
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->doctrine->getManager();
+            /** @var UploadedFile $imageFile */
+            $imageFile = $form->get('image')->getData();
 
-            $entityManager->persist($card);
-            $entityManager->flush();
+            if ($imageFile) {
+                $originalFilename = pathinfo($imageFile->getClientOriginalName(), PATHINFO_FILENAME);
+                $newFilename = $originalFilename.'-'.uniqid().'.'.$imageFile->guessExtension();
+
+                try {
+                    $imageFile->move(
+                        sprintf("%s/%s/%s", $this->getParameter('upload_directory'), 'cards', $card->getId()),
+                        $newFilename
+                    );
+                } catch (FileException $e) {
+
+                }
+
+                $card->setFilename($newFilename);
+            }
+
+            $this->doctrine->getManager()->flush();
 
             $this->addFlash('success', 'flash.success.updated');
 
@@ -109,6 +147,7 @@ class CardController extends AbstractController
         $submittedToken = $request->request->get('token');
 
         if ($this->isCsrfTokenValid('remove', $submittedToken)) {
+            //TODO: remove images
             $entityManager = $this->doctrine->getManager();
             $entityManager->remove($item);
             $entityManager->flush();

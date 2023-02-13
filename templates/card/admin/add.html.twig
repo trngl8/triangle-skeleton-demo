@@ -13,6 +13,10 @@
                     {{ form_row(form.priceSale) }}
                     {{ form_row(form.quantity) }}
                     {{ form_row(form.available) }}
+                    {% if item.filename  %}
+                    <img src="{{ asset('upload/cards/' ~ item.id ~ '/' ~ item.filename) }}" alt="" width="200" >
+                    {% endif %}
+                    {{ form_row(form.image) }}
                 </div>
             </div>
             <div class="mt-4 mb-4">

@@ -1,7 +1,5 @@
 {% extends 'admin.html.twig' %}
 
-{% block title %}{{ 'text.must_be_replaced'|trans }}{% endblock %}
-
 {% block page_title %}
     <h1 class="mt-4">{{ 'title.cards'|trans }}</h1>
 {%endblock%}
@@ -19,6 +17,7 @@
             <thead class="table-light">
             <tr>
                 <th scope="col">#</th>
+                <th scope="col">Image</th>
                 <th scope="col">Title</th>
                 <th scope="col">{{ 'createdAt'| trans }}</th>
                 <th scope="col" class="col-2">{{ 'actions'| trans }}</th>
@@ -28,6 +27,10 @@
             {% for item in items %}
                 <tr>
                     <td>{{ item.id }}</td>
+                    <td>
+                        {% if item.filename  %}
+                            <img src="{{ asset('upload/cards/' ~ item.id ~ '/' ~ item.filename) }}" alt="" width="50" >
+                        {% endif %}</td>
                     <td>{{ item.title }}</td>
                     <td>{{ item.createdAt|date }}</td>
                     <td>
