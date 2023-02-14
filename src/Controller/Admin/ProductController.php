@@ -33,7 +33,7 @@ class ProductController extends AbstractController
         $button = new LinkToRoute('product_add', 'button.add');
 
         if(sizeof($items) === 0) {
-            $this->addFlash('warning', 'flash.warning.no_items');
+            $this->addFlash('warning', 'flash.warning.items');
         }
 
         return $this->render('product/admin/index.html.twig', [
@@ -55,7 +55,7 @@ class ProductController extends AbstractController
             $entityManager->persist($product);
             $entityManager->flush();
 
-            $this->addFlash('success', 'flash.success.product_created');
+            $this->addFlash('success', 'flash.success.created');
 
             return $this->redirectToRoute('admin_product_index');
         }
@@ -65,8 +65,8 @@ class ProductController extends AbstractController
         ]);
     }
 
-    #[Route('/edit/{id}', name: 'edit', methods: ['GET', 'POST', 'HEAD'] )]
-    public function show(Request $request, int $id) : Response
+    #[Route('/{id}/edit', name: 'edit', methods: ['GET', 'POST', 'HEAD'] )]
+    public function edit(Request $request, int $id) : Response
     {
         $product =$this->repository->find($id);
 
@@ -84,7 +84,7 @@ class ProductController extends AbstractController
             $entityManager->persist($product);
             $entityManager->flush();
 
-            $this->addFlash('success', 'flash.success.product_updated');
+            $this->addFlash('success', 'flash.success.updated');
 
 //            $nextAction = $form->get('saveAndAdd')->isClicked()
 //                ? 'admin_product_add'
@@ -99,7 +99,21 @@ class ProductController extends AbstractController
         ]);
     }
 
-    #[Route('/remove/{id}', name: 'remove', methods: ['GET', 'POST', 'HEAD'] )]
+    #[Route('/{id}/show', name: 'show', methods: ['GET', 'HEAD'] )]
+    public function show(Request $request, int $id) : Response
+    {
+        $product =$this->repository->find($id);
+
+        if(!$product) {
+            throw new NotFoundHttpException(sprintf("Product %d not found", $id));
+        }
+
+        return $this->render('product/admin/show.html.twig', [
+            'item' => $product,
+        ]);
+    }
+
+    #[Route('/{id}/remove', name: 'remove', methods: ['GET', 'POST', 'HEAD'] )]
     public function remove(Product $product, Request $request) : Response
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');

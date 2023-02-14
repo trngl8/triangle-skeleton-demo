@@ -87,8 +87,8 @@ class CardController extends AbstractController
         ]);
     }
 
-    #[Route('/edit/{id}', name: 'edit', methods: ['GET', 'POST', 'HEAD'] )]
-    public function show(Request $request, int $id) : Response
+    #[Route('/{id}/edit', name: 'edit', methods: ['GET', 'POST', 'HEAD'] )]
+    public function edit(Request $request, int $id) : Response
     {
         $card =$this->repository->find($id);
 
@@ -139,7 +139,17 @@ class CardController extends AbstractController
         ]);
     }
 
-    #[Route('/remove/{id}', name: 'remove', methods: ['GET', 'POST', 'HEAD'] )]
+    #[Route('/{id}/show', name: 'show', methods: ['GET', 'POST', 'HEAD'] )]
+    public function show(int $id, Request $request) : Response
+    {
+        $card = $this->repository->find($id);
+
+        return $this->render('card/admin/show.html.twig', [
+            'item' => $card,
+        ]);
+    }
+
+    #[Route('/{id}/remove', name: 'remove', methods: ['GET', 'POST', 'HEAD'] )]
     public function remove(Card $item, Request $request) : Response
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
