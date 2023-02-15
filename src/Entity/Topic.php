@@ -25,6 +25,7 @@ class Topic
     private $title;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    #[Assert\Length(max: 255)]
     private $description;
 
     #[ORM\Column(type: 'string', length: 32)]
