@@ -1,4 +1,4 @@
-git add SHELL := /bin/bash
+SHELL := /bin/bash
 
 cc:
 	php bin/console cache:clear
