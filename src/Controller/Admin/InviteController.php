@@ -17,7 +17,7 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/admin/invite', name: 'admin_invite_')]
 class InviteController extends AbstractController
 {
-    CONST PAGINATOR_COUNT = 3;
+    CONST PAGINATOR_COUNT = 20;
     CONST START_PAGE = 1;
     CONST MIN_COUNT = 0;
 

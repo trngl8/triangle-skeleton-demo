@@ -75,7 +75,7 @@
                 {% endif %}
                 <th scope="col">{{ 'profile'| trans }}</th>
                 <th scope="col">{{ 'progress'| trans }}</th>
-                <th scope="col" class="col-2"></th>
+                <th scope="col">{{ 'actions'|trans }}</th>
             </tr>
             </thead>
             <tbody>
@@ -128,11 +128,8 @@
                             {% endif %}
                         {% endif %}
                     </td>
-                    <td class="text-end">
-
+                    <td>
                         <a href="{{ path('admin_topic_show', { id: item.id }) }}" class="btn btn-sm btn-outline-secondary">{{ 'button.show'|trans }}</a>
-                        <a href="{{ path('admin_topic_edit', { id: item.id }) }}" class="btn btn-sm btn-outline-primary">{{ 'button.edit'|trans }}</a>
-                        <a href="{{ path('admin_topic_remove', { id: item.id }) }}" class="btn btn-sm btn-outline-danger">{{ 'button.remove'|trans }}</a>
                     </td>
                 </tr>
             {% endfor %}
