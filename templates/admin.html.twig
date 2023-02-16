@@ -5,14 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-{#    <link rel="shortcut icon" type="image/svg+xml" href="{{ asset('favicons/favicon.svg') }}">#}
-{#    <link rel="alternate icon" type="image/png" sizes="16x16" href="{{ asset('favicons/favicon16x16.png') }}">#}
-{#    <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('favicons/apple-touch-icon.png') }}" />#}
-    <title>{{ app_name }}{{ app_version }}</title>
+
+    <title>{{ app_name }} {{ app_version }}</title>
 
     {% block stylesheets %}
         {{ encore_entry_link_tags('app') }}
     {% endblock stylesheets %}
+
+    {% block add_stylesheets %}{% endblock %}
 
     {% block javascripts %}
         {{ encore_entry_script_tags('app') }}
@@ -59,9 +59,6 @@
             <li><hr class="dropdown-divider" /></li>
             <li><a class="dropdown-item" href="{{ path('logout')}}">{{ 'navbar.logout'|trans  }}</a></li>
         </ul>
-
-
-
     </div>
 </nav>
 

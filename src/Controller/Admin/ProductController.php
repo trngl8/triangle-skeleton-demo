@@ -32,11 +32,8 @@ class ProductController extends AbstractController
 
         $button = new LinkToRoute('product_add', 'button.add');
 
-        if(sizeof($items) === 0) {
-            $this->addFlash('warning', 'flash.warning.items');
-        }
-
-        return $this->render('product/admin/index.html.twig', [
+        //TODO: set default vew in index
+        return $this->render('product/admin/tree.html.twig', [
             'items' => $items,
             'button' => $button
         ]);

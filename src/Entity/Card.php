@@ -43,10 +43,14 @@ class Card
     private ?bool $available = null;
 
     #[ORM\ManyToOne]
+    //TODO: rename to the 'category'
     private ?Product $product = null;
 
     #[ORM\Column(type: 'string', nullable: true)]
     private ?string $filename;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $brand = null;
 
     public function __construct()
     {
@@ -161,6 +165,18 @@ class Card
     public function setFilename($filename)
     {
         $this->filename = $filename;
+
+        return $this;
+    }
+
+    public function getBrand(): ?string
+    {
+        return $this->brand;
+    }
+
+    public function setBrand(?string $brand): self
+    {
+        $this->brand = $brand;
 
         return $this;
     }
