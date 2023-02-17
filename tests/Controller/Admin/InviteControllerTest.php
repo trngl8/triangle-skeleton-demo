@@ -60,6 +60,18 @@ class InviteControllerTest extends WebTestCase
         ]);
 
         $this->assertResponseIsSuccessful();
+
+        $client->request('GET', '/admin/invite/remove/1');
+
+        $this->assertResponseIsSuccessful();
+
+        $client->submitForm('Yes');
+
+        $this->assertResponseIsSuccessful();
+
+        $client->request('GET', '/admin/invite/show/1');
+
+        $this->assertResponseStatusCodeSame(404);
     }
 
     public function testSubmitFail(): void

@@ -47,12 +47,7 @@ class ProductControllerTest extends WebTestCase
 
         $this->assertResponseIsSuccessful();
 
-        //TODO: implement show object IN ADMIN
-        //$client->request('GET', '/admin/product/show/1');
-
-        $this->assertResponseIsSuccessful();
-
-        $client->request('GET', '/admin/product/edit/1');
+        $client->request('GET', '/admin/product/1/edit');
 
         $client->submitForm('Submit', [
             'product_admin[title]' => 'test',
@@ -60,5 +55,22 @@ class ProductControllerTest extends WebTestCase
         ]);
 
         $this->assertResponseIsSuccessful();
+
+        $client->request('GET', '/admin/product/1/show');
+
+        $this->assertResponseIsSuccessful();
+
+        $client->request('GET', '/admin/product/1/remove');
+
+        $this->assertResponseIsSuccessful();
+
+        $client->submitForm('Yes');
+
+        //TODO: implement assert
+//        $this->assertResponseIsSuccessful();
+//
+//        $client->request('GET', '/admin/product/1/show');
+//
+//        $this->assertResponseStatusCodeSame(404);
     }
 }

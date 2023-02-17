@@ -7,6 +7,8 @@ use App\Entity\Card;
 use App\Form\Admin\CardAdminType;
 use Deployer\Component\PharUpdate\Exception\FileException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Form;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -56,24 +58,7 @@ class CardController extends AbstractController
 
             $this->doctrine->getManager()->persist($card);
 
-            /** @var UploadedFile $imageFile */
-            $imageFile = $form->get('image')->getData();
-
-            if ($imageFile) {
-                $originalFilename = pathinfo($imageFile->getClientOriginalName(), PATHINFO_FILENAME);
-                $newFilename = $originalFilename.'-'.uniqid().'.'.$imageFile->guessExtension();
-
-                try {
-                    $imageFile->move(
-                        sprintf("%s/%s/%s", $this->getParameter('upload_directory'), 'cards', $card->getId()),
-                        $newFilename
-                    );
-                } catch (FileException $e) {
-
-                }
-
-                $card->setFilename($newFilename);
-            }
+            $this->processUpload($card, $form);
 
             $this->doctrine->getManager()->flush();
 
@@ -101,24 +86,8 @@ class CardController extends AbstractController
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()) {
-            /** @var UploadedFile $imageFile */
-            $imageFile = $form->get('image')->getData();
 
-            if ($imageFile) {
-                $originalFilename = pathinfo($imageFile->getClientOriginalName(), PATHINFO_FILENAME);
-                $newFilename = $originalFilename.'-'.uniqid().'.'.$imageFile->guessExtension();
-
-                try {
-                    $imageFile->move(
-                        sprintf("%s/%s/%s", $this->getParameter('upload_directory'), 'cards', $card->getId()),
-                        $newFilename
-                    );
-                } catch (FileException $e) {
-
-                }
-
-                $card->setFilename($newFilename);
-            }
+            $this->processUpload($card, $form);
 
             $this->doctrine->getManager()->flush();
 
@@ -143,6 +112,10 @@ class CardController extends AbstractController
     public function show(int $id, Request $request) : Response
     {
         $card = $this->repository->find($id);
+
+        if(!$card) {
+            throw new NotFoundHttpException(sprintf("Card %d not found", $id));
+        }
 
         return $this->render('card/admin/show.html.twig', [
             'item' => $card,
@@ -170,5 +143,27 @@ class CardController extends AbstractController
         return $this->render('card/admin/remove.html.twig', [
             'item' => $item,
         ]);
+    }
+
+    private function processUpload(Card $card, FormInterface $form)
+    {
+        /** @var UploadedFile $imageFile */
+        $imageFile = $form->get('image')->getData();
+
+        if ($imageFile) {
+            $originalFilename = pathinfo($imageFile->getClientOriginalName(), PATHINFO_FILENAME);
+            $newFilename = $originalFilename.'-'.uniqid().'.'.$imageFile->guessExtension();
+
+            try {
+                $imageFile->move(
+                    sprintf("%s/%s/%s", $this->getParameter('upload_directory'), 'cards', $card->getId()),
+                    $newFilename
+                );
+            } catch (FileException $e) {
+
+            }
+
+            $card->setFilename($newFilename);
+        }
     }
 }

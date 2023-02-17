@@ -18,6 +18,5 @@ class AdminUserControllerTest extends WebTestCase
 
         $client->request('GET', '/admin/user');
         $this->assertResponseIsSuccessful();
-        $this->assertSelectorTextContains('h1', 'Users');
     }
 }

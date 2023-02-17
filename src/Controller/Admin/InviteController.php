@@ -199,29 +199,4 @@ class InviteController extends AbstractController
 
         return $response;
     }
-
-    #[Route('/import', name: 'import', methods: ['GET', 'POST', 'HEAD'] )]
-    public function import(Request $request) : Response
-    {
-        $form = $this->createForm(ImportType::class, $import);
-
-        $form->handleRequest($request);
-
-        if($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->doctrine->getManager();
-
-            $entityManager->persist($import);
-            $entityManager->flush();
-
-            $this->addFlash('success', 'flash.success.updated');
-
-            return $this->redirectToRoute('admin_import_index');
-        }
-
-        return $this->render('import/admin/edit.html.twig', [
-            'item' => $import,
-            'form' => $form->createView()
-        ]);
-    }
-
 }

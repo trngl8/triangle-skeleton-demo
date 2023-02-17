@@ -4,6 +4,7 @@ namespace App\Tests\Controller\Admin;
 
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Symfony\Component\BrowserKit\Response;
 
 class CardControllerTest extends WebTestCase
 {
@@ -46,7 +47,11 @@ class CardControllerTest extends WebTestCase
 
         $this->assertResponseIsSuccessful();
 
-        $client->request('GET', '/admin/card/edit/1');
+        $client->request('GET', '/admin/card/2/edit');
+
+        $this->assertResponseStatusCodeSame(404);
+
+        $client->request('GET', '/admin/card/1/edit');
 
         $client->submitForm('Submit', [
             'card_admin[title]' => 'new name',
@@ -54,6 +59,22 @@ class CardControllerTest extends WebTestCase
         ]);
 
         $this->assertResponseIsSuccessful();
+
+        $client->request('GET', '/admin/card/1/show');
+
+        $this->assertResponseIsSuccessful();
+
+        $client->request('GET', '/admin/card/1/remove');
+
+        $this->assertResponseIsSuccessful();
+
+        $client->submitForm('Yes');
+
+        $this->assertResponseIsSuccessful();
+
+        $client->request('GET', '/admin/card/1/show');
+
+        $this->assertResponseStatusCodeSame(404);
     }
 
     public function testSubmitFail(): void
@@ -72,7 +93,6 @@ class CardControllerTest extends WebTestCase
 
         $client->request('GET', '/admin/card/add');
 
-        //TODO: valid node for the form submit
         $crawler = $client->submitForm('Submit', [
             'card_admin[title]' => null,
             'card_admin[code]' => null,

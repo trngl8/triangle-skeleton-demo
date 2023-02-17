@@ -102,7 +102,7 @@ class ProjectController extends AbstractController
         ]);
     }
 
-    #[Route('/remove/{id}', name: 'remove', methods: ['GET', 'POST', 'HEAD'] )]
+    #[Route('/{id}/remove', name: 'remove', methods: ['GET', 'POST', 'HEAD'] )]
     public function remove(Project $project, Request $request) : Response
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');

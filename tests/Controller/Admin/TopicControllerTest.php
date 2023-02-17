@@ -62,6 +62,18 @@ class TopicControllerTest extends WebTestCase
         $client->request('GET', '/admin/topic/1/show');
 
         $this->assertResponseIsSuccessful();
+
+        $client->request('GET', '/admin/topic/1/remove');
+
+        $this->assertResponseIsSuccessful();
+
+        $client->submitForm('Yes');
+
+        $this->assertResponseIsSuccessful();
+
+        $client->request('GET', '/admin/topic/1/show');
+
+        $this->assertResponseStatusCodeSame(404);
     }
 
     public function testTopic404NotFound(): void
