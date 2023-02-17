@@ -15,6 +15,8 @@ use Doctrine\Persistence\ManagerRegistry;
 #[Route('/admin/product', name: 'admin_product_')]
 class ProductController extends AbstractController
 {
+    const DEFAULT_LEVEL = 1;
+
     private $doctrine;
 
     private $repository;
@@ -25,15 +27,26 @@ class ProductController extends AbstractController
         $this->repository = $this->doctrine->getRepository(Product::class);
     }
 
-    #[Route('', name: 'index')]
-    public function index() : Response
+    #[Route('', name: 'index', methods: ['GET', 'HEAD'])]
+    public function index(Request $request) : Response
     {
-        $items = $this->repository->findBy([]);
+        $level = self::DEFAULT_LEVEL;
+
+        if($request->get('level') > $level) {
+            $level = $request->get('level');
+        }
+
+        $items = $this->repository->findBy(['level' => $level]);
 
         $button = new LinkToRoute('product_add', 'button.add');
 
-        //TODO: set default vew in index
-        return $this->render('product/admin/tree.html.twig', [
+        $template = 'product/admin/index.html.twig';
+
+        if('tree' === $request->get('view')) {
+            $template = 'product/admin/tree.html.twig';
+        }
+
+        return $this->render($template, [
             'items' => $items,
             'button' => $button
         ]);
@@ -48,9 +61,8 @@ class ProductController extends AbstractController
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->doctrine->getManager();
-            $entityManager->persist($product);
-            $entityManager->flush();
+            $this->doctrine->getManager()->persist($product);
+            $this->doctrine->getManager()->flush();
 
             $this->addFlash('success', 'flash.success.created');
 

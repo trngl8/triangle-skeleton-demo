@@ -9,6 +9,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -25,9 +26,11 @@ class CardAdminType extends AbstractType
             ])
             ->add('title', TextType::class)
             ->add('code', NumberType::class)
+            ->add('brand', TextType::class)
             ->add('price', NumberType::class)
             ->add('priceSale', NumberType::class)
             ->add('quantity', NumberType::class)
+            ->add('description', TextareaType::class)
             ->add('available', CheckboxType::class)
             ->add('image', FileType::class, [
                 'mapped' => false,
@@ -40,7 +43,7 @@ class CardAdminType extends AbstractType
                             'image/jpeg',
                             'image/png',
                         ],
-                        'mimeTypesMessage' => 'Please upload a valid JPG or PNG file',
+                        'mimeTypesMessage' => 'Please upload a valid JPG or PNG file', //TODO: use external validation message
                     ])
                 ],
             ])

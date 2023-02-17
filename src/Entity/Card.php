@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\CardRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Uid\Uuid;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -13,20 +14,20 @@ class Card
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
-    #[ORM\Column(type: 'integer')]
+    #[ORM\Column(type: Types::INTEGER)]
     private $id;
 
-    #[ORM\Column(type: 'guid')]
+    #[ORM\Column(type: Types::GUID)]
     private $uuid;
 
-    #[ORM\Column(type: 'datetime_immutable')]
+    #[ORM\Column(type: Types::DATETIME_IMMUTABLE)]
     private $createdAt;
 
-    #[ORM\Column(type: 'string', length: 255)]
+    #[ORM\Column(type: Types::STRING, length: 255)]
     #[Assert\NotBlank]
     private $title;
 
-    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
     #[Assert\NotBlank]
     private $code;
 
@@ -34,7 +35,7 @@ class Card
     private ?float $price = null;
 
     #[ORM\Column(nullable: true)]
-    private ?float $price_sale = null;
+    private ?float $priceSale = null;
 
     #[ORM\Column(nullable: true)]
     private ?int $quantity = null;
@@ -42,15 +43,18 @@ class Card
     #[ORM\Column(nullable: true)]
     private ?bool $available = null;
 
+    //TODO: rename field to the 'category'
     #[ORM\ManyToOne]
-    //TODO: rename to the 'category'
     private ?Product $product = null;
 
-    #[ORM\Column(type: 'string', nullable: true)]
+    #[ORM\Column(type: Types::STRING, nullable: true)]
     private ?string $filename;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $brand = null;
+
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $description = null;
 
     public function __construct()
     {
@@ -111,12 +115,12 @@ class Card
 
     public function getPriceSale(): ?float
     {
-        return $this->price_sale;
+        return $this->priceSale;
     }
 
-    public function setPriceSale(?float $price_sale): self
+    public function setPriceSale(?float $priceSale): self
     {
-        $this->price_sale = $price_sale;
+        $this->priceSale = $priceSale;
 
         return $this;
     }
@@ -177,6 +181,18 @@ class Card
     public function setBrand(?string $brand): self
     {
         $this->brand = $brand;
+
+        return $this;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(?string $description): self
+    {
+        $this->description = $description;
 
         return $this;
     }
