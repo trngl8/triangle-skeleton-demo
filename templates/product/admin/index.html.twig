@@ -59,7 +59,9 @@
     {% endblock  %}
 
     {% if button is defined %}
-        <a href="{{ path('admin_product_add') }}" class="btn btn-outline-primary">{{ 'button.add'|trans }}</a>
+        <div class="mt-4">
+            <a href="{{ path('admin_product_add') }}" class="btn btn-outline-primary">{{ 'button.add'|trans }}</a>
+        </div>
     {% endif %}
 
 {% endblock %}

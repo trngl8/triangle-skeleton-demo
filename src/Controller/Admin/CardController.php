@@ -133,7 +133,7 @@ class CardController extends AbstractController
             return $this->redirectToRoute($nextAction);
         }
 
-        return $this->render('card/admin/add.html.twig', [
+        return $this->render('card/admin/edit.html.twig', [
             'item' => $card,
             'form' => $form->createView()
         ]);
