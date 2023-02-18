@@ -24,7 +24,7 @@ class ProjectControllerTest extends WebTestCase
 
     }
 
-    public function testCreateProductSuccess(): void
+    public function testCreateProjectSuccess(): void
     {
         $client = static::createClient();
         $client->followRedirects();
@@ -48,12 +48,9 @@ class ProjectControllerTest extends WebTestCase
 
         $this->assertResponseIsSuccessful();
 
-        //TODO: implement show object IN ADMIN
-        //$client->request('GET', '/admin/product/show/1');
-
         $this->assertResponseIsSuccessful();
 
-        $client->request('GET', '/admin/project/edit/1');
+        $client->request('GET', '/admin/project/1/edit');
 
         $client->submitForm('Submit', [
             'project[title]' => 'test',
@@ -62,5 +59,21 @@ class ProjectControllerTest extends WebTestCase
         ]);
 
         $this->assertResponseIsSuccessful();
+
+        $client->request('GET', '/admin/project/1/show');
+
+        $this->assertResponseIsSuccessful();
+
+        $client->request('GET', '/admin/project/1/remove');
+
+        $this->assertResponseIsSuccessful();
+
+        $client->submitForm('Yes');
+
+        $this->assertResponseIsSuccessful();
+
+        $client->request('GET', '/admin/project/1/show');
+
+        $this->assertResponseStatusCodeSame(404);
     }
 }

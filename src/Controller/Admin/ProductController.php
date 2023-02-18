@@ -109,7 +109,7 @@ class ProductController extends AbstractController
     }
 
     #[Route('/{id}/show', name: 'show', methods: ['GET', 'HEAD'] )]
-    public function show(Request $request, int $id) : Response
+    public function show(int $id) : Response
     {
         $product =$this->repository->find($id);
 

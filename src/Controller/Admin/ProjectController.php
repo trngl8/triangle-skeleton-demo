@@ -67,8 +67,8 @@ class ProjectController extends AbstractController
         ]);
     }
 
-    #[Route('/edit/{id}', name: 'edit', methods: ['GET', 'POST', 'HEAD'] )]
-    public function show(Request $request, int $id) : Response
+    #[Route('/{id}/edit', name: 'edit', methods: ['GET', 'POST', 'HEAD'] )]
+    public function edit(Request $request, int $id) : Response
     {
         $project = $this->doctrine->getRepository(Project::class)->find($id);
 
@@ -99,6 +99,20 @@ class ProjectController extends AbstractController
         return $this->render('project/admin/edit.html.twig', [
             'item' => $project,
             'form' => $form->createView()
+        ]);
+    }
+
+    #[Route('/{id}/show', name: 'show', methods: ['GET', 'HEAD'] )]
+    public function show(int $id) : Response
+    {
+        $project =$this->repository->find($id);
+
+        if(!$project) {
+            throw new NotFoundHttpException(sprintf("Project %d not found", $id));
+        }
+
+        return $this->render('project/admin/show.html.twig', [
+            'item' => $project,
         ]);
     }
 

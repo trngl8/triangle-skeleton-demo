@@ -19,8 +19,8 @@ class ProductControllerTest extends WebTestCase
 
         $client->request('GET', '/admin/product');
         $this->assertResponseIsSuccessful();
-        //TODo: implement translation
-        //$this->assertSelectorTextContains('h1', 'Products');
+
+        $this->assertSelectorTextContains('h1', 'Products');
 
     }
 
@@ -66,11 +66,10 @@ class ProductControllerTest extends WebTestCase
 
         $client->submitForm('Yes');
 
-        //TODO: implement assert
-//        $this->assertResponseIsSuccessful();
-//
-//        $client->request('GET', '/admin/product/1/show');
-//
-//        $this->assertResponseStatusCodeSame(404);
+        $this->assertResponseIsSuccessful();
+
+        $client->request('GET', '/admin/product/1/show');
+
+        $this->assertResponseStatusCodeSame(404);
     }
 }
