@@ -106,9 +106,9 @@ class Product
         return $this;
     }
 
-    public function getLevel(): ?int
+    public function getLevel(): int
     {
-        return $this->level;
+        return $this->level ?? 0;
     }
 
     public function setLevel(?int $level): self

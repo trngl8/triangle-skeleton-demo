@@ -20,13 +20,16 @@
         <div class="col-md-8">
             {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
 
+            {{ form_row(form.code) }}
             {{ form_row(form.product) }}
             {{ form_row(form.title) }}
-            {{ form_row(form.code) }}
             {{ form_row(form.brand) }}
             {{ form_row(form.price) }}
             {{ form_row(form.priceSale) }}
             {{ form_row(form.quantity) }}
+            {{ form_row(form.weight) }}
+            {{ form_row(form.countryCode) }}
+            {{ form_row(form.period) }}
             {{ form_row(form.description) }}
             {{ form_row(form.available) }}
             {% block filename %}

@@ -61,6 +61,11 @@ class ProductController extends AbstractController
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()) {
+
+            if($product->getParent()) {
+                $product->setLevel($product->getParent()->getLevel() + 1);
+            }
+
             $this->doctrine->getManager()->persist($product);
             $this->doctrine->getManager()->flush();
 
@@ -90,7 +95,10 @@ class ProductController extends AbstractController
         if($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->doctrine->getManager();
 
-            $entityManager->persist($product);
+            if($product->getParent()) {
+                $product->setLevel($product->getParent()->getLevel() + 1);
+            }
+
             $entityManager->flush();
 
             $this->addFlash('success', 'flash.success.updated');
@@ -117,8 +125,11 @@ class ProductController extends AbstractController
             throw new NotFoundHttpException(sprintf("Product %d not found", $id));
         }
 
+        $subItems = $this->repository->findBy(['parent' => $product->getId()]);
+
         return $this->render('product/admin/show.html.twig', [
             'item' => $product,
+            'subitems' => $subItems,
         ]);
     }
 

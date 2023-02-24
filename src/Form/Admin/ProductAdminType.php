@@ -3,6 +3,7 @@
 namespace App\Form\Admin;
 
 use App\Entity\Product;
+use App\Repository\ProductRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -18,7 +19,14 @@ class ProductAdminType extends AbstractType
             ->add('title', TextType::class)
             ->add('parent', EntityType::class, [
                 'class' => Product::class,
-                'required' => false
+                'required' => false,
+                'choice_label' => function (?Product $category) {
+                    return $category ? str_repeat('-', $category->getLevel()). $category->getTitle() : '';
+                },
+//                'query_builder' => function (ProductRepository $repository) {
+//                    return $repository->createQueryBuilder('c')
+//                        ->orderBy('c.level', 'ASC');
+//                },
             ])
             ->add('description', TextareaType::class)
         ;

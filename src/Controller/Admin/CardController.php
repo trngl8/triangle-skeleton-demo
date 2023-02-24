@@ -5,10 +5,9 @@ namespace App\Controller\Admin;
 use App\Button\LinkToRoute;
 use App\Entity\Card;
 use App\Form\Admin\CardAdminType;
-use Deployer\Component\PharUpdate\Exception\FileException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -35,10 +34,6 @@ class CardController extends AbstractController
         $items = $this->repository->findBy([]);
 
         $button = new LinkToRoute('project_add', 'button.add');
-
-        if(sizeof($items) === 0) {
-            $this->addFlash('warning', 'flash.warning.no_items');
-        }
 
         return $this->render('card/admin/index.html.twig', [
             'items' => $items,
@@ -122,18 +117,48 @@ class CardController extends AbstractController
         ]);
     }
 
+    #[Route('/{id}/clone', name: 'clone', methods: ['POST'] )]
+    public function clone(Card $card, Request $request) : Response
+    {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+
+        $submittedToken = $request->request->get('token');
+
+        if ($this->isCsrfTokenValid('clone', $submittedToken)) {
+            $newCard = clone $card;
+            $this->doctrine->getManager()->persist($newCard);
+            $this->doctrine->getManager()->flush();
+
+            $this->addFlash('success', 'flash.success.cloned');
+
+            return $this->redirectToRoute('admin_card_show', ['id' => $newCard->getId()]);
+        }
+
+        return $this->render('card/admin/show.html.twig', [
+            'item' => $card,
+        ]);
+    }
+
     #[Route('/{id}/remove', name: 'remove', methods: ['GET', 'POST', 'HEAD'] )]
-    public function remove(Card $item, Request $request) : Response
+    public function remove(Card $card, Request $request) : Response
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
 
         $submittedToken = $request->request->get('token');
 
         if ($this->isCsrfTokenValid('remove', $submittedToken)) {
-            //TODO: remove images
-            $entityManager = $this->doctrine->getManager();
-            $entityManager->remove($item);
-            $entityManager->flush();
+
+            $this->doctrine->getManager()->remove($card);
+
+            try {
+                rmdir(sprintf("%s/%s/%s", $this->getParameter('upload_directory'), 'cards', $card->getId()));
+            } catch (\Exception $e) {
+                $this->addFlash('error', $e->getMessage());
+
+                return $this->redirectToRoute('admin_card_remove', ['id' => $card->getId()]);
+            }
+
+            $this->doctrine->getManager()->flush();
 
             $this->addFlash('success', 'flash.success.removed');
 
@@ -141,11 +166,11 @@ class CardController extends AbstractController
         }
 
         return $this->render('card/admin/remove.html.twig', [
-            'item' => $item,
+            'item' => $card,
         ]);
     }
 
-    private function processUpload(Card $card, FormInterface $form)
+    private function processUpload(Card $card, FormInterface $form) : void
     {
         /** @var UploadedFile $imageFile */
         $imageFile = $form->get('image')->getData();
@@ -160,7 +185,9 @@ class CardController extends AbstractController
                     $newFilename
                 );
             } catch (FileException $e) {
+                $this->addFlash('error', $e->getMessage());
 
+                return;
             }
 
             $card->setFilename($newFilename);

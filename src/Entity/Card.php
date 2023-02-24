@@ -56,6 +56,16 @@ class Card
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $description = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?int $weight = null;
+
+    #[ORM\Column(length: 2, nullable: true)]
+    private ?string $countryCode = null;
+
+    //warranty period. choose filed type
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $period = null;
+
     public function __construct()
     {
         $this->createdAt = new \DateTimeImmutable();
@@ -193,6 +203,42 @@ class Card
     public function setDescription(?string $description): self
     {
         $this->description = $description;
+
+        return $this;
+    }
+
+    public function getWeight(): ?int
+    {
+        return $this->weight;
+    }
+
+    public function setWeight(?int $weight): self
+    {
+        $this->weight = $weight;
+
+        return $this;
+    }
+
+    public function getCountryCode(): ?string
+    {
+        return $this->countryCode;
+    }
+
+    public function setCountryCode(?string $countryCode): self
+    {
+        $this->countryCode = $countryCode;
+
+        return $this;
+    }
+
+    public function getPeriod(): ?string
+    {
+        return $this->period;
+    }
+
+    public function setPeriod(?string $period): self
+    {
+        $this->period = $period;
 
         return $this;
     }
