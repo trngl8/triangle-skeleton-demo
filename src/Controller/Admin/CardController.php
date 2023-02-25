@@ -151,11 +151,13 @@ class CardController extends AbstractController
             $this->doctrine->getManager()->remove($card);
 
             try {
-                rmdir(sprintf("%s/%s/%s", $this->getParameter('upload_directory'), 'cards', $card->getId()));
+                if(file_exists(sprintf("%s/%s/%s", $this->getParameter('upload_directory'), 'cards', $card->getId()))) {
+                    rmdir(sprintf("%s/%s/%s", $this->getParameter('upload_directory'), 'cards', $card->getId()));
+                }
             } catch (\Exception $e) {
                 $this->addFlash('error', $e->getMessage());
 
-                return $this->redirectToRoute('admin_card_remove', ['id' => $card->getId()]);
+                return $this->redirectToRoute('admin_card_index');
             }
 
             $this->doctrine->getManager()->flush();

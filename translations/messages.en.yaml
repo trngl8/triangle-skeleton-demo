@@ -48,6 +48,7 @@ flash:
     removed: Removed
     created: Created
     updated: Updated
+    cloned: Cloned
   warning:
     already_logged_in: You are already logged in
 

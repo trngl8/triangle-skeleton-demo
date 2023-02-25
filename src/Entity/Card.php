@@ -72,6 +72,19 @@ class Card
         $this->uuid = Uuid::v4();
     }
 
+    public function __toString()
+    {
+        return $this->title;
+    }
+
+    public function __clone()
+    {
+        $this->id = null;
+        $this->uuid = Uuid::v4();
+        $this->createdAt = new \DateTimeImmutable();
+        $this->filename = null;
+    }
+
     public function getId(): ?int
     {
         return $this->id;
