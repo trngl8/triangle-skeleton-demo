@@ -38,6 +38,30 @@ class ProfileController extends AbstractController
             'items' => $topics,
         ]);
     }
+    #[Route('/current', name: 'current')]
+    public function current() : Response
+    {
+        $user = $this->getUser();
+        $profile = $this->repository->findOneBy(['email' => $user->getUserIdentifier()]);
+
+        return $this->render('profile/admin/show.html.twig', [
+            'item' => $profile,
+        ]);
+    }
+
+    #[Route('/{id}/show', name: 'show')]
+    public function show() : Response
+    {
+        $profile = $this->doctrine->getRepository(Profile::class)->find($id);
+
+        if(!$profile) {
+            throw new NotFoundHttpException(sprintf("Profile %d not found", $id));
+        }
+
+        return $this->render('profile/admin/show.html.twig', [
+            'item' => $profile,
+        ]);
+    }
 
     #[Route('/add', name: 'add')]
     public function add(Request $request): Response
@@ -62,8 +86,8 @@ class ProfileController extends AbstractController
         ]);
     }
 
-    #[Route('/edit/{id}', name: 'show', methods: ['GET', 'POST', 'HEAD'] )]
-    public function show(Request $request, int $id) : Response
+    #[Route('/{id}/edit', name: 'edit', methods: ['GET', 'POST', 'HEAD'] )]
+    public function edit(Request $request, int $id) : Response
     {
         $profile = $this->doctrine->getRepository(Profile::class)->find($id);
 
@@ -91,7 +115,7 @@ class ProfileController extends AbstractController
         ]);
     }
 
-    #[Route('/remove/{id}', name: 'remove', methods: ['GET', 'POST', 'HEAD'] )]
+    #[Route('/{id}/remove', name: 'remove', methods: ['GET', 'POST', 'HEAD'] )]
     public function remove(Profile $check, Request $request) : Response
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
