@@ -40,6 +40,9 @@ class Product
     #[ORM\ManyToOne(targetEntity: self::class, inversedBy: 'products')]
     private ?self $parent = null;
 
+    #[ORM\Column(type: Types::STRING, nullable: true)]
+    private ?string $filename;
+
     #[ORM\OneToMany(mappedBy: 'parent', targetEntity: self::class)]
     private Collection $products;
 
@@ -138,6 +141,18 @@ class Product
     public function setParent(?self $parent): self
     {
         $this->parent = $parent;
+
+        return $this;
+    }
+
+    public function getFilename()
+    {
+        return $this->filename;
+    }
+
+    public function setFilename($filename)
+    {
+        $this->filename = $filename;
 
         return $this;
     }

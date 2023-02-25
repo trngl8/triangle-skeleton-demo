@@ -22,6 +22,12 @@
             {{ form_row(form.parent) }}
             {{ form_row(form.title) }}
             {{ form_row(form.description) }}
+            {% block filename %}
+                {% if item is defined and item.filename  %}
+                    <img src="{{ asset('upload/products/' ~ item.id ~ '/' ~ item.filename) }}" alt="" width="100" >
+                {% endif %}
+            {% endblock %}
+            {{ form_row(form.image) }}
 
             <div class="mt-4">
                 <button type="submit" class="btn btn-lg btn-primary ">{{ 'button.submit'|trans }}</button>

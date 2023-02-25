@@ -3,9 +3,13 @@
 namespace App\Controller\Admin;
 
 use App\Button\LinkToRoute;
+use App\Entity\Card;
 use App\Entity\Product;
 use App\Form\Admin\ProductAdminType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -67,6 +71,9 @@ class ProductController extends AbstractController
             }
 
             $this->doctrine->getManager()->persist($product);
+
+            $this->processUpload($product, $form);
+
             $this->doctrine->getManager()->flush();
 
             $this->addFlash('success', 'flash.success.created');
@@ -93,13 +100,14 @@ class ProductController extends AbstractController
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->doctrine->getManager();
 
             if($product->getParent()) {
                 $product->setLevel($product->getParent()->getLevel() + 1);
             }
 
-            $entityManager->flush();
+            $this->processUpload($product, $form);
+
+            $this->doctrine->getManager()->flush();
 
             $this->addFlash('success', 'flash.success.updated');
 
@@ -107,7 +115,7 @@ class ProductController extends AbstractController
 //                ? 'admin_product_add'
 //                : 'admin_product_index';
 
-            return $this->redirectToRoute('admin_product_index');
+            return $this->redirectToRoute('admin_product_edit', ['id' => $product->getId()]);
         }
 
         return $this->render('product/admin/edit.html.twig', [
@@ -153,5 +161,29 @@ class ProductController extends AbstractController
         return $this->render('product/admin/remove.html.twig', [
             'item' => $product,
         ]);
+    }
+
+    private function processUpload(Product $product, FormInterface $form) : void
+    {
+        /** @var UploadedFile $imageFile */
+        $imageFile = $form->get('image')->getData();
+
+        if ($imageFile) {
+            $originalFilename = pathinfo($imageFile->getClientOriginalName(), PATHINFO_FILENAME);
+            $newFilename = $originalFilename.'-'.uniqid().'.'.$imageFile->guessExtension();
+
+            try {
+                $imageFile->move(
+                    sprintf("%s/%s/%s", $this->getParameter('upload_directory'), 'products', $product->getId()),
+                    $newFilename
+                );
+            } catch (FileException $e) {
+                $this->addFlash('error', $e->getMessage());
+
+                return;
+            }
+
+            $product->setFilename($newFilename);
+        }
     }
 }

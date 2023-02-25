@@ -16,50 +16,51 @@
 
 {% block main %}
 
-    {% block viewtype %}
-        <div class="btn-group mb-4" role="group" aria-label="View type">
-            <a href="{{ path('admin_product_index', {view: 'index'}) }}" class="btn btn-outline-secondary">Index</a>
-            <a href="{{ path('admin_product_index', {view: 'tree'}) }}" type="button" class="btn btn-outline-secondary">Tree</a>
-        </div>
-    {% endblock %}
+{#    {% block viewtype %}#}
+{#        <div class="btn-group mb-4" role="group" aria-label="View type">#}
+{#            <a href="{{ path('admin_product_index', {view: 'index'}) }}" class="btn btn-outline-secondary">Index</a>#}
+{#            <a href="{{ path('admin_product_index', {view: 'tree'}) }}" type="button" class="btn btn-outline-secondary">Tree</a>#}
+{#        </div>#}
+{#    {% endblock %}#}
 
     {% block items %}
         {% if items is defined and items|length > 0 %}
-            <table class="table">
-                <thead class="table-light">
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Title</th>
-                    <th scope="col">Description</th>
-                    <th scope="col">Parent</th>
-                    <th scope="col">Level</th>
-                    <th scope="col">{{ 'actions'| trans }}</th>
-                </tr>
-                </thead>
-                <tbody>
-                {% for item in items %}
-                    <tr>
-                        <td>{{ item.id }}</td>
-                        <td><a href="{{ path('admin_product_show', { id: item.id }) }}">{{ item.title }}</a></td>
-                        <td>{{ item.description|u.truncate(48, '...') }}</td>
-                        <td>
-                            {% if item.parent %}
-                                <a href="{{ path('admin_product_show', { id: item.parent.id }) }}">{{ item.parent }}</a>
-                            {% endif %}
-                        </td>
-                        <td>{{ item.level }}</td>
-                        <td>
-                            <a href="{{ path('admin_product_show', { id: item.id }) }}" class="btn btn-sm btn-outline-secondary">{{ 'button.show'|trans }}</a>
-                        </td>
-                    </tr>
-                {% endfor %}
-                </tbody>
-            </table>
+            {% for item in items %}
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="mt-2">
+                            <a class="btn btn-outline-secondary" href="{{ path('admin_product_show', { id: item.id }) }}">{{ item.title }}</a>
+                        </div>
+                    </div>
+                </div>
+                {% if item.products|length > 0 %}
+                    {% for level1 in item.products %}
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="mt-2 {% if item.level > 0 %}ms-5{% endif %}">
+                                <a class="btn btn-outline-secondary" href="{{ path('admin_product_show', { id: level1.id }) }}">{{ level1.title }}</a>
+                            </div>
+                        </div>
+                    </div>
+                    {% if level1.products|length > 0 %}
+                        {% for level2 in level1.products %}
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="mt-2 {% if level2.level > 0 %}ms-5{% endif %}">
+                                        <a class="btn btn-outline-secondary" href="{{ path('admin_product_show', { id: level2.id }) }}">{{ level2.title }}</a>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                    {% endfor %}
+                {% endif %}
+            {% endfor %}
         {% endif %}
     {% endblock  %}
 
     {% if button is defined %}
-        <div class="mt-4">
+        <div class="mt-5">
             <a href="{{ path('admin_product_add') }}" class="btn btn-outline-primary">{{ 'button.add'|trans }}</a>
         </div>
     {% endif %}
