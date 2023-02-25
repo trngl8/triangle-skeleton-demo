@@ -83,6 +83,7 @@ button:
   light: Light
   add: Add
   register: Register
+  clone: Clone
 
 link:
   forgot_password: Forgot your password?

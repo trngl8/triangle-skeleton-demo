@@ -1,6 +1,6 @@
 {% extends 'admin.html.twig' %}
 
-{% block title %}{{ 'text.must_be_replaced'|trans }}{% endblock %}
+{% block title %}{{ 'title.orders'|trans }}{% endblock %}
 
 {% block page_title %}
     <h1 class="mt-4">{{ 'title.orders'|trans }}</h1>
@@ -22,7 +22,7 @@
                 <th scope="col">Title</th>
                 <th scope="col">Currency</th>
                 <th scope="col">Amount</th>
-                <th scope="col" class="col-2">{{ 'actions'| trans }}</th>
+                <th scope="col">{{ 'actions'| trans }}</th>
             </tr>
             </thead>
             <tbody>
@@ -33,8 +33,7 @@
                     <td>{{ item.currency }}</td>
                     <td>{{ item.amount }}</td>
                     <td>
-                        <a href="{{ path('admin_order_edit', {'id': item.id }) }}" class="btn btn-sm btn-outline-primary">{{ 'button.edit'|trans }}</a>
-                        <a href="{{ path('admin_order_remove', {'id': item.id }) }}" class="btn btn-sm btn-outline-danger">{{ 'button.remove'|trans }}</a>
+                        <a href="{{ path('admin_order_show', {'id': item.id }) }}" class="btn btn-outline-secondary">{{ 'button.show'|trans }}</a>
                     </td>
                 </tr>
             {% endfor %}
