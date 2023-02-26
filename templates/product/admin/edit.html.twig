@@ -22,6 +22,7 @@
             {{ form_row(form.parent) }}
             {{ form_row(form.title) }}
             {{ form_row(form.description) }}
+            {{ form_row(form.fees) }}
             {% block filename %}
                 {% if item is defined and item.filename  %}
                     <img src="{{ asset('upload/products/' ~ item.id ~ '/' ~ item.filename) }}" alt="" width="100" >

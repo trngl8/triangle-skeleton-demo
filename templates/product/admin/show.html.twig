@@ -18,7 +18,9 @@
                 <div class="card-body">
                     <p>{{ item.title }}</p>
                     <p>{{ item.description }}</p>
-                    <p>{{ item.parent }}</p>
+                    {% if item.fees %}
+                    <p>{{ item.fees }}%</p>
+                    {% endif %}
                 </div>
             </div>
             <div class="mt-4">

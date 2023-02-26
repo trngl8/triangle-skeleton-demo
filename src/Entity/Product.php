@@ -46,6 +46,10 @@ class Product
     #[ORM\OneToMany(mappedBy: 'parent', targetEntity: self::class)]
     private Collection $products;
 
+    #[ORM\Column(nullable: true)]
+    #[Assert\NotBlank]
+    private ?int $fees = null;
+
     public function __construct()
     {
         $this->products = new ArrayCollection();
@@ -183,6 +187,18 @@ class Product
                 $product->setParent(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getFees(): ?int
+    {
+        return $this->fees;
+    }
+
+    public function setFees(?int $fees): self
+    {
+        $this->fees = $fees;
 
         return $this;
     }

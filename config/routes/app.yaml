@@ -38,11 +38,11 @@ app_cart:
 
 admin:
   path: /admin
-  controller: App\Controller\Admin\AdminController::admin
+  controller: App\Controller\Admin\AdminDashboardController::admin
 
 admin_inbox:
   path: /admin/inbox
-  controller: App\Controller\Admin\AdminController::inbox
+  controller: App\Controller\Admin\AdminDashboardController::inbox
 
 app_features:
   path: /features
