@@ -54,7 +54,7 @@
 
         <a class="btn btn-outline-secondary dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-person"></i> {{ app.user.username }}</a>
         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-            <li><a class="dropdown-item" href="{{ path('admin_profile_current') }}">{{ 'app.profile'|trans }}</a></li>
+            <li><a class="dropdown-item" href="{{ path('admin_profile_current_show') }}">{{ 'app.profile'|trans }}</a></li>
             <li><a class="dropdown-item" href="{{ path('admin_inbox') }}">{{ 'navbar.activity'|trans  }}</a></li>
             <li><hr class="dropdown-divider" /></li>
             <li><a class="dropdown-item" href="{{ path('logout')}}">{{ 'navbar.logout'|trans  }}</a></li>

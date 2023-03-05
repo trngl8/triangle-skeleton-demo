@@ -27,7 +27,9 @@
                 </div>
             </div>
             <div class="mt-4">
+                {% block edit_button %}
                 <a href="{{ path('admin_profile_edit', {id: item.id}) }}" class="btn btn-outline-secondary">{{ 'button.edit'|trans }}</a>
+                {% endblock %}
             </div>
         </div>
     </div>

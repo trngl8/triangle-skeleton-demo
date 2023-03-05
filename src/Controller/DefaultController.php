@@ -7,6 +7,7 @@ use App\Exception\ThemeLayoutNotFoundException;
 use App\Repository\ProductRepository;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Twig\Environment;
 use Twig\Error\LoaderError;
@@ -34,8 +35,12 @@ class DefaultController
         $this->defaultModule = $defaultModule;
     }
 
-    public function default() : Response
+    public function default(Request $request) : Response
     {
+        //TODO: check current route
+//        if ($request->attributes->get('_route') === 'default' && $this->appTheme === 'default') {
+//        }
+
         $templateName = sprintf('%s/default.html.twig', $this->appTheme);
 
         try {

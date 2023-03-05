@@ -38,19 +38,46 @@ class ProfileController extends AbstractController
             'items' => $topics,
         ]);
     }
-    #[Route('/current', name: 'current')]
+
+    #[Route('/current', name: 'current_show')]
     public function current() : Response
     {
         $user = $this->getUser();
         $profile = $this->repository->findOneBy(['email' => $user->getUserIdentifier()]);
 
-        return $this->render('profile/admin/show.html.twig', [
+        return $this->render('profile/admin/current.html.twig', [
             'item' => $profile,
+        ]);
+    }
+    #[Route('/current/edit', name: 'current_edit')]
+    public function currentEdit(Request $request) : Response
+    {
+        $user = $this->getUser();
+        $profile = $this->repository->findOneBy(['email' => $user->getUserIdentifier()]);
+
+        //TODO: action if profile does not exists
+        $form = $this->createForm(ProfileAdminType::class, $profile);
+
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()) {
+            $session = $request->getSession();
+            $session->set('_locale', $profile->getLocale());
+            $this->doctrine->getManager()->flush();
+
+            $this->addFlash('success', 'flash.success.updated');
+
+            return $this->redirectToRoute('admin_profile_current_show');
+        }
+
+        return $this->render('profile/admin/edit.html.twig', [
+            'item' => $profile,
+            'form' => $form->createView()
         ]);
     }
 
     #[Route('/{id}/show', name: 'show')]
-    public function show() : Response
+    public function show(int $id) : Response
     {
         $profile = $this->doctrine->getRepository(Profile::class)->find($id);
 
