@@ -26,6 +26,11 @@ class UserLocaleSubscriber implements EventSubscriberInterface
 
         $profile = $this->repo->findOneBy(['email' => $user->getUserIdentifier()]);
 
+        if(!$profile) {
+            //TODO: create profile or alert message
+            return;
+        }
+
         if (null !== $profile->getLocale()) {
             $this->requestStack->getSession()->set('_locale', $profile->getLocale());
         }
