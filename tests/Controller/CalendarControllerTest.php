@@ -13,6 +13,7 @@ class CalendarControllerTest extends WebTestCase
 
         $this->assertResponseIsSuccessful();
         $this->assertSelectorTextContains('h1', 'Tomorrow');
+        $this->assertSelectorTextContains('h2', 'Today');
     }
 
     public function testCalendarOrder(): void
