@@ -34,10 +34,9 @@ class CalendarControllerTest extends WebTestCase
         $client->submitForm('Submit', [
             'form[date]' => '10.00',
             'form[name]' => 'name',
-            'form[email]' =>  'test@test.com',
-            'form[phone]' =>  '+38525777525',
+            'form[email]' => 'test@test.com',
+            'form[phone]' => '+38525777525',
         ]);
-
 
         $this->assertResponseRedirects('/calendar/order/success');
     }

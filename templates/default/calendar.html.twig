@@ -2,9 +2,28 @@
 
 {% block hero %}
     <div class="container py-5">
+        <h1 class="mb-4">Today, {{ "today"|date('Y-m-d') }}</h1>
+        <div class="btn-group">
+            <button class="btn btn-lg btn-outline-primary disabled" type="button">
+                10.00&nbsp;&mdash; 10.30
+            </button>
+        </div>
+        <div class="btn-group">
+            <button class="btn btn-lg btn-outline-secondary disabled" type="button">
+                11.00
+            </button>
+        </div>
+        <div class="btn-group">
+            <button class="btn btn-lg btn-outline-warning disabled" type="button">
+                19.30
+            </button>
+        </div>
+    </div>
+
+    <div class="container py-5">
         <h1 class="mb-4">Tomorrow, {{ "tomorrow"|date('Y-m-d') }}</h1>
         <div class="btn-group">
-            <button class="btn btn-lg btn-outline-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <button class="btn btn-lg btn-outline-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" title="25min">
                 10.00
             </button>
             <ul class="dropdown-menu">
@@ -12,7 +31,7 @@
             </ul>
         </div>
         <div class="btn-group">
-            <button class="btn btn-lg btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <button class="btn btn-lg btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" title="25min">
                 11.00
             </button>
             <ul class="dropdown-menu">
@@ -20,7 +39,7 @@
             </ul>
         </div>
         <div class="btn-group">
-            <button class="btn btn-lg btn-outline-warning dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <button class="btn btn-lg btn-outline-warning dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" title="25min">
                 19.30
             </button>
             <ul class="dropdown-menu">
