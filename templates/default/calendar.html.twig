@@ -1,0 +1,31 @@
+{% extends 'default/index.html.twig' %}
+
+{% block hero %}
+    <div class="container py-5">
+        <h1 class="mb-4">Today, {{ "now"|date('Y-m-d') }}</h1>
+        <div class="btn-group">
+            <button class="btn btn-lg btn-outline-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                10.00
+            </button>
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="{{ path('app_calendar_order', {date:'10.00'}) }}">Бронювати</a></li>
+            </ul>
+        </div>
+        <div class="btn-group">
+            <button class="btn btn-lg btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                11.00
+            </button>
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="{{ path('app_calendar_order', {date:'11.00'}) }}">Бронювати</a></li>
+            </ul>
+        </div>
+        <div class="btn-group">
+            <button class="btn btn-lg btn-outline-warning dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                19.30
+            </button>
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="{{ path('app_calendar_order', {date:'19.30'}) }}">Бронювати</a></li>
+            </ul>
+        </div>
+    </div>
+{% endblock %}
