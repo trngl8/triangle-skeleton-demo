@@ -1,5 +1,7 @@
 .idea
 
+/public/upload/
+
 ###> symfony/framework-bundle ###
 /.env.local
 /.env.local.php
@@ -21,8 +23,3 @@ yarn-error.log
 .phpunit.result.cache
 /phpunit.xml
 ###< symfony/phpunit-bridge ###
-
-###> phpunit/phpunit ###
-/phpunit.xml
-.phpunit.result.cache
-###< phpunit/phpunit ###
