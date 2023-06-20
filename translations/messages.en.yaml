@@ -89,6 +89,16 @@ button:
 link:
   forgot_password: Forgot your password?
 
+# Calendar
+calendar:
+  title: Calendar
+  book: Book
+  today: Today
+  yesterday: Yesterday
+  tomorrow: Tomorrow
+  sent: Sent
+  order_sent: Order was sent successfully
+
 type: Type
 total: Total
 title:
