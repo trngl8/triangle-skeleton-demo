@@ -42,9 +42,9 @@ class Order
     #[ORM\Column(length: 255)]
     private ?string $deliveryPhone;
 
-    public function __construct()
+    public function __construct(?Uuid $uuid = null)
     {
-        $this->uuid = Uuid::v4();
+        $this->uuid = $uuid ?? Uuid::v4();
         $this->action = 'pay';
     }
 

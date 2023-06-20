@@ -12,8 +12,8 @@ class CalendarControllerTest extends WebTestCase
         $client->request('GET', '/calendar');
 
         $this->assertResponseIsSuccessful();
-        $this->assertSelectorTextContains('h1', 'Tomorrow');
-        $this->assertSelectorTextContains('h2', 'Today');
+        $this->assertSelectorTextContains('h1', 'calendar.title'); //Tomorrow
+        $this->assertSelectorTextContains('h2', 'calendar.today, 20 June'); //Today
     }
 
     public function testCalendarOrder(): void

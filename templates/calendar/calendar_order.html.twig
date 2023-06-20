@@ -1,9 +1,9 @@
-{% extends 'default/calendar.html.twig' %}
+{% extends 'calendar/default.html.twig' %}
 
 {% block hero %}
     <div class="container py-5">
 
-        <h1 class="mb-4">Tomorrow, {{ "tomorrow"|date('Y-m-d') }}, {{ time }}</h1>
+        <h1 class="mb-4">Tomorrow, {{ "tomorrow"|date('Y-m-d') }}, {{ item.time }}</h1>
         <div class="col-md-8">
             {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
             {{ form_widget(form) }}

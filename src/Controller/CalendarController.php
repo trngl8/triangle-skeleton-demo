@@ -2,7 +2,10 @@
 
 namespace App\Controller;
 
+use App\Entity\Order;
 use App\Model\CalendarOrder;
+use App\Repository\OrderRepository;
+use App\Repository\TimeDataRepository;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
@@ -16,6 +19,8 @@ use Symfony\Component\Routing\Annotation\Route;
 class CalendarController extends AbstractController
 {
     public function __construct(
+        private readonly TimeDataRepository $timeDataRepository,
+        private readonly OrderRepository $orderRepository,
         private readonly MailerInterface $mailer,
         private readonly string $adminEmail
     ) {
@@ -24,16 +29,28 @@ class CalendarController extends AbstractController
     #[Route('', name: 'default')]
     public function default(): Response
     {
-        return $this->render('default/calendar.html.twig'); //TODO: move to calendar folder
+        $todayItems = $this->timeDataRepository->findToday();
+        $tomorrowItems = $this->timeDataRepository->findTomorrow();
+
+        return $this->render('calendar/default.html.twig', [
+            'todayItems' => $todayItems,
+            'tomorrowItems' => $tomorrowItems,
+        ]);
     }
 
-    #[Route('/{date}/order', name: 'order')]
-    public function order(string $date, Request $request): Response
+    #[Route('/{uuid}/order', name: 'order')]
+    public function order(string $uuid, Request $request): Response
     {
-        $order = new CalendarOrder();
-        $form = $this->createFormBuilder($order)
+        $item = $this->timeDataRepository->get($uuid);
+
+        if(!$item) {
+            throw $this->createNotFoundException(sprintf('Item %s not found', $uuid));
+        }
+
+        $orderRequest = new CalendarOrder();
+        $form = $this->createFormBuilder($orderRequest)
             ->add('date', HiddenType::class, [
-                'data' => $date,
+                'data' => $uuid,
             ])
             ->add('name')
             ->add('email')
@@ -42,27 +59,40 @@ class CalendarController extends AbstractController
 
         $form->handleRequest($request);
 
-        if($form->isSubmitted() && $form->isValid()) {
-            $order->date = $date;
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $orderRequest->date = $item['time'];
+
+            //TODO: create from Order factory
+            //TODO: deliveryName
+
+            $order = new Order();
+            $order->setAmount(1);
+            $order->setCurrency('USD');
+            $order->setDeliveryEmail($orderRequest->email);
+            $order->setDeliveryPhone($orderRequest->phone);
+            $order->setDescription(sprintf("%s %s", $orderRequest->name,  $orderRequest->date));
+            $this->orderRepository->add($order);
             $email = (new TemplatedEmail())
-                ->from(new Address('info@triangle.software', 'bot')) //TODO: create sender
+                ->from(new Address('info@triangle.software', 'Triangle Software')) //TODO: create sender
                 ->to($this->adminEmail)
                 ->subject('new order')
                 ->htmlTemplate('email/new_order.html.twig')
                 ->context([
-                    'order' => $order,
+                    'order' => $orderRequest,
                 ])
             ;
 
             $this->mailer->send($email);
 
-            $this->addFlash('success', 'Your order has been sent');
+            $this->addFlash('success', sprintf('Your order %s has been sent', $order->getUuid()));
 
+            //TODO: redirect to success Order page
             return $this->redirectToRoute('app_calendar_order_success');
         }
 
-        return $this->render('default/calendar_order.html.twig', [
-            'time' => $date,
+        return $this->render('calendar/calendar_order.html.twig', [
+            'item' => $item,
             'form' => $form->createView(),
         ]);
     }
@@ -70,6 +100,6 @@ class CalendarController extends AbstractController
     #[Route('/order/success', name: 'order_success')]
     public function orderSuccess(): Response
     {
-        return $this->render('default/calendar_order_success.html.twig');
+        return $this->render('calendar/calendar_order_success.html.twig');
     }
 }

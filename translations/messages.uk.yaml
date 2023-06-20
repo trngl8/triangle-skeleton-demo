@@ -85,3 +85,14 @@ button:
   add: Додати
   register: Реєстрація
   clone: Клонувати
+
+# Calendar
+calendar:
+  title: Календар
+  book: Забронювати
+  today: Сьогодні
+  yesterday: Вчора
+  tomorrow: Завтра
+  sent: Відправлено
+  order_sent: Заявку успішно відправлено
+
