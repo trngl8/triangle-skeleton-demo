@@ -72,10 +72,10 @@ class CalendarController extends AbstractController
             $order->setDeliveryEmail($orderRequest->email);
             $order->setDeliveryPhone($orderRequest->phone);
             $order->setDescription(sprintf("%s %s", $orderRequest->name,  $orderRequest->date));
-            $this->orderRepository->add($order);
+            $this->orderRepository->add($order, true);
             $email = (new TemplatedEmail())
                 ->from(new Address('info@triangle.software', 'Triangle Software')) //TODO: create sender
-                ->to($this->adminEmail)
+                ->to($this->adminEmail) //TODO: should be calendar owner email
                 ->subject('new order')
                 ->htmlTemplate('email/new_order.html.twig')
                 ->context([
