@@ -29,8 +29,8 @@ class CalendarController extends AbstractController
     #[Route('', name: 'default')]
     public function default(): Response
     {
-        $todayItems = $this->timeDataRepository->findToday();
-        $tomorrowItems = $this->timeDataRepository->findTomorrow();
+        $todayItems = $this->timeDataRepository->findBy([], ['startAt' => 'DESC']);
+        $tomorrowItems = $this->timeDataRepository->findBy([], ['startAt' => 'DESC']);
 
         return $this->render('calendar/default.html.twig', [
             'todayItems' => $todayItems,
@@ -41,7 +41,7 @@ class CalendarController extends AbstractController
     #[Route('/{uuid}/order', name: 'order')]
     public function order(string $uuid, Request $request): Response
     {
-        $item = $this->timeDataRepository->get($uuid);
+        $item = $this->timeDataRepository->findOneBy(['uuid' => $uuid]);
 
         if(!$item) {
             throw $this->createNotFoundException(sprintf('Item %s not found', $uuid));
@@ -76,7 +76,7 @@ class CalendarController extends AbstractController
             $email = (new TemplatedEmail())
                 ->from(new Address('info@triangle.software', 'Triangle Software')) //TODO: create sender
                 ->to($this->adminEmail) //TODO: should be calendar owner email
-                ->subject('new order')
+                ->subject(sprintf('New order for %s', $orderRequest->date))
                 ->htmlTemplate('email/new_order.html.twig')
                 ->context([
                     'order' => $orderRequest,

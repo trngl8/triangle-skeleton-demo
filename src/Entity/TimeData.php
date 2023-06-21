@@ -18,11 +18,17 @@ class TimeData
     #[ORM\Column(type: 'uuid')]
     private Uuid $uuid;
 
-    #[ORM\Column]
-    private ?\DateTimeImmutable $startAt = null;
-
     #[ORM\Column(length: 255)]
     private ?string $title = null;
+
+    #[ORM\Column(length: 64, nullable: true)]
+    private ?string $type = null;
+
+    #[ORM\Column(type: 'datetime', nullable: true)]
+    private ?\DateTime $startAt = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?int $duration = null;
 
     public function __construct()
     {
@@ -46,18 +52,6 @@ class TimeData
         return $this;
     }
 
-    public function getStartAt(): ?\DateTimeImmutable
-    {
-        return $this->startAt;
-    }
-
-    public function setStartAt(\DateTimeImmutable $startAt): static
-    {
-        $this->startAt = $startAt;
-
-        return $this;
-    }
-
     public function getTitle(): ?string
     {
         return $this->title;
@@ -66,6 +60,42 @@ class TimeData
     public function setTitle(string $title): static
     {
         $this->title = $title;
+
+        return $this;
+    }
+
+    public function getType(): ?string
+    {
+        return $this->type;
+    }
+
+    public function setType(?string $type): static
+    {
+        $this->type = $type;
+
+        return $this;
+    }
+
+    public function getStartAt(): ?\DateTime
+    {
+        return $this->startAt;
+    }
+
+    public function setStartAt(\DateTime $startAt): static
+    {
+        $this->startAt = $startAt;
+
+        return $this;
+    }
+
+    public function getDuration(): ?int
+    {
+        return $this->duration;
+    }
+
+    public function setDuration(?int $duration): static
+    {
+        $this->duration = $duration;
 
         return $this;
     }
