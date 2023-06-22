@@ -99,4 +99,9 @@ class TimeData
 
         return $this;
     }
+
+    public function getTime(): ?string
+    {
+        return $this->startAt?->format('H:i');
+    }
 }
