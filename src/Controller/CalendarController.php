@@ -61,7 +61,7 @@ class CalendarController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            $orderRequest->date = $item['time'];
+            $orderRequest->date = $item->getTime();
 
             //TODO: create from Order factory
             //TODO: deliveryName
