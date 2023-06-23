@@ -17,9 +17,13 @@
                     {% for key, item in top_menu %}
                         <li><a href="{{ path(item.route) }}" class="nav-link px-2 {% if app.request.pathinfo == item.url %}text-secondary{% endif %} position-relative">{{ item.title|trans }}</a></li>
                     {% endfor %}
-                    
+
                 </ul>
             {% endif %}
+
+            {{ render(controller(
+                'App\\Controller\\MenuController::mainMenu', {max: 5}
+            )) }}
 
 {#            <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">#}
 {#                <input type="search" class="form-control" placeholder="Search..." aria-label="Search">#}
