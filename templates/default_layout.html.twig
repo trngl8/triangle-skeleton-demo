@@ -11,15 +11,10 @@
             <a href="{{ path('default_index') }}" class="d-flex align-items-center mb-2 me-4 mb-lg-0 text-decoration-none">
                 <img src="{{ asset('favicons/favicon.svg') }}" width="32" height="32" alt="{{ app_name }}">
             </a>
-            {% if top_menu is defined %}
-                <ul class="nav nav-col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
 
-                    {% for key, item in top_menu %}
-                        <li><a href="{{ path(item.route) }}" class="nav-link px-2 {% if app.request.pathinfo == item.url %}text-secondary{% endif %} position-relative">{{ item.title|trans }}</a></li>
-                    {% endfor %}
-                    
-                </ul>
-            {% endif %}
+            {{ render(controller(
+                'App\\Controller\\MenuController::mainMenu', {max: 8}
+            )) }}
 
 {#            <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">#}
 {#                <input type="search" class="form-control" placeholder="Search..." aria-label="Search">#}
