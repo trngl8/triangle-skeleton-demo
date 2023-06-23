@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6d7d2a248a38db45c78cd143919152f6",
+    "content-hash": "ccf65e7473e5b4f40878554be2ff1398",
     "packages": [
         {
             "name": "doctrine/cache",
@@ -10174,7 +10174,7 @@
         }
     ],
     "aliases": [],
-    "minimum-stability": "stable",
+    "minimum-stability": "beta",
     "stability-flags": {
         "hwi/oauth-bundle": 10
     },
