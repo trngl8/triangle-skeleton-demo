@@ -32,6 +32,11 @@ class Menu
                 'route' => 'topic_index',
                 'url' => '/topic',
             ],
+            'calendar' => [
+                'title' => 'calendar.title',
+                'route' => 'app_calendar_index',
+                'url' => '/calendar',
+            ],
         ];
 
         return array_slice($menu, 0, $max);
