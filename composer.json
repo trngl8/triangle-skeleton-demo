@@ -1,4 +1,6 @@
 {
+    "name": "trngl8/triangle-skeleton-demo",
+    "description": "Triangle Software Website",
     "type": "project",
     "license": "proprietary",
     "minimum-stability": "stable",
@@ -81,6 +83,9 @@
         ],
         "post-update-cmd": [
             "@auto-scripts"
+        ],
+        "tests-unit": [
+            "php vendor/bin/phpunit tests/Menu"
         ]
     },
     "conflict": {
