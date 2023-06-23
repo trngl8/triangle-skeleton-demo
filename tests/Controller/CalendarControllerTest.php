@@ -12,23 +12,23 @@ class CalendarControllerTest extends WebTestCase
         $client->request('GET', '/calendar');
 
         $this->assertResponseIsSuccessful();
-        $this->assertSelectorTextContains('h1', 'calendar.title'); //Tomorrow
-        $this->assertSelectorTextContains('h2', 'calendar.today, 20 June'); //Today
+        $this->assertSelectorTextContains('h1', 'Calendar');
+        $this->assertSelectorTextContains('h2', 'Today');
     }
 
     public function testCalendarOrder(): void
     {
         $client = static::createClient();
-        $client->request('GET', '/calendar/10.00/order');
+        $client->request('GET', '/calendar/order');
 
         $this->assertResponseIsSuccessful();
-        $this->assertSelectorTextContains('h1', '10.00');
+        $this->assertSelectorTextContains('h1', 'Tomorrow');
     }
 
     public function testCalendarOrderSubmitSuccess(): void
     {
         $client = static::createClient();
-        $client->request('GET', '/calendar/10.00/order');
+        $client->request('GET', '/calendar/order');
 
         $this->assertResponseIsSuccessful();
 

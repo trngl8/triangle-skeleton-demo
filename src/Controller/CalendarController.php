@@ -29,13 +29,23 @@ class CalendarController extends AbstractController
     #[Route('', name: 'default')]
     public function default(): Response
     {
-        $todayItems = $this->timeDataRepository->findBy([], ['startAt' => 'DESC']);
-        $tomorrowItems = $this->timeDataRepository->findBy([], ['startAt' => 'DESC']);
+        $order = ['startAt' => 'DESC'];
+        $todayItems = $this->timeDataRepository->findBy([], $order);
+        $tomorrowItems = $this->timeDataRepository->findBy([], $order);
 
         return $this->render('calendar/default.html.twig', [
             'todayItems' => $todayItems,
             'tomorrowItems' => $tomorrowItems,
         ]);
+    }
+
+    #[Route('/order', name: 'default_order')]
+    public function defaultOrder(Request $request): Response
+    {
+        $order = ['startAt' => 'DESC'];
+        $item = $this->timeDataRepository->findOneBy([], $order);
+
+        return $this->order($item->getUuid(), $request);
     }
 
     #[Route('/{uuid}/order', name: 'order')]
@@ -44,7 +54,7 @@ class CalendarController extends AbstractController
         $item = $this->timeDataRepository->findOneBy(['uuid' => $uuid]);
 
         if(!$item) {
-            throw $this->createNotFoundException(sprintf('Item %s not found', $uuid));
+            throw $this->createNotFoundException(sprintf('Item %s not found', $uuid)); //TODO: translate
         }
 
         $orderRequest = new CalendarOrder();
@@ -64,15 +74,17 @@ class CalendarController extends AbstractController
             $orderRequest->date = $item->getTime();
 
             //TODO: create from Order factory
-            //TODO: deliveryName
 
             $order = new Order();
-            $order->setAmount(1);
-            $order->setCurrency('USD');
+            $order->setAmount($item->getDuration() * 25); //TODO: set in constants
+            $order->setCurrency('USD'); //TODO: get from profile or system settings
             $order->setDeliveryEmail($orderRequest->email);
             $order->setDeliveryPhone($orderRequest->phone);
-            $order->setDescription(sprintf("%s %s", $orderRequest->name,  $orderRequest->date));
+            $order->setDeliveryName($orderRequest->name);
+            $order->setDescription($orderRequest->date);
+
             $this->orderRepository->add($order, true);
+
             $email = (new TemplatedEmail())
                 ->from(new Address('info@triangle.software', 'Triangle Software')) //TODO: create sender
                 ->to($this->adminEmail) //TODO: should be calendar owner email
@@ -82,12 +94,10 @@ class CalendarController extends AbstractController
                     'order' => $orderRequest,
                 ])
             ;
-
             $this->mailer->send($email);
 
-            $this->addFlash('success', sprintf('Your order %s has been sent', $order->getUuid()));
+            $this->addFlash('success', sprintf('Your order %s has been sent', $order->getUuid())); //TODO: translate
 
-            //TODO: redirect to success Order page
             return $this->redirectToRoute('app_calendar_order_success');
         }
 
