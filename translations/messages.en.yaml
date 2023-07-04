@@ -26,6 +26,7 @@ menu:
   users: Users
   market: Market
   integrations: Integrations
+  calendar: Calendar
 hero:
   caption: "Welcome to the Old School" #"The best way to manage your projects"
   text: "Old school is the famous school in the California South East. Our history was started at 1999 from garage startup. I was looking for duck on my playground."
@@ -88,6 +89,16 @@ button:
 
 link:
   forgot_password: Forgot your password?
+
+# Calendar
+calendar:
+  title: Calendar
+  book: Book
+  today: Today
+  yesterday: Yesterday
+  tomorrow: Tomorrow
+  sent: Sent
+  order_sent: Order was sent successfully
 
 type: Type
 total: Total

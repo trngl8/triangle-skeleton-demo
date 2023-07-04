@@ -42,9 +42,12 @@ class Order
     #[ORM\Column(length: 255)]
     private ?string $deliveryPhone;
 
-    public function __construct()
+    #[ORM\Column(length: 128, nullable: true)]
+    private ?string $deliveryName = null;
+
+    public function __construct(?Uuid $uuid = null)
     {
-        $this->uuid = Uuid::v4();
+        $this->uuid = $uuid ?? Uuid::v4();
         $this->action = 'pay';
     }
 
@@ -158,5 +161,17 @@ class Order
     public function getUuid(): ?string
     {
         return $this->uuid;
+    }
+
+    public function getDeliveryName(): ?string
+    {
+        return $this->deliveryName;
+    }
+
+    public function setDeliveryName(?string $deliveryName): static
+    {
+        $this->deliveryName = $deliveryName;
+
+        return $this;
     }
 }

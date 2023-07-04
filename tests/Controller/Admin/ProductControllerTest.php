@@ -42,6 +42,7 @@ class ProductControllerTest extends WebTestCase
 
         $crawler = $client->submitForm('Submit', [
             'product_admin[title]' => 'test',
+            'product_admin[fees]' => 12,
             'product_admin[description]' => 'set other description',
         ]);
 
@@ -51,6 +52,7 @@ class ProductControllerTest extends WebTestCase
 
         $client->submitForm('Submit', [
             'product_admin[title]' => 'test',
+            'product_admin[fees]' => 1,
             'product_admin[description]' => 'set one more description',
         ]);
 
