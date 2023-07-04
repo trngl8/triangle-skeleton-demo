@@ -1,7 +1,9 @@
 {
+    "name": "trngl8/triangle-skeleton-demo",
+    "description": "Triangle Software Website",
     "type": "project",
     "license": "proprietary",
-    "minimum-stability": "stable",
+    "minimum-stability": "dev",
     "prefer-stable": true,
     "require": {
         "php": ">=8.1.0",
@@ -34,7 +36,7 @@
         "symfony/validator": "6.3.*",
         "symfony/webpack-encore-bundle": "^1.13",
         "symfony/yaml": "6.3.*",
-        "symfonycasts/reset-password-bundle": "^1.16",
+        "symfonycasts/reset-password-bundle": "^1.17",
         "symfonycasts/verify-email-bundle": "^1.13",
         "twig/extra-bundle": "^2.12|^3.0",
         "twig/intl-extra": "^3.3",
@@ -81,6 +83,9 @@
         ],
         "post-update-cmd": [
             "@auto-scripts"
+        ],
+        "tests-unit": [
+            "php vendor/bin/phpunit tests/Menu"
         ]
     },
     "conflict": {
