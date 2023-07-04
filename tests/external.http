@@ -1,0 +1,43 @@
+###
+###
+GET https://api.telegram.org/bot5200801847:AAEm53cd0VLmtgLeDWFW8qky5cuW8vtrxZ4/getMe
+
+###
+GET https://api.telegram.org/bot5200801847:AAEm53cd0VLmtgLeDWFW8qky5cuW8vtrxZ4/getUpdates
+
+###
+GET https://api.telegram.org/bot5200801847:AAEm53cd0VLmtgLeDWFW8qky5cuW8vtrxZ4/getWebhookInfo
+
+###
+GET https://api.telegram.org/bot5200801847:AAEm53cd0VLmtgLeDWFW8qky5cuW8vtrxZ4/deleteWebhook
+
+###
+POST https://api.telegram.org/bot5200801847:AAEm53cd0VLmtgLeDWFW8qky5cuW8vtrxZ4/setWebhook
+Content-Type: application/json
+
+{
+  "url": "https://triangle.software/test"
+}
+
+###
+GET https://api.telegram.org/bot5200801847:AAEm53cd0VLmtgLeDWFW8qky5cuW8vtrxZ4/getWebhookInfo
+
+###
+GET https://api.telegram.org/bot5200801847:AAEm53cd0VLmtgLeDWFW8qky5cuW8vtrxZ4/deleteWebhook
+
+###
+GET https://api.telegram.org/bot5200801847:AAEm53cd0VLmtgLeDWFW8qky5cuW8vtrxZ4/getUpdates
+
+
+###
+POST http://127.0.0.1:8001/api/telegram
+
+
+###
+POST https://api.telegram.org/bot5200801847:AAEm53cd0VLmtgLeDWFW8qky5cuW8vtrxZ4/sendMessage
+Content-Type: application/json
+
+{
+  "chat_id": 63913496,
+  "text" : "some text"
+}
