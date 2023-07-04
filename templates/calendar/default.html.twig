@@ -1,9 +1,21 @@
 {% extends 'default/index.html.twig' %}
 
-{% block hero %}
-    <div class="container py-5">
-        <h1 class="display-5 mb-5">{{ 'calendar.title'|trans }}</h1>
+{% block breadcrumbs %}
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ path('app_index') }}">{{ 'menu.home'|trans }}</a></li>
+            <li class="breadcrumb-item active" aria-current="page">{{ 'menu.calendar'|trans }}</li>
+        </ol>
+    </nav>
+{% endblock %}
 
+{% block hero %}
+{% endblock %}
+
+{% block main %}
+    <div class="py-5">
+        <h1 class="display-5 mb-5">{{ 'calendar.title'|trans }}</h1>
+        <hr class="hr" />
         <h2 class="mb-4">{{ 'calendar.today'|trans }}, {{ "today"|date('d F') }}</h2>
 
         {% for item in todayItems %}
@@ -17,7 +29,7 @@
 
     </div>
 
-    <div class="container py-5">
+    <div class="py-5">
         <h3 class="mb-4">{{ 'calendar.tomorrow'|trans }}, {{ "tomorrow"|date('d F') }}</h3>
 
         {% for item in tomorrowItems %}
