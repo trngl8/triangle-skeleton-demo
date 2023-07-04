@@ -68,6 +68,11 @@ class TwigEventSubscriber implements EventSubscriberInterface
                 'route' => 'topic_index',
                 'url' => '/topic',
             ],
+            'calendar' => [
+                'title' => 'menu.calendar',
+                'route' => 'app_calendar_default',
+                'url' => '/calendar',
+            ],
         ];
 
         $this->twig->addGlobal('top_menu', $topMenu);

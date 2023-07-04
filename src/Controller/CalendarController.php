@@ -18,6 +18,9 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/calendar', name: 'app_calendar_')]
 class CalendarController extends AbstractController
 {
+    const DEFAULT_DURATION = 25;
+    const DEFAULT_CURRENCY = 'UAH';
+
     public function __construct(
         private readonly TimeDataRepository $timeDataRepository,
         private readonly OrderRepository $orderRepository,
@@ -76,8 +79,9 @@ class CalendarController extends AbstractController
             //TODO: create from Order factory
 
             $order = new Order();
-            $order->setAmount($item->getDuration() * 25); //TODO: set in constants
-            $order->setCurrency('USD'); //TODO: get from profile or system settings
+            $order->setAmount($item->getDuration() * self::DEFAULT_DURATION);
+            //TODO: issues/211
+            $order->setCurrency(self::DEFAULT_CURRENCY);
             $order->setDeliveryEmail($orderRequest->email);
             $order->setDeliveryPhone($orderRequest->phone);
             $order->setDeliveryName($orderRequest->name);
@@ -85,9 +89,10 @@ class CalendarController extends AbstractController
 
             $this->orderRepository->add($order, true);
 
+            //TODO: issues/210
             $email = (new TemplatedEmail())
-                ->from(new Address('info@triangle.software', 'Triangle Software')) //TODO: create sender
-                ->to($this->adminEmail) //TODO: should be calendar owner email
+                ->from(new Address('info@triangle.software', 'Triangle Software'))
+                ->to($this->adminEmail)
                 ->subject(sprintf('New order for %s', $orderRequest->date))
                 ->htmlTemplate('email/new_order.html.twig')
                 ->context([
