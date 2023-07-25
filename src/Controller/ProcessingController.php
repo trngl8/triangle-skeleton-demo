@@ -31,10 +31,10 @@ class ProcessingController extends AbstractController
         if (count($errors) > 0) {
             $result = [];
             foreach ($errors as $error) {
-                $result = array_merge($result, [
+                $result = array_merge($result, [[
                     'property' => $error->getPropertyPath(),
                     'message' => $error->getMessage()
-                ]);
+                ]]);
             }
             return $this->json([
                 'status' => 'error',
