@@ -29,9 +29,16 @@ class ProcessingController extends AbstractController
         $errors = $this->validator->validate($order);
 
         if (count($errors) > 0) {
+            $result = [];
+            foreach ($errors as $error) {
+                $result = array_merge($result, [
+                    'property' => $error->getPropertyPath(),
+                    'message' => $error->getMessage()
+                ]);
+            }
             return $this->json([
                 'status' => 'error',
-                'errors' => $errors
+                'errors' => $result
             ], 400);
         }
 
