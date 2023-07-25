@@ -22,7 +22,7 @@ class ProcessingController extends AbstractController
     #[Route(path: "/api/order/create", name: "api_order_create", methods: ["POST"])]
     public function createOrder(Request $request) : Response
     {
-        $data = $request->request->all()['body'] ?? [];
+        $data = $request->request->all() ?? [];
 
         $order = new ExternalOrder($data);
 

@@ -12,14 +12,12 @@ class ProcessingControllerTest extends WebTestCase
         $client->followRedirects();
 
         $client->request('POST', '/api/order/create', [
-            'body' => [
                 'firstname' => 'First',
                 'lastname' => 'Last',
                 'email' => 'test@email.com',
                 'phone' => '1234567890',
                 'address' => 'City, Street, 1',
                 'period' => 2,
-            ]
         ]);
 
         $this->assertResponseStatusCodeSame(200);
