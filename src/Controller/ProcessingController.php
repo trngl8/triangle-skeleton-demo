@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Model\ExternalOrder;
+use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -13,6 +14,7 @@ class ProcessingController extends AbstractController
 {
     public function __construct(
         private readonly ValidatorInterface $validator,
+        private readonly LoggerInterface $logger
     )
     {
     }
@@ -20,7 +22,7 @@ class ProcessingController extends AbstractController
     #[Route(path: "/api/order/create", name: "api_order_create", methods: ["POST"])]
     public function createOrder(Request $request) : Response
     {
-        $data = $request->request->all()['body'];
+        $data = $request->request->all()['body'] ?? [];
 
         $order = new ExternalOrder($data);
 
@@ -32,6 +34,8 @@ class ProcessingController extends AbstractController
                 'errors' => $errors
             ], 400);
         }
+
+        $this->logger->info('New order', ['order' => $order]);
 
         return $this->json([
             'status' => 'new'
