@@ -8,7 +8,10 @@ Requirements
 
 * PHP 8.0.2 or higher;
 * PDO-SQLite PHP extension enabled;
-* and the usual Symfony application requirements.
+* Symfony [local web server](https://symfony.com/doc/current/setup/symfony_server.html) 
+for the local development 
+
+
 
 Installation
 ------------
