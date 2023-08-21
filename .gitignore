@@ -17,6 +17,8 @@
 /public/build/
 npm-debug.log
 yarn-error.log
+.yarn
+.yarnrc.yml
 ###< symfony/webpack-encore-bundle ###
 
 ###> symfony/phpunit-bridge ###
