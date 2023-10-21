@@ -27,9 +27,9 @@ class MeetupController extends AbstractController
     {
         return $this->render('meetup/index.html.twig', [
             'meetups' => [
-                ['id' => 1, 'title' => 'Meetup 1'],
-                ['id' => 1, 'title' => 'Meetup 2'],
-                ['id' => 1, 'title' => 'Meetup 3'],
+                ['id' => 1, 'title' => 'Meetup 1', 'plannedAt' => new \DateTimeImmutable()],
+                ['id' => 1, 'title' => 'Meetup 2', 'plannedAt' => new \DateTimeImmutable()],
+                ['id' => 1, 'title' => 'Meetup 3', 'plannedAt' => new \DateTimeImmutable()],
             ]
         ]);
     }
@@ -37,22 +37,29 @@ class MeetupController extends AbstractController
     #[Route('/create', name: 'create')]
     public function create(Request $request): Response
     {
-        $form = $this->createForm(MeetupType::class, new MeetupRequest());
+        $meetupRequest = new MeetupRequest();
+        $form = $this->createForm(MeetupType::class, $meetupRequest);
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $data = $form->getData();
-            $meetup = new Meetup($data->title);
+            $meetup = new Meetup(
+                $meetupRequest->title,
+                $meetupRequest->plannedDayAt->add($meetupRequest->plannedTimeAt->diff(new \DateTimeImmutable())),
+            );
+
             $this->meetupRepository->add($meetup);
+
             try {
                 $this->meetupRepository->save();
             } catch (\Exception $e) {
-                $this->addFlash('error', sprintf('Meetup %s not created!', $data->title));
+                $this->addFlash('error', sprintf('Meetup %s not created!', $meetupRequest->title));
                 $this->logger->error($e->getMessage());
                 return $this->redirectToRoute('app_meetup_index');
             }
-            $this->addFlash('success', 'Meetup created!');
+
+            $this->addFlash('success', sprintf('Meetup %s created!', $meetupRequest->title));
+
             return $this->redirectToRoute('app_meetup_index');
         }
 

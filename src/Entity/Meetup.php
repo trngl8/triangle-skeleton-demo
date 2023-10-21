@@ -17,13 +17,24 @@ class Meetup
     #[ORM\Column(length: 255)]
     private string $title;
 
-    public function __construct(string $title)
+    private \DateTimeInterface $plannedAt;
+
+    private string $timezone;
+
+    public function __construct(string $title, \DateTimeInterface $plannedAt)
     {
         $this->title = $title;
+        $this->plannedAt = $plannedAt;
+        $this->timezone = date_default_timezone_get();
     }
 
     public function __toString(): string
     {
         return $this->title;
+    }
+
+    public function getPlannedAt(): \DateTimeInterface
+    {
+        return $this->plannedAt;
     }
 }

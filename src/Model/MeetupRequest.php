@@ -6,7 +6,8 @@ class MeetupRequest
 {
     public string $title;
 
-    public \DateTimeInterface $plannedAt;
+    public \DateTime $plannedDayAt;
+    public \DateTime $plannedTimeAt;
 
     public int $duration;
 

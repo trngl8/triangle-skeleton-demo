@@ -5,8 +5,9 @@ namespace App\Form;
 use App\Model\MeetupRequest;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\TimeType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -16,10 +17,14 @@ class MeetupType extends AbstractType
     {
         $builder
             ->add('title', TextType::class)
-            ->add('plannedAt', DateTimeType::class, [
-                'widget' => 'single_text',
-//                'html5' => false,
-//                'attr' => ['class' => 'js-datepicker'],
+            ->add('plannedDayAt', DateType::class, [
+                'widget' => 'single_text'
+            ])
+            ->add('plannedTimeAt', TimeType::class, [
+                'widget' => 'choice',
+                'input'  => 'datetime',
+                'minutes' => [0, 30],
+                'hours' => range(8, 20),
             ])
             ->add('duration', ChoiceType::class, ['choices' => [
                 '30 minutes' => 1,

@@ -6,8 +6,12 @@
         <p>There is no form to display</p>
     {% else %}
         {{ form_start(form) }}
-            {{ form_widget(form) }}
-            <button type="submit" class="btn btn-outline-primary">Create</button>
+        {{ form_row(form.title) }}
+        {{ form_row(form.plannedDayAt) }}
+        {{ form_row(form.plannedTimeAt) }}
+        {{ form_row(form.duration) }}
+        {{ form_rest(form) }}
+        <button type="submit" class="btn btn-lg btn-outline-primary">Create</button>
         {{ form_end(form) }}
     {% endif %}
 {% endblock %}
