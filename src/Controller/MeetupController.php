@@ -28,13 +28,21 @@ class MeetupController extends AbstractController
         return $this->render('meetup/index.html.twig', [
             'meetups' => [
                 ['id' => 1, 'title' => 'Meetup 1', 'plannedAt' => new \DateTimeImmutable()],
-                ['id' => 1, 'title' => 'Meetup 2', 'plannedAt' => new \DateTimeImmutable()],
-                ['id' => 1, 'title' => 'Meetup 3', 'plannedAt' => new \DateTimeImmutable()],
+                ['id' => 2, 'title' => 'Meetup 2', 'plannedAt' => new \DateTimeImmutable()],
+                ['id' => 3, 'title' => 'Meetup 3', 'plannedAt' => new \DateTimeImmutable()],
             ]
         ]);
     }
 
-    #[Route('/create', name: 'create')]
+    #[Route('/{id}/show', name: 'show')]
+    public function show(int $id): Response
+    {
+        return $this->render('meetup/show.html.twig', [
+            'meetup' => ['id' => $id, 'title' => sprintf('Meetup %d', $id), 'plannedAt' => new \DateTimeImmutable()],
+        ]);
+    }
+
+    #[Route('/create', name: 'create', methods: ['GET', 'POST'])]
     public function create(Request $request): Response
     {
         $meetupRequest = new MeetupRequest();
@@ -66,5 +74,20 @@ class MeetupController extends AbstractController
         return $this->render('meetup/create.html.twig', [
             'form' => $form
         ]);
+    }
+
+    #[Route('/{id}/join', name: 'join', methods: ['POST'])]
+    public function join(int $id, Request $request): Response
+    {
+        $submittedToken = $request->request->get('token');
+
+        if ($this->isCsrfTokenValid('join', $submittedToken)) {
+
+            $this->addFlash('success', sprintf('You joined to meetup %d!', $id));
+
+            return $this->redirectToRoute('app_meetup_index');
+        }
+
+        return $this->redirectToRoute('app_meetup_index');
     }
 }

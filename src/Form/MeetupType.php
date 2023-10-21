@@ -23,8 +23,8 @@ class MeetupType extends AbstractType
             ->add('plannedTimeAt', TimeType::class, [
                 'widget' => 'choice',
                 'input'  => 'datetime',
-                'minutes' => [0, 30],
-                'hours' => range(8, 20),
+                'minutes' => range(0, 59, MeetupRequest::$POMODORO_STEP),
+                'hours' => range(MeetupRequest::$MIN_HOUR, MeetupRequest::$MAX_HOUR),
             ])
             ->add('duration', ChoiceType::class, ['choices' => [
                 '30 minutes' => 1,
