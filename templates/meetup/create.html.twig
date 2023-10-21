@@ -1,0 +1,13 @@
+{% extends 'meetup/index.html.twig' %}
+
+{% block main %}
+    <h1>Create a new meetup</h1>
+    {% if form is not defined %}
+        <p>There is no form to display</p>
+    {% else %}
+        {{ form_start(form) }}
+            {{ form_widget(form) }}
+            <button type="submit" class="btn btn-outline-primary">Create</button>
+        {{ form_end(form) }}
+    {% endif %}
+{% endblock %}

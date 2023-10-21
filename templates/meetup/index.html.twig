@@ -2,6 +2,16 @@
 {% extends 'default_layout.html.twig' %}
 
 {% block main %}
+
+    {% set items = meetups %}
+
     <h1>Meetups</h1>
     <p> Welcome to the meetups page!</p>
+    {% if items|length > 0 %}
+        {% for item in items %}
+        {% endfor %}
+    {% else %}
+        <p>There are no meetups yet.</p>
+        <a href="{{ path('app_meetup_create') }}" class="btn btn-outline-primary">Create a new meetup</a>
+    {% endif %}
 {% endblock %}
