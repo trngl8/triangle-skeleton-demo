@@ -6,6 +6,7 @@ use App\Entity\Meetup;
 use App\Form\MeetupType;
 use App\Model\MeetupRequest;
 use App\Repository\MeetupRepository;
+use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -15,7 +16,8 @@ use Symfony\Component\HttpFoundation\Request;
 class MeetupController extends AbstractController
 {
     public function __construct(
-        private readonly MeetupRepository $meetupRepository
+        private readonly MeetupRepository $meetupRepository,
+        private readonly LoggerInterface $logger
     )
     {
     }
@@ -24,7 +26,11 @@ class MeetupController extends AbstractController
     public function index(Request $request): Response
     {
         return $this->render('meetup/index.html.twig', [
-            'meetups' => []
+            'meetups' => [
+                ['id' => 1, 'title' => 'Meetup 1'],
+                ['id' => 1, 'title' => 'Meetup 2'],
+                ['id' => 1, 'title' => 'Meetup 3'],
+            ]
         ]);
     }
 
@@ -42,7 +48,8 @@ class MeetupController extends AbstractController
             try {
                 $this->meetupRepository->save();
             } catch (\Exception $e) {
-                $this->addFlash('error', 'Meetup not created!');
+                $this->addFlash('error', sprintf('Meetup %s not created!', $data->title));
+                $this->logger->error($e->getMessage());
                 return $this->redirectToRoute('app_meetup_index');
             }
             $this->addFlash('success', 'Meetup created!');

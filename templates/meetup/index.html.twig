@@ -7,11 +7,27 @@
 
     <h1>Meetups</h1>
     <p> Welcome to the meetups page!</p>
-    {% if items|length > 0 %}
-        {% for item in items %}
-        {% endfor %}
-    {% else %}
-        <p>There are no meetups yet.</p>
+    <div class="items_list mb-4">
+        {% if items|length > 0 %}
+
+            <ol class="list-group list-group-numbered">
+                {% for item in items %}
+                    <li class="list-group-item d-flex justify-content-between align-items-start">
+                        <div class="ms-2 me-auto">
+                            <div class="fw-bold">{{ item.title }}</div>
+                        </div>
+                       <span class="badge bg-primary rounded-pill">{{ item.id }}</span>
+                    </li>
+                {% endfor %}
+            </ol>
+
+        {% else %}
+            <p>There are no meetups yet.</p>
+        {% endif %}
+    </div>
+
+    {% if app.user %}
         <a href="{{ path('app_meetup_create') }}" class="btn btn-outline-primary">Create a new meetup</a>
     {% endif %}
+
 {% endblock %}
