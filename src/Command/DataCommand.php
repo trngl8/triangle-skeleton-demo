@@ -49,7 +49,7 @@ HELP
         $db->query(sprintf('
             INSERT INTO app_meetups(title, planned_at, timezone, created_at) 
             VALUES ("%s", "%s", "%s", "%s")',
-                'MEETUP 1',
+                'Meetup 1',
                 '2024-01-01 00:00:00',
                 'Europe/Kyiv',
                 '2023-01-01 00:00:00'

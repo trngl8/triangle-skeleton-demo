@@ -23,7 +23,7 @@ class MeetupRepository extends ServiceEntityRepository
         $this->getEntityManager()->flush();
     }
 
-    public function get(int $id): array
+    public function get(int $id): ?Meetup
     {
         return $this->find($id);
     }
