@@ -40,6 +40,8 @@ class MeetupController extends AbstractController
     {
         $meetup = $this->meetupRepository->get($id);
 
+        // TODO: check if user joined to meetup
+
         return $this->render('meetup/show.html.twig', [
             'meetup' => $meetup,
         ]);
@@ -85,15 +87,16 @@ class MeetupController extends AbstractController
         $submittedToken = $request->request->get('token');
 
         if ($this->isCsrfTokenValid('join', $submittedToken)) {
-            if (!$this->getUser()) {
-                $form = $this->createForm(ProfileInfoRequestType::class);
-                return $this->render('meetup/profile.html.twig', [
-                    'form' => $form
-                ]);
-            }
 
             $meetup = $this->meetupRepository->get($id);
-            $this->meetupService->join($meetup, $this->getUser());
+            $user = $this->getUser();
+
+            if (!$user) {
+                $this->addFlash('error', sprintf('You not joined to meetup %d!', $id));
+                return $this->redirectToRoute('login');
+            }
+
+            $this->meetupService->join($meetup, $user);
 
             $this->addFlash('success', sprintf('You joined to meetup %d!', $id));
 
@@ -103,5 +106,30 @@ class MeetupController extends AbstractController
         $this->addFlash('error', sprintf('You not joined to meetup %d!', $id));
 
         return $this->redirectToRoute('app_meetups_index');
+    }
+
+    #[Route('/{id}/subscribe', name: 'subscribe', methods: ['GET', 'POST'])]
+    public function subscribe(int $id, Request $request): Response
+    {
+        $meetup = $this->meetupRepository->get($id);
+
+        $form = $this->createForm(ProfileInfoRequestType::class);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $data = $form->getData();
+
+            $this->meetupService->subscribe($meetup, $data);
+
+            $this->addFlash('success', 'You subscribed to meetup!');
+
+            return $this->redirectToRoute('app_meetups_show', ['id' => $id]);
+        }
+
+        return $this->render('meetup/subscribe.html.twig', [
+            'form' => $form->createView()
+        ]);
     }
 }

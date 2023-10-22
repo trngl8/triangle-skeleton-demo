@@ -12,9 +12,11 @@ class MeetupService
         //
     }
 
-    public function join(Meetup $meetup, UserInterface $user): int
+    public function join(Meetup $meetup, UserInterface $user): void
     {
-        return 1;
     }
 
+    public function subscribe(Meetup $meetup, array $data): void
+    {
+    }
 }
