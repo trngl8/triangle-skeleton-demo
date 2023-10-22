@@ -83,6 +83,12 @@ class MeetupController extends AbstractController
 
         if ($this->isCsrfTokenValid('join', $submittedToken)) {
 
+            // TODO: implement business scenario
+            // 1. get meetup by id
+            // 2. get current user
+            // 3. add user to meetup
+            // TODO: if user does not exist?
+
             $this->addFlash('success', sprintf('You joined to meetup %d!', $id));
 
             return $this->redirectToRoute('app_meetups_index');

@@ -28,12 +28,12 @@ class MeetupRepository extends ServiceEntityRepository
         return ['id' => $id, 'title' => sprintf('Meetup %d', $id), 'plannedAt' => new \DateTimeImmutable()];
     }
 
-    public function findAll(): iterable
-    {
-        return [
-            ['id' => 1, 'title' => 'Meetup 1', 'plannedAt' => new \DateTimeImmutable()],
-            ['id' => 2, 'title' => 'Meetup 2', 'plannedAt' => new \DateTimeImmutable()],
-            ['id' => 3, 'title' => 'Meetup 3', 'plannedAt' => new \DateTimeImmutable()],
-        ];
-    }
+//    public function findAll(): iterable
+//    {
+//        return [
+//            ['id' => 1, 'title' => 'Meetup 1', 'plannedAt' => new \DateTimeImmutable()],
+//            ['id' => 2, 'title' => 'Meetup 2', 'plannedAt' => new \DateTimeImmutable()],
+//            ['id' => 3, 'title' => 'Meetup 3', 'plannedAt' => new \DateTimeImmutable()],
+//        ];
+//    }
 }

@@ -16,11 +16,13 @@ class Meetup
 
     #[ORM\Column(length: 255)]
     private string $title;
-
+    #[ORM\Column(type: 'datetime')]
     private \DateTimeInterface $plannedAt;
 
+    #[ORM\Column(length: 64)]
     private string $timezone;
 
+    #[ORM\Column(type: 'datetime')]
     private \DateTimeInterface $createdAt;
 
     public function __construct(string $title, \DateTimeInterface $plannedAt)
@@ -32,6 +34,16 @@ class Meetup
     }
 
     public function __toString(): string
+    {
+        return $this->title;
+    }
+
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+    public function getTitle(): string
     {
         return $this->title;
     }
