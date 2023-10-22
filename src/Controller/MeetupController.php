@@ -129,6 +129,7 @@ class MeetupController extends AbstractController
         }
 
         return $this->render('meetup/subscribe.html.twig', [
+            'meetup' => $meetup,
             'form' => $form->createView()
         ]);
     }

@@ -49,4 +49,10 @@ class MeetupControllerTest extends WebTestCase
         $this->client->request('POST', '/meetups/1/join');
         $this->assertResponseRedirects();
     }
+
+    public function testSubscribeError(): void
+    {
+        $this->client->request('POST', '/meetups/1/subscribe');
+        $this->assertResponseIsSuccessful();
+    }
 }
