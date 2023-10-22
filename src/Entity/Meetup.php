@@ -21,11 +21,14 @@ class Meetup
 
     private string $timezone;
 
+    private \DateTimeInterface $createdAt;
+
     public function __construct(string $title, \DateTimeInterface $plannedAt)
     {
         $this->title = $title;
         $this->plannedAt = $plannedAt;
         $this->timezone = date_default_timezone_get();
+        $this->createdAt = new \DateTimeImmutable();
     }
 
     public function __toString(): string

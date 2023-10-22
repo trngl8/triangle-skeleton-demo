@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 
-#[Route('/meetup', name: 'app_meetup_')]
+#[Route('/meetups', name: 'app_meetups_')]
 class MeetupController extends AbstractController
 {
     public function __construct(
@@ -22,23 +22,23 @@ class MeetupController extends AbstractController
     {
     }
 
-    #[Route('', name: 'index')]
+    #[Route('', name: 'index', methods: ['GET'])]
     public function index(Request $request): Response
     {
+        $meetups = $this->meetupRepository->findAll();
+
         return $this->render('meetup/index.html.twig', [
-            'meetups' => [
-                ['id' => 1, 'title' => 'Meetup 1', 'plannedAt' => new \DateTimeImmutable()],
-                ['id' => 2, 'title' => 'Meetup 2', 'plannedAt' => new \DateTimeImmutable()],
-                ['id' => 3, 'title' => 'Meetup 3', 'plannedAt' => new \DateTimeImmutable()],
-            ]
+            'meetups' => $meetups
         ]);
     }
 
-    #[Route('/{id}/show', name: 'show')]
+    #[Route('/{id}/show', name: 'show', methods: ['GET'])]
     public function show(int $id): Response
     {
+        $meetup = $this->meetupRepository->get($id);
+
         return $this->render('meetup/show.html.twig', [
-            'meetup' => ['id' => $id, 'title' => sprintf('Meetup %d', $id), 'plannedAt' => new \DateTimeImmutable()],
+            'meetup' => $meetup,
         ]);
     }
 
@@ -63,12 +63,12 @@ class MeetupController extends AbstractController
             } catch (\Exception $e) {
                 $this->addFlash('error', sprintf('Meetup %s not created!', $meetupRequest->title));
                 $this->logger->error($e->getMessage());
-                return $this->redirectToRoute('app_meetup_index');
+                return $this->redirectToRoute('app_meetups_index');
             }
 
             $this->addFlash('success', sprintf('Meetup %s created!', $meetupRequest->title));
 
-            return $this->redirectToRoute('app_meetup_index');
+            return $this->redirectToRoute('app_meetups_index');
         }
 
         return $this->render('meetup/create.html.twig', [
@@ -85,9 +85,11 @@ class MeetupController extends AbstractController
 
             $this->addFlash('success', sprintf('You joined to meetup %d!', $id));
 
-            return $this->redirectToRoute('app_meetup_index');
+            return $this->redirectToRoute('app_meetups_index');
         }
 
-        return $this->redirectToRoute('app_meetup_index');
+        $this->addFlash('error', sprintf('You not joined to meetup %d!', $id));
+
+        return $this->redirectToRoute('app_meetups_index');
     }
 }
