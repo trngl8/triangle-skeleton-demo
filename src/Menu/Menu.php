@@ -46,6 +46,11 @@ class Menu
                 'route' => 'app_calendar_index',
                 'url' => '/calendar',
             ],
+            'meetup' => [
+                'title' => 'menu.meetup',
+                'route' => 'app_meetup_index',
+                'url' => '/meetup',
+            ],
         ];
 
         $router = $this->router;
