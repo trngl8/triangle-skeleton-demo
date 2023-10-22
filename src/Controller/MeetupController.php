@@ -4,8 +4,10 @@ namespace App\Controller;
 
 use App\Entity\Meetup;
 use App\Form\MeetupType;
+use App\Form\ProfileInfoRequestType;
 use App\Model\MeetupRequest;
 use App\Repository\MeetupRepository;
+use App\Service\MeetupService;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,6 +18,7 @@ use Symfony\Component\HttpFoundation\Request;
 class MeetupController extends AbstractController
 {
     public function __construct(
+        private readonly MeetupService $meetupService,
         private readonly MeetupRepository $meetupRepository,
         private readonly LoggerInterface $logger
     )
@@ -82,12 +85,15 @@ class MeetupController extends AbstractController
         $submittedToken = $request->request->get('token');
 
         if ($this->isCsrfTokenValid('join', $submittedToken)) {
+            if (!$this->getUser()) {
+                $form = $this->createForm(ProfileInfoRequestType::class);
+                return $this->render('meetup/profile.html.twig', [
+                    'form' => $form
+                ]);
+            }
 
-            // TODO: implement business scenario
-            // 1. get meetup by id
-            // 2. get current user
-            // 3. add user to meetup
-            // TODO: if user does not exist?
+            $meetup = $this->meetupRepository->get($id);
+            $this->meetupService->join($meetup, $this->getUser());
 
             $this->addFlash('success', sprintf('You joined to meetup %d!', $id));
 
