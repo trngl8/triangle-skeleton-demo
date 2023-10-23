@@ -1,5 +1,31 @@
 {% extends 'meetup/index.html.twig' %}
 
+{% block modal %}
+    <div class="modal fade" id="removeFormModal" tabindex="-1" aria-labelledby="removeFormModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Remove?</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Remove record?
+                </div>
+                <div class="modal-footer">
+                    <form action="{{ url('app_meetups_remove', { id: meetup.id }) }}" method="post" data-confirmation="true" id="remove-form">
+                        <input type="hidden" name="token" value="{{ csrf_token('remove') }}" />
+                        <button type="submit" class="btn btn-outline-danger">
+                            Remove
+                        </button>
+                    </form>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+{#                    <button type="button" class="btn btn-primary">Yes</button>#}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
 {% block breadcrumbs %}
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
@@ -27,12 +53,21 @@
 
             {% block card_actions %}
                 {% if app.user %}
-                    <form action="{{ url('app_meetups_join', { id: meetup.id }) }}" method="post" data-confirmation="true" id="join-form">
-                        <input type="hidden" name="token" value="{{ csrf_token('join') }}" />
-                        <button type="submit" class="btn btn-outline-success">
-                            Join
-                        </button>
-                    </form>
+                    <div class="d-flex">
+                        <div class="me-2">
+                            <form action="{{ url('app_meetups_join', { id: meetup.id }) }}" method="post" data-confirmation="true" id="joinForm">
+                                <input type="hidden" name="token" value="{{ csrf_token('join') }}" />
+                                <button type="submit" class="btn btn-outline-success">
+                                    Join
+                                </button>
+                            </form>
+                        </div>
+                        <div class="me-2">
+                            <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#removeFormModal">
+                                Remove
+                            </button>
+                        </div>
+                    </div>
                 {% else %}
                     <a href="{{ path('app_meetups_subscribe', { id: meetup.id }) }}" class="btn btn-outline-success">Join</a>
                 {% endif %}

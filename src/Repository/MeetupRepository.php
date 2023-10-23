@@ -28,4 +28,9 @@ class MeetupRepository extends ServiceEntityRepository
         return $this->find($id);
     }
 
+    public function remove($entity): void
+    {
+        $this->getEntityManager()->remove($entity);
+    }
+
 }

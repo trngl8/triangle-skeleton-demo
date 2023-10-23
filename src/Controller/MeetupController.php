@@ -132,4 +132,28 @@ class MeetupController extends AbstractController
             'form' => $form->createView()
         ]);
     }
+
+    #[Route('/{id}/remove', name: 'remove', methods: ['GET', 'POST', 'DELETE'])]
+    public function remove(int $id, Request $request): Response
+    {
+        $this->denyAccessUnlessGranted('ROLE_USER'); //TODO: check if user is owner
+
+        $submittedToken = $request->request->get('token');
+
+        $meetup = $this->meetupRepository->get($id);
+
+        if ($this->isCsrfTokenValid('remove', $submittedToken)) {
+
+            $this->meetupRepository->remove($meetup);
+            $this->meetupRepository->save();
+
+            $this->addFlash('success', sprintf('You removed meetup %d!', $id));
+
+            return $this->redirectToRoute('app_meetups_index');
+        }
+
+        $this->addFlash('error', sprintf('You not removed meetup %d!', $id));
+
+        return $this->redirectToRoute('app_meetups_index');
+    }
 }
