@@ -1,28 +1,56 @@
 {% extends 'meetup/index.html.twig' %}
 
+{% block breadcrumbs %}
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item" aria-current="page"><a href="{{ path('app_index') }}">{{ 'menu.home'|trans }}</a></li>
+            <li class="breadcrumb-item" aria-current="page"><a href="{{ path('app_meetups_index') }}">Meetups</a></li>
+            <li class="breadcrumb-item active" aria-current="page">{{ meetup.title }}</li>
+        </ol>
+    </nav>
+{% endblock %}
+
+
 {% block main %}
 
 <h1>{{ meetup.title }}</h1>
+    <div class="row mb-4">
+        <div class="col-md-8">
+            {% block card %}
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h5 class="card-title">{{ meetup.title }}</h5>
+                    <p class="card-text">{{ meetup.plannedAt|date }}</p>
+                </div>
+            </div>
+            {% endblock %}
 
-<div class="card w-75 mb-4">
-    <div class="card-body">
-        <h5 class="card-title">{{ meetup.title }}</h5>
-        <p class="card-text">{{ meetup.plannedAt|date }}</p>
-        {% block card_actions %}
-            {% if app.user %}
-                <form action="{{ url('app_meetups_join', { id: meetup.id }) }}" method="post" data-confirmation="true" id="join-form">
-                    <input type="hidden" name="token" value="{{ csrf_token('join') }}" />
-                    <button type="submit" class="btn btn-outline-success">
-                        Join
-                    </button>
-                </form>
-            {% else %}
-                <a href="{{ path('app_meetups_subscribe', { id: meetup.id }) }}" class="btn btn-outline-success">Join</a>
-            {% endif %}
-        {% endblock %}
+            {% block card_actions %}
+                {% if app.user %}
+                    <form action="{{ url('app_meetups_join', { id: meetup.id }) }}" method="post" data-confirmation="true" id="join-form">
+                        <input type="hidden" name="token" value="{{ csrf_token('join') }}" />
+                        <button type="submit" class="btn btn-outline-success">
+                            Join
+                        </button>
+                    </form>
+                {% else %}
+                    <a href="{{ path('app_meetups_subscribe', { id: meetup.id }) }}" class="btn btn-outline-success">Join</a>
+                {% endif %}
+            {% endblock %}
+        </div>
+        <div class="col-md-4">
+            {% block sidebar %}
+                <div class="card text-bg-light mb-4">
+                    <div class="card-body">
+                        <p class="card-title">Join meeting</p>
+                        <p class="card-text">If you are going to connect, click Join</p>
+                    </div>
+                </div>
+            {% endblock %}
+        </div>
+        <div class="col-md-8">
+
+        </div>
     </div>
-</div>
-
-<a href="{{ path('app_meetups_index') }}" class="btn btn-outline-primary">Back to list</a>
 
 {% endblock %}

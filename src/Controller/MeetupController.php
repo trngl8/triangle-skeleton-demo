@@ -116,7 +116,6 @@ class MeetupController extends AbstractController
         $form = $this->createForm(ProfileInfoRequestType::class);
 
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
 
             $data = $form->getData();
