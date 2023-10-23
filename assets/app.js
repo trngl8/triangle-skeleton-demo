@@ -16,7 +16,8 @@ import './styles/app.css';
 require('bootstrap');
 
 // start the Stimulus application
-import './bootstrap';
+import * as bootstrap from 'bootstrap';
+window.bootstrap = bootstrap;
 
-// const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
-// const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))

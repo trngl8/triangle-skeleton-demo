@@ -1,6 +1,17 @@
 {#{% extends 'default.html.twig' %}#}
 {% extends 'default_layout.html.twig' %}
 
+{% block modal %}{% endblock %}
+
+{% block breadcrumbs %}
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ path('app_index') }}">{{ 'menu.home'|trans }}</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Meetups</li>
+        </ol>
+    </nav>
+{% endblock %}
+
 {% block main %}
 
     {% set items = meetups %}

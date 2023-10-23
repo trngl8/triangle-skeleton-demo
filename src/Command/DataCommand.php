@@ -36,13 +36,22 @@ HELP
         $db = new \SQLite3(__DIR__ . '/../../var/default.db', SQLITE3_OPEN_CREATE | SQLITE3_OPEN_READWRITE);
         $db->enableExceptions(true);
 
-        $db->query('DROP TABLE IF EXISTS app_meetups');
+        #$db->query('DROP TABLE IF EXISTS app_meetups'); //TODO: move drop to the configuration option
         $db->query('CREATE TABLE IF NOT EXISTS app_meetups(
             id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
             title VARCHAR(255) NOT NULL,
             planned_at DATETIME NOT NULL,
             timezone VARCHAR(64) NOT NULL,
             created_at DATETIME NOT NULL
+        )');
+
+        $db->query('DROP TABLE IF EXISTS app_subscribes');
+        $db->query('CREATE TABLE IF NOT EXISTS app_subscribes(
+            id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+            type VARCHAR(255) NOT NULL,
+            target INTEGER NOT NULL,
+            email VARCHAR(255) NOT NULL,
+            name VARCHAR(255) NOT NULL
         )');
 
         $db->exec('BEGIN');
