@@ -84,6 +84,8 @@ class MeetupController extends AbstractController
     #[Route('/{id}/join', name: 'join', methods: ['POST'])]
     public function join(int $id, Request $request): Response
     {
+        //$this->denyAccessUnlessGranted('ROLE_USER'); //TODO: remove user check
+
         $submittedToken = $request->request->get('token');
 
         if ($this->isCsrfTokenValid('join', $submittedToken)) {
