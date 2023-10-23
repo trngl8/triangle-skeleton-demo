@@ -40,10 +40,11 @@ class MeetupController extends AbstractController
     {
         $meetup = $this->meetupRepository->get($id);
 
-        // TODO: check if user joined to meetup
+        $subscribers = $this->meetupService->getSubscribers($meetup);
 
         return $this->render('meetup/show.html.twig', [
             'meetup' => $meetup,
+            'subscribers' => $subscribers
         ]);
     }
 
@@ -58,7 +59,8 @@ class MeetupController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $meetup = new Meetup(
                 $meetupRequest->title,
-                $meetupRequest->plannedDayAt->add($meetupRequest->plannedTimeAt->diff(new \DateTimeImmutable())),
+                $meetupRequest->plannedDayAt->add(
+                    new \DateInterval('PT' . $meetupRequest->plannedTimeAt->format('H') . 'H' . $meetupRequest->plannedTimeAt->format('i') . 'M')),
             );
 
             $this->meetupRepository->add($meetup);
@@ -98,9 +100,18 @@ class MeetupController extends AbstractController
                 return $this->redirectToRoute('login');
             }
 
-            $this->meetupService->join($meetup, $user);
-
-            $this->addFlash('success', sprintf('You joined to meetup %d!', $id));
+            $result = $this->meetupService->join($meetup, $user);
+            switch ($result) {
+                case MeetupService::SUCCESS:
+                    $this->addFlash('success', sprintf('You joined to meetup %d!', $id));
+                    break;
+                case MeetupService::ALREADY_JOINED:
+                    $this->addFlash('warning', sprintf('You already joined to meetup %d!', $id));
+                    break;
+                default:
+                    $this->addFlash('error', sprintf('You not joined to meetup %d!', $id));
+                    break;
+            }
 
             return $this->redirectToRoute('app_meetups_index');
         }
