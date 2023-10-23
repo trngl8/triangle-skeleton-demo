@@ -28,7 +28,7 @@ class MeetupController extends AbstractController
     #[Route('', name: 'index', methods: ['GET'])]
     public function index(Request $request): Response
     {
-        $meetups = $this->meetupRepository->findAll();
+        $meetups = $this->meetupRepository->findCurrent();
 
         return $this->render('meetup/index.html.twig', [
             'meetups' => $meetups

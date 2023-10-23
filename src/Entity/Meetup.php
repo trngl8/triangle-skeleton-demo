@@ -25,6 +25,8 @@ class Meetup
     #[ORM\Column(type: 'datetime')]
     private \DateTimeInterface $createdAt;
 
+    private array $subscribers;
+
     public function __construct(string $title, \DateTimeInterface $plannedAt)
     {
         $this->title = $title;
@@ -52,4 +54,6 @@ class Meetup
     {
         return $this->plannedAt;
     }
+
+
 }

@@ -35,6 +35,8 @@ HELP
 
         $db = new \SQLite3(__DIR__ . '/../../var/default.db', SQLITE3_OPEN_CREATE | SQLITE3_OPEN_READWRITE);
         $db->enableExceptions(true);
+//        $result = $db->query('select name from sqlite_schema where type = \'table\' and name not like \'sqlite_%\'');
+//        $io->writeln('Tables: ' . json_encode($result->fetchArray(SQLITE3_ASSOC)));
 
         #$db->query('DROP TABLE IF EXISTS app_meetups'); //TODO: move drop to the configuration option
         $db->query('CREATE TABLE IF NOT EXISTS app_meetups(
@@ -66,6 +68,8 @@ HELP
         $db->exec('COMMIT');
 
         $db->close();
+
+        $io->writeln('Data created');
 
         return 1;
     }

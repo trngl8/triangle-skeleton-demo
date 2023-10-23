@@ -28,12 +28,14 @@
                         <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"/>
                     </svg>
                     <div class="d-flex gap-2 w-100 justify-content-between align-items-start">
-                        <div>
+                        <div class="w-100">
                             <h6 class="mb-0">{{ item.title }}</h6>
                             <p class="mb-0 opacity-75">{{ item.plannedAt|date }}</p>
                         </div>
-{#                        <small class="text-nowrap">now</small>#}
-                        <span class="badge bg-primary rounded-pill">{{ item.id }}</span>
+                        <small class="text-nowrap opacity-50">{{item.plannedAt|date }}</small> {# TODO: custom date fromat #}
+                        {% if item.subscribers|length > 0 %}
+                            <span class="badge bg-primary rounded-pill">{{ item.subscribers|length }}</span>
+                        {% endif %}
                     </div>
                 </a>
                 {% endfor %}
