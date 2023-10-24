@@ -54,6 +54,7 @@ HELP
             name VARCHAR(255) NOT NULL
         )');
 
+        // TODO: get data from csv fixtures
         $db->exec('BEGIN');
         $db->query(sprintf('
             INSERT INTO app_meetups(title, planned_at, timezone, created_at) 
@@ -66,6 +67,8 @@ HELP
         $db->exec('COMMIT');
 
         $db->close();
+
+        $io->writeln('Data created');
 
         return 1;
     }

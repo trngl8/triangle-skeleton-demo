@@ -28,7 +28,7 @@ class MeetupController extends AbstractController
     #[Route('', name: 'index', methods: ['GET'])]
     public function index(Request $request): Response
     {
-        $meetups = $this->meetupRepository->findAll();
+        $meetups = $this->meetupRepository->findCurrent();
 
         return $this->render('meetup/index.html.twig', [
             'meetups' => $meetups
@@ -79,7 +79,7 @@ class MeetupController extends AbstractController
         }
 
         return $this->render('meetup/create.html.twig', [
-            'form' => $form
+            'form' => $form->createView()
         ]);
     }
 
@@ -121,10 +121,44 @@ class MeetupController extends AbstractController
         return $this->redirectToRoute('app_meetups_index');
     }
 
+    #[Route('/{id}/edit', name: 'edit', methods: ['GET', 'POST'])]
+    public function edit(int $id, Request $request): Response
+    {
+        $meetup = $this->meetupRepository->get($id);
+        $subscribers = $this->meetupService->getSubscribers($meetup);
+
+        $meetupRequest = new MeetupRequest();
+        $meetupRequest->title = $meetup->getTitle();
+        $meetupRequest->plannedDayAt = $meetup->getPlannedAt();
+        $meetupRequest->plannedTimeAt = $meetup->getPlannedAt();
+        $meetupRequest->duration = $meetup->getDuration();
+
+        $form = $this->createForm(MeetupType::class, $meetupRequest);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $this->meetupRepository->update($meetup, $meetupRequest);
+            $this->meetupRepository->save();
+
+            $this->addFlash('success', sprintf('Meetup %s updated!', $meetupRequest->title));
+
+            return $this->redirectToRoute('app_meetups_show', ['id' => $id]);
+        }
+
+        return $this->render('meetup/edit.html.twig', [
+            'form' => $form->createView(),
+            'meetup' => $meetup,
+            'subscribers' => $subscribers
+        ]);
+    }
+
     #[Route('/{id}/subscribe', name: 'subscribe', methods: ['GET', 'POST'])]
     public function subscribe(int $id, Request $request): Response
     {
         $meetup = $this->meetupRepository->get($id);
+        $subscribers = $this->meetupService->getSubscribers($meetup);
 
         $form = $this->createForm(ProfileInfoRequestType::class);
 
@@ -142,6 +176,7 @@ class MeetupController extends AbstractController
 
         return $this->render('meetup/subscribe.html.twig', [
             'meetup' => $meetup,
+            'subscribers' => $subscribers,
             'form' => $form->createView()
         ]);
     }
