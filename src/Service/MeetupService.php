@@ -7,6 +7,7 @@ use App\Entity\Subscribe;
 use App\Repository\MeetupRepository;
 use App\Service\Http\TelegramHttpClient;
 use Doctrine\ORM\EntityManagerInterface;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 class MeetupService
@@ -17,21 +18,14 @@ class MeetupService
     public function __construct(
         public MeetupRepository $meetupRepository,
         public TelegramHttpClient $telegramClient,
-        public EntityManagerInterface $entityManager
+        public EntityManagerInterface $entityManager,
+        public LoggerInterface $logger
     )
     {
     }
 
     public function join(Meetup $meetup, UserInterface $user): int
     {
-//        $chatId = 0; //TODO define chat id
-//
-//        $this->telegramClient->sendMessage($chatId, sprintf(
-//            'New user joined for the meetup #%d: <br>%s',
-//            $meetup->getId(),
-//            $user->getUserIdentifier(),
-//        ));
-
         $exists = $this->entityManager->getRepository(Subscribe::class)->findOneBy([
             'type' => 'meetup',
             'target' => $meetup->getId(),
@@ -52,20 +46,21 @@ class MeetupService
         $this->entityManager->persist($subscribe);
         $this->entityManager->flush();
 
+        if ($_ENV['TELEGRAM_CHAT_ID']) {
+            $this->telegramClient->sendMessage($_ENV['TELEGRAM_CHAT_ID'], sprintf(
+                'New user joined for the meetup #%d: <br>%s',
+                $meetup->getId(),
+                $user->getUserIdentifier(),
+            ));
+        } else {
+            $this->logger->warning('Telegram chat id not configured!');
+        }
+
         return self::SUCCESS;
     }
 
     public function subscribe(Meetup $meetup, array $data): void
     {
-//        $chatId = 0; //TODO define chat id
-//
-//        $this->telegramClient->sendMessage($chatId, sprintf(
-//            'New subscriber for the meetup #%d: <br>%s %s',
-//            $meetup->getId(),
-//            $data['email'],
-//            $data['name']
-//        ));
-
         $subscribe = new Subscribe(
             'meetup',
             $meetup->getId(),
@@ -76,6 +71,16 @@ class MeetupService
         $this->entityManager->persist($subscribe);
         $this->entityManager->flush();
 
+        if ($_ENV['TELEGRAM_CHAT_ID']) {
+            $this->telegramClient->sendMessage($_ENV['TELEGRAM_CHAT_ID'], sprintf(
+                'New subscriber for the meetup #%d: <br>%s %s',
+                $meetup->getId(),
+                $data['email'],
+                $data['name']
+            ));
+        } else {
+            $this->logger->warning('Telegram chat id not configured!');
+        }
     }
 
     public function getSubscribers(Meetup $meetup): array
