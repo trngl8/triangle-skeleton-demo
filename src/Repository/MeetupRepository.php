@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Meetup;
 use App\Entity\Subscribe;
+use App\Model\MeetupRequest;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -17,6 +18,14 @@ class MeetupRepository extends ServiceEntityRepository
     public function add(Meetup $entity): void
     {
         $this->getEntityManager()->persist($entity);
+    }
+
+    public function update(Meetup $meetup, MeetupRequest $request): void
+    {
+        $meetup->setTitle($request->title);
+        $meetup->setPlannedAt($request->plannedDayAt->add(
+            new \DateInterval(sprintf('PT%dM', $request->duration))
+        ));
     }
 
     public function save(): void
@@ -36,20 +45,20 @@ class MeetupRepository extends ServiceEntityRepository
 
     public function findCurrent(): iterable
     {
-        $meetings = $this->createQueryBuilder('m')
+        $meetups = $this->createQueryBuilder('m')
             ->orderBy('m.plannedAt', 'ASC')
             ->getQuery()
             ->getArrayResult();
 
         // TODO: use join
-        foreach ($meetings as &$meeting) {
-            $meeting['subscribers'] = $this->getEntityManager()->getRepository(Subscribe::class)->findBy([
+        foreach ($meetups as &$meetup) {
+            $meetup['subscribers'] = $this->getEntityManager()->getRepository(Subscribe::class)->findBy([
                 'type' => 'meetup',
-                'target' => $meeting['id']
+                'target' => $meetup['id']
             ]);
         }
 
-        return $meetings;
+        return $meetups;
     }
 
 }

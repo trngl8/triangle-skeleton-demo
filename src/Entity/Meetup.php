@@ -50,10 +50,25 @@ class Meetup
         return $this->title;
     }
 
+    public function setTitle(string $title): self
+    {
+        $this->title = $title;
+        return $this;
+    }
+
+    public function setPlannedAt(\DateTimeInterface $plannedAt): self
+    {
+        $this->plannedAt = $plannedAt;
+        return $this;
+    }
+
     public function getPlannedAt(): \DateTimeInterface
     {
         return $this->plannedAt;
     }
 
-
+    public function getDuration(): int
+    {
+        return 60;
+    }
 }

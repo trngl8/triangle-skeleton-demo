@@ -35,8 +35,6 @@ HELP
 
         $db = new \SQLite3(__DIR__ . '/../../var/default.db', SQLITE3_OPEN_CREATE | SQLITE3_OPEN_READWRITE);
         $db->enableExceptions(true);
-//        $result = $db->query('select name from sqlite_schema where type = \'table\' and name not like \'sqlite_%\'');
-//        $io->writeln('Tables: ' . json_encode($result->fetchArray(SQLITE3_ASSOC)));
 
         #$db->query('DROP TABLE IF EXISTS app_meetups'); //TODO: move drop to the configuration option
         $db->query('CREATE TABLE IF NOT EXISTS app_meetups(
@@ -56,6 +54,7 @@ HELP
             name VARCHAR(255) NOT NULL
         )');
 
+        // TODO: get data from csv fixtures
         $db->exec('BEGIN');
         $db->query(sprintf('
             INSERT INTO app_meetups(title, planned_at, timezone, created_at) 

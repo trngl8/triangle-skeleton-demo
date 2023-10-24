@@ -11,7 +11,7 @@
 {% endblock %}
 
 {% block main %}
-    <h1>Create a new meetup</h1>
+    <h1>{% block main_header %}Create a new meetup{% endblock %}</h1>
     {% if form is not defined %}
         <p>There is no form to display</p>
     {% else %}
@@ -21,7 +21,7 @@
         {{ form_row(form.plannedTimeAt) }}
         {{ form_row(form.duration) }}
         {{ form_rest(form) }}
-        <button type="submit" class="btn btn-lg btn-outline-primary">Create</button>
+        <button type="submit" class="btn btn-lg btn-outline-primary">{% block form_button_caption %}Create{% endblock %}</button>
         {{ form_end(form) }}
     {% endif %}
 {% endblock %}
