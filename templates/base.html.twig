@@ -21,9 +21,9 @@
 
         {#    <link rel="canonical" href="{{ '' }}">#}
 
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+{#        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">#}
 
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.15.1/devicon.min.css">
+{#        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.15.1/devicon.min.css">#}
 
         {% block add_stylesheets %}{%endblock%}
 
@@ -36,7 +36,8 @@
         {% block simple_navbar %}{% endblock %}
         {% block body %}{% endblock %}
         {% block footer %}{% endblock %}
-        <!-- Page rendered on {{ 'now'|format_datetime('long', 'long', '', 'UTC') }} -->
-
+        {% if app.environment is same as 'dev' %}
+            <!-- Page rendered on {{ 'now'|format_datetime('long', 'long', '', 'UTC') }} -->
+        {% endif %}
     </body>
  </html>
