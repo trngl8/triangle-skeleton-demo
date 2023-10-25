@@ -36,7 +36,8 @@
         {% block simple_navbar %}{% endblock %}
         {% block body %}{% endblock %}
         {% block footer %}{% endblock %}
-        <!-- Page rendered on {{ 'now'|format_datetime('long', 'long', '', 'UTC') }} -->
-
+        {% if app.environment is same as 'dev' %}
+            <!-- Page rendered on {{ 'now'|format_datetime('long', 'long', '', 'UTC') }} -->
+        {% endif %}
     </body>
  </html>

@@ -10,13 +10,13 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 class LoginController extends AbstractController
 {
     #[Route('/login', name: 'login')]
-    public function index(AuthenticationUtils $authenticationUtils, string $appTheme): Response
+    public function index(AuthenticationUtils $authenticationUtils): Response
     {
         $error = $authenticationUtils->getLastAuthenticationError();
 
         $lastUsername = $authenticationUtils->getLastUsername();
 
-        return $this->render(sprintf('%s/login.html.twig', $appTheme), [
+        return $this->render(sprintf('default/login.html.twig'), [
             'error' => $error,
             'last_username' => $lastUsername,
         ]);
