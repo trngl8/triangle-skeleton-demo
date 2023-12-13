@@ -41,7 +41,7 @@
                 <div class="card-body">
                     {% if app.user %}
 
-                    <a class="w-100 btn btn-lg btn-primary btn-common" href="{{ path('app_default') }}">{{ app.user.userIdentifier }}</a>
+                    <a class="w-100 btn btn-lg btn-primary btn-common" href="{{ path('app_profile') }}">{{ app.user.userIdentifier }}</a>
                     <p class="mb-3 mt-3 text-center">or</p>
                     <a class="w-100 btn btn-lg btn-outline-primary" href="{{ path('logout') }}">{{ 'logout'|trans }}</a>
 

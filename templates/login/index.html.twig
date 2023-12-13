@@ -20,13 +20,11 @@
                 <div class="card">
                     <div class="card-body text-dark ">
 
-                        {% if app.user %}
-                            {# TODO: set default module for the user #}
-                            <a class="w-100 btn btn-lg btn-outline-primary btn-common" href="{{ path(app_default_module) }}">{{ app.user.userIdentifier }}</a>
-                            <p class="mb-3 mt-3 text-center">or</p>
-                            <a class="w-100 btn btn-lg btn-outline-primary" href="{{ path('logout') }}">{{ 'logout'|trans }}</a>
-
-                        {% else %}
+{#                        {% if app.user %}#}
+{#                            <a class="w-100 btn btn-lg btn-outline-primary btn-common" href="{{ path('app_profile') }}">{{ app.user.userIdentifier }}</a>#}
+{#                            <p class="mb-3 mt-3 text-center">or</p>#}
+{#                            <a class="w-100 btn btn-lg btn-outline-primary" href="{{ path('logout') }}">{{ 'logout'|trans }}</a>#}
+{#                        {% else %}#}
 
                             <form method="post" action="{{ path('login') }}">
                                 <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
@@ -52,7 +50,7 @@
                                 {#                        </div>#}
                             </form>
 
-                        {% endif %}
+{#                        {% endif %}#}
 
                     </div>
                 </div>
