@@ -1,20 +1,16 @@
 default:
   path: /
-  controller: App\Controller\IndexController::index
-
-#deprecated
-app_home:
-  path: /
   controller: App\Controller\DefaultController::default
+
+##deprecated
+#app_home:
+#  path: /
+#  controller: App\Controller\DefaultController::default
 
 #deprecated
 app_index:
   path: /index
-  controller: App\Controller\DefaultController::index
-
-default_index:
-  path: /index
-  controller: App\Controller\DefaultController::index
+  controller: App\Controller\IndexController::index
 
 app_restricted:
   path: /restricted
