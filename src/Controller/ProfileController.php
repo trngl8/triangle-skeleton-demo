@@ -6,6 +6,7 @@ use App\Entity\Profile;
 use App\Form\ProfileType;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -76,6 +77,10 @@ class ProfileController extends AbstractController
                 ->setActive(true);
         }
 
+        if ($request->cookies->has('APP_THEME')) {
+            $profile->theme = $request->cookies->get('APP_THEME');
+        }
+
         $form = $this->createForm(ProfileType::class, $profile);
 
         $form->handleRequest($request);
@@ -83,12 +88,16 @@ class ProfileController extends AbstractController
         if($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->doctrine->getManager();
             $profile->setEmail($user->getUserIdentifier());
+
             $entityManager->persist($profile);
             $entityManager->flush();
 
             $this->addFlash('success', 'flash.success.profile_updated');
+            $response = $this->redirectToRoute('app_profile_edit');
+            $response->headers->setCookie(Cookie::create('APP_THEME', $profile->theme));
+            $request->cookies->set('APP_THEME', $profile->theme);
 
-            return $this->redirectToRoute('app_profile');
+            return $response;
         }
 
         return $this->render('profile/edit.html.twig', [

@@ -41,11 +41,14 @@ class Profile
     #[ORM\OneToMany(mappedBy: 'profile', targetEntity: Invite::class)]
     private $invites;
 
+    public string $theme;
+
     public function __construct()
     {
         $this->active = true;
         $this->topics = new ArrayCollection();
         $this->invites = new ArrayCollection();
+        $this->theme = 'default';
     }
 
     public function __toString()
