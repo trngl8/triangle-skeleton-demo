@@ -5,14 +5,13 @@ namespace App\Controller;
 use App\Button\LinkToRoute;
 use App\Exception\ThemeLayoutNotFoundException;
 use App\Repository\ProductRepository;
-use Symfony\Bundle\SecurityBundle\Security;
-use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Twig\Environment;
 use Twig\Error\LoaderError;
 
-class DefaultController
+class DefaultController extends AbstractController
 {
     private $productRepository;
 
@@ -21,25 +20,23 @@ class DefaultController
     private $appTheme;
     private $defaultModule;
 
-    private $security;
-
     public function __construct(ProductRepository $productRepository, Environment $twig,
-        Security $security,
         string $appTheme,
         string $defaultModule,
     ) {
         $this->productRepository = $productRepository;
         $this->twig = $twig;
-        $this->security = $security;
         $this->appTheme = $appTheme;
         $this->defaultModule = $defaultModule;
     }
 
     public function default(Request $request) : Response
     {
-        //TODO: check current route
-//        if ($request->attributes->get('_route') === 'default' && $this->appTheme === 'default') {
-//        }
+        if ($request->cookies->get('THEME_CHOICE')) {
+            $this->forward('App\Controller\DefaultController::index', [
+                'request' => $request,
+            ]);
+        }
 
         $templateName = sprintf('%s/default.html.twig', $this->appTheme);
 
@@ -47,17 +44,6 @@ class DefaultController
             $template = $this->twig->load($templateName);
         } catch (LoaderError $e) {
             throw new ThemeLayoutNotFoundException("Default template not found");
-        }
-
-        $user = $this->security->getUser();
-
-        if ($user) {
-            //TODO: get from the routing service
-            if(in_array('ROLE_ADMIN', $user->getRoles())) {
-                return new RedirectResponse('/admin');
-            }
-
-            return new RedirectResponse('/index');
         }
 
         //TODO: check routes exists
@@ -77,7 +63,7 @@ class DefaultController
         return $response;
     }
 
-    public function index() : Response
+    public function index(Request $request) : Response
     {
         $templateName = sprintf('%s/index.html.twig', $this->appTheme);
 

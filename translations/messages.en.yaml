@@ -50,6 +50,7 @@ flash:
     created: Created
     updated: Updated
     cloned: Cloned
+    profile_updated: Profile updated
   warning:
     already_logged_in: You are already logged in
 

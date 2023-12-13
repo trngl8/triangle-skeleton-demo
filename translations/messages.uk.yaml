@@ -50,6 +50,7 @@ flash:
     created: Створено
     updated: Оновлено
     cloned: Клоновано
+    profile_updated: Профіль оновлено
   warning:
     already_logged_in: You are already logged in
 
