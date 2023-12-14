@@ -10,7 +10,7 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 class LoginController extends AbstractController
 {
     #[Route('/login', name: 'login')]
-    public function index(AuthenticationUtils $authenticationUtils): Response
+    public function index(AuthenticationUtils $authenticationUtils, string $adminEmail): Response
     {
         $user = $this->getUser();
 
@@ -25,7 +25,11 @@ class LoginController extends AbstractController
             ]);
         }
 
-        return$this->redirectToRoute('app_profile');
+        if ($adminEmail === $user->getUserIdentifier()) {
+            return $this->redirectToRoute('admin');
+        }
+
+        return $this->redirectToRoute('app_profile');
     }
 
     #[Route('/logout', name: 'logout')]
