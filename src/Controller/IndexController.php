@@ -2,15 +2,24 @@
 
 namespace App\Controller;
 
+use App\Repository\BlockRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Attribute\Route;
 
 class IndexController extends AbstractController
 {
+    private $blockRepository;
+    public function __construct(BlockRepository $blockRepository)
+    {
+        $this->blockRepository = $blockRepository;
+    }
+
+    #[Route('/index', name: 'app_index')]
     public function index(Request $request): Response
     {
         $defaultHero = 'scrum';
@@ -44,8 +53,11 @@ class IndexController extends AbstractController
             return $response;
         }
 
+        $blocks = $this->blockRepository->findByRoute('/index'); // TODO: get URI from request
+
         return $this->render('index/index.html.twig', [
             'hero' => $params['hero'] ?? $defaultHero,
+            'blocks' => $blocks,
             'form' => $form->createView(),
         ]);
     }

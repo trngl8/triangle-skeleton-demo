@@ -7,11 +7,6 @@ default:
 #  path: /
 #  controller: App\Controller\DefaultController::default
 
-#deprecated
-app_index:
-  path: /index
-  controller: App\Controller\IndexController::index
-
 app_restricted:
   path: /restricted
   controller: App\Controller\HomeController::home # splash screen

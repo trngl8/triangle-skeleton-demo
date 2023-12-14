@@ -204,4 +204,12 @@ class MeetupController extends AbstractController
 
         return $this->redirectToRoute('app_meetups_index');
     }
+    #[Route('/internal/list', name: 'internal_list', methods: ['GET'])]
+    public function internalList(): Response
+    {
+        return $this->render('meetup/_list.html.twig', [
+            'items' => $this->meetupRepository->findCurrent()
+        ]);
+    }
+
 }

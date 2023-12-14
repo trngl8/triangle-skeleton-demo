@@ -26,6 +26,9 @@ class Block
     #[ORM\Column(type: 'datetime')]
     private \DateTimeInterface $createdAt;
 
+    #[ORM\Column(length: 128, nullable: true)]
+    private ?string $controller = null;
+
     public function __construct(string $type, string $route, string $title)
     {
         $this->type = $type;
@@ -57,6 +60,18 @@ class Block
     public function getRoute(): string
     {
         return $this->route;
+    }
+
+    public function getController(): ?string
+    {
+        return $this->controller;
+    }
+
+    public function setController(?string $controller): static
+    {
+        $this->controller = $controller;
+
+        return $this;
     }
 
 }
