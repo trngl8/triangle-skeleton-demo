@@ -20,8 +20,8 @@ class IndexController extends AbstractController
             ->add('theme', ChoiceType::class, [
                 'choices' => [
                     'Default' => 'default',
-                    'Dark' => 'dark',
-                    'Light' => 'light',
+                    'Simple' => 'simple',
+                    'Blog' => 'blog',
                 ],
                 'label' => 'Choose theme',
                 'attr' => [

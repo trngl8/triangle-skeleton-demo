@@ -20,7 +20,7 @@
                         {{ form_widget(form.save) }}
                     </div>
                     <div class="col-auto">
-                        <button type="button" class="btn-outline-danger btn">{{ 'button.cancel'|trans }}</button>
+                        <a href="{{ path('default') }}" class="btn-outline-danger btn">{{ 'button.close'|trans }}</a>
                     </div>
                 </div>
                 {{ form_end(form) }}

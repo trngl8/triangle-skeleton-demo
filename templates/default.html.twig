@@ -39,6 +39,8 @@
                     {% for block in blocks %}
                         <p class="lead" data-hello-target="output">{{ block.title }}</p>
                     {% endfor %}
+                {% else %}
+                    <p class="lead" data-hello-target="output">{{ app.request.cookies.get('APP_THEME') }}</p>
                 {% endif %}
 
                 {% if buttons is defined %}
