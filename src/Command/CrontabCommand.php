@@ -47,14 +47,8 @@ HELP
         $io = new SymfonyStyle($input, $output);
         $table = new Table($output);
         $io->title('Crontab');
-        $jobs = $this->em->getRepository(Job::class)->findAll();
         $rows = [];
-        foreach ($jobs as $job) {
-            $line = [
-                'id' => $job->getId(),
-                'title' => $job->getTitle(),
-                'crontab' => $job->getCrontab(),
-            ];
+        foreach ($this->getJobs() as $line) {
             $rows[] = $line;
         }
 
@@ -65,5 +59,18 @@ HELP
         $table->render();
 
         return Command::SUCCESS;
+    }
+
+    private function getJobs(): \Generator
+    {
+        $jobs = $this->em->getRepository(Job::class)->findAll();
+        foreach ($jobs as $job) {
+            $line = [
+                'id' => $job->getId(),
+                'title' => $job->getTitle(),
+                'crontab' => $job->getCrontab(),
+            ];
+            yield $line;
+        }
     }
 }
