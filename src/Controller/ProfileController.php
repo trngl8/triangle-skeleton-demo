@@ -105,4 +105,11 @@ class ProfileController extends AbstractController
             'profile' => $profile,
         ]);
     }
+
+    #[Route('/profile/remove', name: 'app_profile_remove')]
+    public function remove(): Response
+    {
+        // TODO implement
+        return $this->redirectToRoute('logout');
+    }
 }
