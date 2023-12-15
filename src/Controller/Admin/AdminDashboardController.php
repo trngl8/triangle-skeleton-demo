@@ -6,7 +6,7 @@ use App\Service\MessageService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 
-class AdminController extends AbstractController
+class AdminDashboardController extends AbstractController
 {
     private $messageService; //TODO: should be interface
 

@@ -26,11 +26,11 @@ class LoginControllerTest extends WebTestCase
         $client->loginUser($testUser);
 
         $client->request('GET', '/');
+        $client->followRedirect();
         $this->assertResponseIsSuccessful();
 
         $client->request('GET', '/logout');
         $client->followRedirect();
         $this->assertResponseIsSuccessful();
-
     }
 }
