@@ -6,21 +6,21 @@ use App\Button\LinkToRoute;
 use App\Exception\ThemeLayoutNotFoundException;
 use App\Repository\BlockRepository;
 use Psr\Log\LoggerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Twig\Environment;
 use Twig\Error\LoaderError;
 
-class DefaultController extends AbstractController
+class DefaultController
 {
     private BlockRepository $blockRepository;
 
-    private $twig;
+    private Environment $twig;
 
-    private $logger;
+    private LoggerInterface $logger;
 
-    public function __construct(Environment $twig, LoggerInterface $logger, BlockRepository $blockRepository) {
+    public function __construct(Environment $twig, LoggerInterface $logger, BlockRepository $blockRepository)
+    {
         $this->twig = $twig;
         $this->logger = $logger;
         $this->blockRepository = $blockRepository;
@@ -29,8 +29,7 @@ class DefaultController extends AbstractController
     public function default(Request $request) : Response
     {
         if (!$request->cookies->has('APP_THEME')) {
-            // TODO: choose theme
-            return $this->forward('App\Controller\DefaultController::index');
+            return $this->index();
         }
 
         $templateName = sprintf('%s.html.twig', $request->cookies->get('APP_THEME'));

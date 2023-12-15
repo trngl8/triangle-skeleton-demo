@@ -33,7 +33,7 @@ class CardController extends AbstractController
     {
         $items = $this->repository->findBy([]);
 
-        $button = new LinkToRoute('project_add', 'button.add');
+        $button = new LinkToRoute('project_add', 'button.add', 'Add');
 
         return $this->render('card/admin/index.html.twig', [
             'items' => $items,

@@ -85,7 +85,7 @@ class TopicController extends AbstractController
         $pages = range(self::START_PAGE, $lastPage);
 
         return $this->render('topic/admin/index.html.twig', [
-            'button' => new LinkToRoute('topic_add', 'button.add'),
+            'button' => new LinkToRoute('topic_add', 'button.add', 'Add'),
             'paginator' => $paginator,
             'count' => $c,
             'page' => $page,

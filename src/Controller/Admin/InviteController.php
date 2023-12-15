@@ -70,7 +70,7 @@ class InviteController extends AbstractController
         }
 
         return $this->render('invite/admin/index.html.twig', [
-            'button' => new LinkToRoute('invite_add', 'button.add'),
+            'button' => new LinkToRoute('invite_add', 'button.add', 'Add'),
             'paginator' => $paginator,
             'count' => $c,
             'page' => $page,
