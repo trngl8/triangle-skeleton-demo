@@ -97,6 +97,7 @@
         {% include 'index/_' ~ hero ~ '_hero.html.twig' %}
 
         {% for block in blocks  %}
+
             {% if block.type == 'list' %}
                 <div class="container">
                     <h3 class="mb-4">{{ block.title }}</h3>
@@ -106,13 +107,14 @@
                         </div>
                         <div class="col-md-4">
                             <div class="h-100 p-4 bg-light border rounded-3">
-                                <p>For the individuals:</p>
-                                <a href="{{ path('app_product_index') }}" class="btn btn-outline-secondary" title="details instructions">Ask details</a>
+                                <p>By products:</p>
+                                <a href="{{ path('app_product_index') }}" class="btn btn-outline-secondary" title="details instructions">View products</a>
                             </div>
                         </div>
                     </div>
                 </div>
             {% endif %}
+
             {% if block.type == 'container' %}
                 <div class="container">
                     <div class="row align-items-md-stretch">
@@ -133,24 +135,13 @@
                     </div>
                 </div>
             {% endif %}
+
+            {% if block.type == 'features' %}
+                {{ render(path(block.controller, {id: block.id})) }}
+            {% endif %}
+
         {% endfor %}
-        {% if products is defined and products|length > 0 %}
-            <div class="container " id="featured-3">
-                <h2 class="pb-2 border-bottom">Active courses</h2>
-                <div class="row g-4 py-5 row-cols-1 row-cols-lg-3">
-                    {% for item in products %}
-                        <div class="feature col">
-                            <div class="feature-icon d-inline-flex align-items-center justify-content-center fs-2 mb-3">
-                                {{ item.imageTag|raw }}
-                            </div>
-                            <h3 class="fs-2">{{ item.title }}</h3>
-                            <p>{{ item.description }}</p>
-                            <a href="{{ path('app_product_show', { alias : item.id}) }}" class="btn btn-sm btn-outline-dark" title="details instructions">Join course</a>
-                        </div>
-                    {% endfor %}
-                </div>
-            </div>
-        {% endif %}
+
     {% endblock hero %}
 
     <div class="mt-4">
