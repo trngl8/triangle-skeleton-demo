@@ -42,15 +42,4 @@ class ProductController extends AbstractController
             'offers' => $offers
         ]);
     }
-
-    #[Route('/internal/list/{id}', name: 'internal_list')]
-    public function internalList(Block $block): Response
-    {
-        $products = $this->productRepository->findAll();
-
-        return $this->render('product/_features.html.twig', [
-            'products' => $products,
-            'block' => $block
-        ]);
-    }
 }

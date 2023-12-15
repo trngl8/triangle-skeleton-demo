@@ -14,11 +14,11 @@ class BlockFixture extends Fixture
         $manager->persist($block1);
 
         $block2 = new Block('list', '/index', 'Meetups list');
-        $block2->setController('app_meetups_internal_list');
+        $block2->setController('app_block_fragment_meetup_list');
         $manager->persist($block2);
 
         $block3 = new Block('features', '/index', 'Active courses');
-        $block3->setController('app_product_internal_list');
+        $block3->setController('app_block_fragment_product_list');
         $manager->persist($block3);
 
         $manager->flush();
