@@ -34,7 +34,7 @@ class ProfileController extends AbstractController
         $topics = $this->repository->findBy([]);
 
         return $this->render('profile/admin/index.html.twig', [
-            'button' => new LinkToRoute('admin_profile_add', 'button.add'),
+            'button' => new LinkToRoute('admin_profile_add', 'button.add', 'Add'),
             'items' => $topics,
         ]);
     }

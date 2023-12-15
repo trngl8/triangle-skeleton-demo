@@ -42,7 +42,7 @@ class ProductController extends AbstractController
 
         $items = $this->repository->findBy(['level' => $level]);
 
-        $button = new LinkToRoute('product_add', 'button.add');
+        $button = new LinkToRoute('product_add', 'button.add', 'Add');
 
         $template = 'product/admin/index.html.twig';
 
